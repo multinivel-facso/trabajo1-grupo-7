@@ -1,7 +1,7 @@
 ---
 title: "Título del trabajo grupal"
 subtitle: "Estadística Correlacional 2023"
-author: "Equipo docente"
+author: "Matilda Raccagni, Rodrigo Huerta"
 date: "2023-11-07"
 lang: es
 format: html
@@ -13,7 +13,6 @@ editor: visual
 Aqui ponemos la introducción, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
 
 En este ejemplo daremos una mirada a la salud mental, y exploraremos posibles asociaciones con la edad, sexo y nivel educacional.
-
 
 # Variables
 
@@ -64,11 +63,9 @@ Y las variables del módulo de Salud y Bienestar, referentes a *Estado de ánimo
 -   Frecuencia: Enlentecimiento físico
 -   Frecuencia: Pensamiento de muerte o dañarse
 
-
 ```{r, echo=FALSE}
 include_graphics("https://www.desarrollosocialyfamilia.gob.cl/storage/image/banner-saludmental.png")
 ```
-
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 tab1 <- data %>%
