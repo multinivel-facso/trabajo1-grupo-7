@@ -30,11 +30,21 @@ options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
 
 casen2022 <- read_sav("Base de datos Casen 2022 SPSS_18 marzo 2024.sav") 
+casen2022_c <- read_sav("Base de datos provincia y comuna Casen 2022 SPSS.sav")
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-# II- Selección de variables 
-rec_casen <- casen2022 %>% select(educ, r3, h7d, area, r12a, r12b, 
-                                      r17a, r17b, r17c, r17d, r17e, ypchautcor)
+# II- Selección de variables - 153.015 obs. of 12 variables
 
+casen2022_full <- merge(casen2022, 
+                        casen2022_c[, c("folio", "id_persona", "comuna")], 
+                        by = c("folio", "id_persona"), 
+                        all.x = TRUE)
+
+rec_casen <- casen2022_full %>% 
+  filter(edad >= 20) %>% select(educ, r3, h7d, area, r12a, r12b,
+         r17a, r17b, r17c, r17d, r17e, comuna)
+
+# Filtramos por personas con 20 años o más, ya que a 
+# ellos se les presentaban todas las opciones de nivel educacional
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # III- Recodificación de variables y creación de escalas
@@ -134,15 +144,15 @@ rec_casen$conectividad <- rec_casen$r17a + rec_casen$r17b + rec_casen$r17c +
 
 colSums(is.na(rec_casen))
 
-rec_casen <- na.omit(rec_casen) # 51.776 obs.
+rec_casen <- na.omit(rec_casen) # 51.686 obs.
 
 casen <- rec_casen %>% select(nvl_educ, pueblo_indigena, dificultad_conc,
-                              area, nvl_educ_padres, conectividad, ypchautcor)
+                              area, nvl_educ_padres, conectividad, comuna)
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # V- Correlación Intra Clase (ICC) y modelo nulo
 
-results_0 = lmer(nvl_educ ~ 1 + (1 | ypchautcor), data = casen)
+results_0 = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 
 reghelper::ICC(results_0)
 
