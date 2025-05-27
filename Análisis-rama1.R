@@ -17,7 +17,8 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                lme4,
                haven,
                reghelper,
-               texreg) # Varios
+               texreg, 
+               gt) # Varios
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo

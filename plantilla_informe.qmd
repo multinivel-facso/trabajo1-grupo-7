@@ -1,18 +1,14 @@
 ---
-title: "Título del trabajo grupal"
-subtitle: "Estadística Correlacional 2023"
+title: "Incidencia en el nivel educacional máximo alcanzado de adultos chilenos"
+subtitle: "Análisis de datos Multinivel"
 author: "Matilda Raccagni, Rodrigo Huerta"
-date: "2023-11-07"
+date: "2025-05-28"
 lang: es
 format: html
 editor: visual
 ---
 
 # Introducción
-
-Aqui ponemos la introducción, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
-
-En este ejemplo daremos una mirada a la salud mental, y exploraremos posibles asociaciones con la edad, sexo y nivel educacional.
 
 # Variables
 
@@ -21,15 +17,23 @@ Aqui ponemos las variables, de acuerdo con la [pauta](https://correlacional.netl
 Podemos cargar las librerías sin que aparezca en nuestro informe, señalando la especificación al chunk `echo=FALSE`.
 
 ```{r librerias, echo=FALSE, warning=FALSE, message=FALSE, collapse=TRUE}
-library(pacman)
-pacman::p_load(tidyverse,   # manipulacion datos
-               sjPlot,      # tablas
-               confintr,    # IC
-               gginference, # visualizacion 
-               rempsyc,     # reporte
-               broom,       # varios
-               sjmisc,      # para descriptivos 
-               knitr)            
+pacman::p_load(tidyverse, # Manipulacion de datos
+               car, # Recodificar
+               sjPlot, # Tablas y graficos
+               sjmisc, # Descriptivos
+               kableExtra, # Tablas
+               psych, # Bivariados
+               corrplot, # Graficos correlación
+               broom, 
+               gginference,
+               ggplot2,
+               dplyr,
+               stargazer,
+               lme4,
+               haven,
+               reghelper,
+               texreg, 
+               gt) # Varios           
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
@@ -142,6 +146,16 @@ Aqui redactamos algunas conclusiones, de acuerdo con la [pauta](https://correlac
 
 # Biliografía
 
--   COES (2023). *Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2022. Presentación de Resultados COES*. Marzo, Santiago de Chile.
+-   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
 
--   R Core Team (2023). *R: A Language and Environment for Statistical Computing*. R Foundation for Statistical Computing, Vienna, Austria. <https://www.R-project.org/>.
+-   Jiménez, J. M., & Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. *Latinoamérica. Revista de Estudios Educativos*, 52(1). <https://latam.redilat.org/index.php/lt/article/view/3246>
+
+-   López, J., & Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? *Estudios Sociológicos*, 26(78), 713–736. <https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext>
+
+-   Manzano, A. (2021). Desigualdades educativas entre el campo y la ciudad: Un análisis territorial del acceso a la educación básica. *Revista Latinoamericana de Educación Inclusiva*, 15(1), 45–64. https://doi.org/10.4067/S0718-73782021000100045
+
+-   Mejía, D. A., & Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. *ResearchGate*. [https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement](https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement)
+
+-   Rodríguez, F., Pérez, M., & Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. *Revista Conrado*, 17(83). <https://www.redalyc.org/journal/280/28073811035/html/>
+
+-   Salas, C. (2020). El ingreso familiar como determinante de la asistencia escolar de los jóvenes. *Problemas del Desarrollo*, 51(201). <https://www.probdes.iiec.unam.mx/index.php/pde/article/view/69395/61488>
