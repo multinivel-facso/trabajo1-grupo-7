@@ -17,26 +17,136 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                dplyr,
                stargazer,
                lme4,
-               haven) # Varios
+               haven,
+               reghelper,
+               texreg) # Varios
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
 
-load(url("https://datos.gob.cl/dataset/c6983439-49f6-4e71-85fe-e8de6e73dae0/resource/ed81f50c-1c7d-43d9-9083-dfc161e0cd66/download/20240516_enssex_data.rdata"))
+casen2022 <- read_sav("Base de datos Casen 2022 SPSS_18 marzo 2024.sav") 
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# II- Selección de variables 
+rec_casen <- casen2022 %>% select(educ, r3, h7d, area, r12a, r12b, 
+                                      r17a, r17b, r17c, r17d, r17e, ypchautcor)
+
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# III- Recodificación de variables y creación de escalas
 
-# II- Selección de variables 
+# 1) Nivel educacional máximo (variable dependiente) (0-8)
+rec_casen <- rec_casen %>%
+  mutate(nvl_educ = case_when(
+    educ == -88 ~ NA_real_,
+    educ == 0 ~ 0,
+    educ == 1 ~ 1,
+    educ == 2 ~ 2,
+    educ %in% c(3, 4) ~ 3,
+    educ %in% c(5, 6) ~ 4,
+    educ %in% c(7, 9) ~ 5,
+    educ %in% c(8, 11) ~ 6,
+    educ == 10 ~ 7,
+    educ == 12 ~ 8))
 
-test1 <- enssex4 %>% select(region, p5, p267, p285)
+# 2) Pertenencia a pueblo indígena (dummy, 1=sí pertenece)
+rec_casen <- rec_casen %>% 
+  mutate(pueblo_indigena = case_when(
+    r3 %in% c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) ~ 1,
+    r3 == 11 ~ 0))
 
-# p267 -> pasar valor 99 a NA
-# p285 pasar valor 9 a NA
+# 3) Dificultad para recordar o para concentrarse (0-3)
+rec_casen <- rec_casen %>%
+  mutate(dificultad_conc = case_when(
+    h7d == 1 ~ 0,
+    h7d == 2 ~ 1,
+    h7d == 3 ~ 2,
+    h7d == 4 ~ 3))
 
-test1$p267[test1$p267 %in% c(99)] <- NA
-test1$p285[test1$p285 %in% c(9)] <- NA
+# 4) Area urbana o rural (1=urbana, 0=rural)
+rec_casen <- rec_casen %>%
+  mutate(area = case_when(
+    area == 1 ~ 1,
+    area == 2 ~ 0))
 
-test1 <- na.omit(test1)
+# 5) Nivel educacional de los padres (1-5)
+# a) Nivel educacional madre
+rec_casen <- rec_casen %>%
+  mutate(educ_madre = case_when(
+    r12a == 1 ~ 1,
+    r12a == 2 ~ 2,
+    r12a %in% c(3, 4) ~ 3,
+    r12a %in% c(5, 6) ~ 4,
+    r12a == 7 ~ 5))
 
-frq(test1)
-a
+# b) Nivel educacional padre
+rec_casen <- rec_casen %>%
+  mutate(educ_padre = case_when(
+    r12b == 1 ~ 1,
+    r12b == 2 ~ 2,
+    r12b %in% c(3, 4) ~ 3,
+    r12b %in% c(5, 6) ~ 4,
+    r12b == 7 ~ 5))
+
+# c) Construir el promedio
+rec_casen <- rec_casen %>%
+  mutate(nvl_educ_padres = rowMeans(
+    select(., educ_padre, educ_madre)))
+
+# 6) Índice de conectividad
+# a) Recodificar variables
+rec_casen <- rec_casen %>%
+  mutate(r17a = case_when(
+    r17a == 1 ~ 1,
+    r17a == 2 ~ 0))
+
+rec_casen <- rec_casen %>%
+  mutate(r17b = case_when(
+    r17b == 1 ~ 1,
+    r17b == 2 ~ 0))
+
+rec_casen <- rec_casen %>%
+  mutate(r17c = case_when(
+    r17c == 1 ~ 1,
+    r17c == 2 ~ 0))
+
+rec_casen <- rec_casen %>%
+  mutate(r17d = case_when(
+    r17d == 1 ~ 1,
+    r17d == 2 ~ 0))
+
+rec_casen <- rec_casen %>%
+  mutate(r17e = case_when(
+    r17e == 1 ~ 1,
+    r17e == 2 ~ 0))
+
+# b) Construir escala sumativa
+rec_casen$conectividad <- rec_casen$r17a + rec_casen$r17b + rec_casen$r17c +
+  rec_casen$r17d + rec_casen$r17e
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# IV- Tratamiento de NA y segunda selección de variables (para reducir el 
+# tamaño de la base de datos)
+
+colSums(is.na(rec_casen))
+
+rec_casen <- na.omit(rec_casen) # 51.776 obs.
+
+casen <- rec_casen %>% select(nvl_educ, pueblo_indigena, dificultad_conc,
+                              area, nvl_educ_padres, conectividad, ypchautcor)
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# V- Correlación Intra Clase (ICC) y modelo nulo
+
+results_0 = lmer(nvl_educ ~ 1 + (1 | ypchautcor), data = casen)
+
+reghelper::ICC(results_0)
+
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+#VI- Guardar base de datos 
+save(casen, file = "~/Desktop/Github/grupo 7 trabajo 1/casen.RData")
+
+
+
+
+
