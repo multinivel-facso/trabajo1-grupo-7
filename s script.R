@@ -1,6 +1,11 @@
 #25/05/2025
 
-#Inicio de trabajo
+#Base de trabajo (rama principal):
+#Con este script creamos un subset de datos con las variables de interés debido
+#a que la base de datos original era muy grande para cargarla y daba errores al
+#hacer commit. La nueva base se llama casen y tiene 51776 obs. y 7 variables, y 
+#se guardó en la carpeta del trabajo. Se pude cargar con el siguiente código: 
+#load("casen.Rdata")
 
 # I- Cargamos las librerias y base de datos
 
