@@ -400,16 +400,18 @@ En la @tbl-sexo podemos ver que la proporción de mujeres que responde la encues
 tabla1
 ```
 
-# Análisis
+# Correlación intraclase (ICC)
 
-Aqui ponemos el análisis, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
-
-En nuestro ejemplo, analizaremos la correlación entre algunas variables.
+Se calculó la correlación intraclase para la variable dependiente nvl_educ, resultando en un 14% aproximadamente. Esto quiere decir que un 14% de la varianza de nuestra variable dependiente corresponde a unidades de nivel 2.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-cor_edad_dep <- cor(data$edad, data$sint_depresivos)
-cor_nedu_dep <- cor(data$nedu, data$sint_depresivos)
-cor_nedu_edad <- cor(data$nedu, data$edad)
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+screenreg(modelo_nulo)
+
+reghelper::ICC(modelo_nulo)
+
+
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}

@@ -34,8 +34,52 @@ casen = casen %>%
   group_by(comuna) %>% 
   mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
 
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Crear modelo con datos individuales
+reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+area+pueblo_indigena + 
+            dificultad_conc, data = casen)
+
+# Crear base de datos colapsada
+agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean)) %>% as.data.frame()
+
+# Crear modelo con datos agregados
+reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+area+pueblo_indigena + 
+               dificultad_conc, data=agg_casen)
+
+# Comparación de modelos
+stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Individual","Agregado"), type ='text')
+
+pacman::p_load(sjPlot,sjmisc,sjlabelled)
+tab_model(reg, reg_agg, show.ci=F, show.se = T, dv.labels = c("Individual", "Agregado"))
 
 
-# Guardar base de datos
-save(casen, file = "~/Desktop/Github/grupo 7 trabajo 1/casen.RData")
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Comparar modelos
+
+# Modelo individual:
+reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_educ_padres + 
+             mean_conectividad + area, data = casen)
+
+# Modelo agregado:
+agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+
+reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_educ_padres + 
+             mean_conectividad + area, data = casen)
+
+# Modelo multinivel
+reg_mnvl=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_educ_padres + 
+                 mean_conectividad + area + (1 | comuna), data=casen)
+
+screenreg(list(reg_ind, reg_agg, reg_mnvl))
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Coeficientes aleatorios
+
+reg_casen0=lmer(nvl_educ ~ 1 + ( 1 | comuna), data = casen)
+reg_casen1=lmer(nvl_educ ~ 1 + pueblo_indigena + ( 1 | comuna), data = casen)
+
+reg_casen2=lmer(nvl_educ ~ 1 + pueblo_indigena + (1 + pueblo_indigena | comuna), data=casen)
+screenreg(list(reg_casen1, reg_casen2), doctype = FALSE) # para ver en la consola utilizar screenreg()
+
+
 
