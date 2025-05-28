@@ -30,6 +30,58 @@ En este contexto, es crucial analizar cómo la conjunción de factores como el n
 
 Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y “si vive en una zona rural o urbana”, nuestra variable de anidación serán las “comunas”
 
+### **Objetivos:**
+
+Analizar el efecto de factores individuales (variables de nivel 1) y contextuales (variables de nivel 2 y de anidación) sobre el nivel educativo máximo alcanzado por las personas en Chile, utilizando modelos estadísticos que consideren la estructura anidada de los datos a nivel de comuna.
+
+### **Objetivos Especificos:**
+
+1\) Cuantificar la variación del intercepto del nivel educativo máximo entre comunas mediante la estimación de efectos aleatorios.
+
+2\) Explorar si el efecto de la pertenencia a pueblos originarios sobre el logro educativo se ve moderado por la zona geográfica (urbana o rural), a través de una interacción cruzada entre variables de nivel 1 y nivel 2.
+
+3\) Examinar si el efecto del nivel educacional promedio de los padres en la comuna sobre el nivel educativo máximo alcanzado por los individuos varía según la comuna de residencia, considerando la comuna como una variable de nivel contextual que modera dicha relación en un modelo multinivel.
+
+### **Hipotesis** Nivel 1:
+
+#### **Pertenencia a pueblos originarios**
+
+-   **H₀:** β1=0\\beta_1 = 0β1​=0 → La pertenencia a pueblos originarios no se asocia significativamente con el nivel educacional máximo alcanzado.
+
+-   **H₁:** β1\<0\\beta_1 \< 0β1​\<0 → La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.
+
+**Dificultad para concentrarse**
+
+-   **H₀:** β2=0\\beta_2 = 0β2​=0 → La dificultad para concentrarse no tiene efecto significativo sobre el nivel educacional máximo.
+
+-   **H₁:** β2\<0\\beta_2 \< 0β2​\<0 → La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo.
+
+### **Hipotesis** Nivel 2:
+
+#### **Conectividad digital**
+
+-   **H₀:** β3=0\\beta_3 = 0β3​=0 → La conectividad digital no se asocia significativamente con el nivel educacional máximo.
+
+-   **H₁:** β3\>0\\beta_3 \> 0β3​\>0 → Una mayor conectividad digital se asocia con un mayor nivel educacional máximo.
+
+#### **Promedio del nivel educacional de los padres en la comuna**
+
+-   **H₀:** γ01=0\\gamma\_{01} = 0γ01​=0 → El promedio educacional de los padres en la comuna no influye significativamente en el nivel educacional de los individuos.
+
+-   **H₁:** γ01\>0\\gamma\_{01} \> 0γ01​\>0 → Un mayor promedio educacional de los padres en la comuna se asocia con un mayor nivel educacional de los individuos.
+
+#### **Zona rural vs. urbana**
+
+-   **H₀:** γ02=0\\gamma\_{02} = 0γ02​=0 → No hay diferencias en el nivel educacional máximo entre zonas rurales y urbanas.
+
+-   **H₁:** γ02\<0\\gamma\_{02} \< 0γ02​\<0 → Residir en zona rural se asocia con un menor nivel educacional máximo alcanzado.
+
+#### **Varianza comunal** 
+
+-   **H₀:** τ00=0\\tau\_{00} = 0τ00​=0 → No existe variación significativa en el nivel educacional máximo entre comunas.
+
+-   **H₁:** τ00\>0\\tau\_{00} \> 0τ00​\>0 → Existe variación significativa entre comunas en el nivel educacional máximo.\
+
 # Variables
 
 Aqui ponemos las variables, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
@@ -56,8 +108,6 @@ pacman::p_load(tidyverse, # Manipulacion de datos
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
 ```
-
-Esto lo podemos repetir para la carga de la base de datos y el procesamiento de los datos.
 
 ```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
 load("casen.Rdata") #cargamos base de datos
