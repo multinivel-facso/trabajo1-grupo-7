@@ -12,7 +12,7 @@ editor: visual
 
 # Introducción
 
-La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, la residencia en zonas rurales o urbanas, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu & Passeron, 1990).
+La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu & Passeron, 1990).
 
 Diversos estudios han demostrado que el nivel educativo de los padres constituye un predictor sólido del rendimiento académico y de las trayectorias escolares de sus hijos. Mejía y Mejía (2023) sostienen que los hijos de padres con mayor nivel de instrucción (capital cultural) tienden a alcanzar logros educativos más altos, en parte por el capital cultural que se transmite en el hogar y por el acompañamiento en el proceso educativo. Este fenómeno ha sido ampliamente documentado en donde el capital familiar actúa como una ventaja comparativa.
 
@@ -20,15 +20,13 @@ Otro eje de desigualdad significativa es la pertenencia a pueblos indígenas. En
 
 La conectividad digital ha adquirido una relevancia especial en los últimos años, particularmente a raíz de la pandemia de COVID-19. Rodríguez et al. (2021) muestran cómo la falta de acceso a dispositivos tecnológicos y a internet de calidad afectó negativamente el proceso formativo de miles de estudiantes. Las brechas digitales se han convertido así en un nuevo eje de desigualdad educativa, afectando especialmente a estudiantes de zonas rurales o de bajos ingresos, quienes vieron restringido su derecho a la educación durante largos periodos.
 
-Además, la residencia en zonas rurales representa una condición estructural que afecta el logro educativo. Según Manzano (2021), los estudiantes que viven en áreas rurales suelen tener menos acceso a centros educativos, materiales didácticos, docentes calificados y conectividad digital, lo cual incide directamente en sus trayectorias educativas. Estas desigualdades geográficas refuerzan las desventajas acumuladas y dificultan la equidad en el acceso a oportunidades educativas. El aislamiento territorial, la baja densidad poblacional y la dispersión escolar dificultan la implementación de políticas educativas inclusivas y sostenidas en estos territorios.
-
 En esta línea, también es relevante considerar la **comuna de residencia** como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.
 
 En el plano individual, factores como la dificultad de concentración también inciden en el rendimiento académico. Jiménez y Fernández (2022) analizan cómo los problemas de concentración afectan negativamente el aprendizaje, y cómo estas dificultades se ven exacerbadas en contextos de pobreza, estrés familiar o ausencia de acompañamiento educativo. Las condiciones del entorno, por tanto, pueden potenciar o mitigar estas dificultades individuales, lo que evidencia la necesidad de un enfoque integral.
 
-En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, el área de residencia, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.
+En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.
 
-Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y “si vive en una zona rural o urbana”, nuestra variable de anidación serán las “comunas”
+Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y "conectividad", y nuestra variable de anidación serán las “comunas”
 
 ### **Objetivos:**
 
@@ -38,9 +36,7 @@ Analizar el efecto de factores individuales (variables de nivel 1) y contextuale
 
 1\) Cuantificar la variación del intercepto del nivel educativo máximo entre comunas mediante la estimación de efectos aleatorios.
 
-2\) Explorar si el efecto de la pertenencia a pueblos originarios sobre el logro educativo se ve moderado por la zona geográfica (urbana o rural), a través de una interacción cruzada entre variables de nivel 1 y nivel 2.
-
-3\) Examinar si el efecto del nivel educacional promedio de los padres en la comuna sobre el nivel educativo máximo alcanzado por los individuos varía según la comuna de residencia, considerando la comuna como una variable de nivel contextual que modera dicha relación en un modelo multinivel.
+2\) Examinar si el efecto del nivel educacional promedio de los padres en la comuna sobre el nivel educativo máximo alcanzado por los individuos varía según la comuna de residencia, considerando la comuna como una variable de nivel contextual que modera dicha relación en un modelo multinivel.
 
 ### **Hipotesis** Nivel 1:
 
@@ -69,12 +65,6 @@ Analizar el efecto de factores individuales (variables de nivel 1) y contextuale
 -   **H₀:** γ01=0\\gamma\_{01} = 0γ01​=0 → El promedio educacional de los padres en la comuna no influye significativamente en el nivel educacional de los individuos.
 
 -   **H₁:** γ01\>0\\gamma\_{01} \> 0γ01​\>0 → Un mayor promedio educacional de los padres en la comuna se asocia con un mayor nivel educacional de los individuos.
-
-#### **Zona rural vs. urbana**
-
--   **H₀:** γ02=0\\gamma\_{02} = 0γ02​=0 → No hay diferencias en el nivel educacional máximo entre zonas rurales y urbanas.
-
--   **H₁:** γ02\<0\\gamma\_{02} \< 0γ02​\<0 → Residir en zona rural se asocia con un menor nivel educacional máximo alcanzado.
 
 #### **Varianza comunal** 
 
@@ -274,25 +264,7 @@ tabla_apa_gt <- casen %>%
 tabla_apa_gt
 ```
 
-Area rural o urbana:
-
-En cuanto a pertenencia a zonas rurales o urbanas podemos observar que del total de la muestra (N) de 51.686, un 20.77% corresponde a zonas rurales, es decir 10.733 encuestados, mientras que 79.23% de los encuestados corresponden a zonas urbanas, es decir 40.953 personas.
-
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-desc4 <- casen %>%
-  group_by(area) %>% # agrupamos 
-  summarise(n = n()) %>% # contamos por categ de respuesta
-  mutate(prop = round((n / sum(n)) * 100, 2)) # porcentaje
-
-tabla4 <- desc4 %>% 
-  kableExtra::kable(format = "html",
-                    align = "c",
-                    col.names = c("Sector rural o urbano (1=urbano)", "n", "Proporción (%)"),
-                    caption = "Tabla 4: Sector rural o urbano") %>% 
-  kableExtra::kable_classic(full_width = FALSE, position = "center", font_size = 14) %>% 
-  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
-
-tabla4
 ```
 
 promedio maximo nivel educacional padres:
@@ -502,8 +474,6 @@ Aqui redactamos algunas conclusiones, de acuerdo con la [pauta](https://correlac
 -   Jiménez, J. M., & Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. *Latinoamérica. Revista de Estudios Educativos*, 52(1). <https://latam.redilat.org/index.php/lt/article/view/3246>
 
 -   López, J., & Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? *Estudios Sociológicos*, 26(78), 713–736. <https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext>
-
--   Manzano, A. (2021). Desigualdades educativas entre el campo y la ciudad: Un análisis territorial del acceso a la educación básica. *Revista Latinoamericana de Educación Inclusiva*, 15(1), 45–64. https://doi.org/10.4067/S0718-73782021000100045
 
 -   Mejía, D. A., & Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. *ResearchGate*. [https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement](https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement)
 
