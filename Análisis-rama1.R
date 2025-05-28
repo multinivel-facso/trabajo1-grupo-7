@@ -181,6 +181,7 @@ tabla4 <- desc4 %>%
 
 tabla4
 
+
 #Maximo nivel educacional padres (promedio)
 desc5 <- casen %>% 
   summarise("Media" = mean(nvl_educ_padres),
@@ -198,6 +199,50 @@ tabla5 <- kableExtra::kbl(desc5, escape=F, full_width = F, caption = "Tabla 5: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla5
+
+frq(casen$nvl_educ_padres)
+
+casen <- casen %>%
+  mutate(nvl_educ_padres_label = case_when(
+    nvl_educ_padres == 1.00 ~ "Nivel muy bajo",
+    nvl_educ_padres == 1.50 ~ "Nivel bajo-muy bajo",
+    nvl_educ_padres == 2.00 ~ "Nivel bajo",
+    nvl_educ_padres == 2.50 ~ "Nivel medio-bajo",
+    nvl_educ_padres == 3.00 ~ "Nivel medio",
+    nvl_educ_padres == 3.50 ~ "Nivel medio-alto",
+    nvl_educ_padres == 4.00 ~ "Nivel alto",
+    nvl_educ_padres == 4.50 ~ "Nivel alto-muy alto",
+    nvl_educ_padres == 5.00 ~ "Nivel muy alto"))
+
+casen <- casen %>%
+  mutate(nvl_educ_padres_label = factor(nvl_educ_padres_label,
+                                        levels = c(
+                                          "Nivel muy bajo",
+                                          "Nivel bajo-muy bajo",
+                                          "Nivel bajo",
+                                          "Nivel medio-bajo",
+                                          "Nivel medio",
+                                          "Nivel medio-alto",
+                                          "Nivel alto",
+                                          "Nivel alto-muy alto",
+                                          "Nivel muy alto"
+                                        )))
+
+desc5.1 <- casen %>%
+  group_by(nvl_educ_padres_label) %>%
+  summarise(n = n()) %>%
+  mutate(prop = round((n / sum(n)) * 100, 2))
+
+tabla5.1 <- desc5.1 %>% 
+  kableExtra::kable(format = "html",
+                    align = "c",
+                    col.names = c("Nivel educacional", "n", "Proporción (%)"),
+                    caption = "Tabla 5.1: Nivel educacional máximo alcanzado por los padres") %>% 
+  kableExtra::kable_classic(full_width = FALSE, position = "center", font_size = 14) %>% 
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla5.1
+
 
 #escala conectividad
 desc6 <- casen %>% 
@@ -242,7 +287,7 @@ top_25 <- freq_comunas %>%
 ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
   geom_col(fill = "darkgreen") +
   coord_flip() +
-  labs(title = "Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
+  labs(title = "Tabla 7: Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
   theme_minimal()
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/

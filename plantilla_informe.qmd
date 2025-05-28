@@ -34,8 +34,6 @@ Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se 
 
 Aqui ponemos las variables, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
 
-Podemos cargar las librerías sin que aparezca en nuestro informe, señalando la especificación al chunk `echo=FALSE`.
-
 ```{r librerias, echo=FALSE, warning=FALSE, message=FALSE, collapse=TRUE}
 pacman::p_load(tidyverse, # Manipulacion de datos
                car, # Recodificar
@@ -92,7 +90,7 @@ Y las variables del módulo de Salud y Bienestar, referentes a *Estado de ánimo
 -   Frecuencia: Enlentecimiento físico
 -   Frecuencia: Pensamiento de muerte o dañarse
 
-Descripción estadisticos:
+### **Descripción estadisticos:**
 
 En la variable máximo nivel educacional alcanzado se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media , por otro lado un 25% de los encuestados llegaron a un nivel de educación básica incompleta. Y solamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
 
@@ -178,7 +176,9 @@ tabla2 <- desc2 %>%
 tabla2
 ```
 
-Dificultad para concentrarse
+Dificultad para concentrarse:
+
+En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Esto indica que la concentración no representa un problema severo para la mayoria de nuestra muestra. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 desc3 <- casen %>% 
@@ -224,7 +224,9 @@ tabla_apa_gt <- casen %>%
 tabla_apa_gt
 ```
 
-Area rural o urbana
+Area rural o urbana:
+
+En cuanto a pertenencia a zonas rurales o urbanas podemos observar que del total de la muestra (N) de 51.686, un 20.77% corresponde a zonas rurales, es decir 10.733 encuestados, mientras que 79.23% de los encuestados corresponden a zonas urbanas, es decir 40.953 personas.
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 desc4 <- casen %>%
@@ -243,7 +245,7 @@ tabla4 <- desc4 %>%
 tabla4
 ```
 
-promedio maximo nivel educacional padres
+promedio maximo nivel educacional padres:
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 desc5 <- casen %>% 
@@ -262,6 +264,48 @@ tabla5 <- kableExtra::kbl(desc5, escape=F, full_width = F, caption = "Tabla 5: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla5
+
+casen <- casen %>%
+  mutate(nvl_educ_padres_label = case_when(
+    nvl_educ_padres == 1.00 ~ "Nivel muy bajo",
+    nvl_educ_padres == 1.50 ~ "Nivel bajo-muy bajo",
+    nvl_educ_padres == 2.00 ~ "Nivel bajo",
+    nvl_educ_padres == 2.50 ~ "Nivel medio-bajo",
+    nvl_educ_padres == 3.00 ~ "Nivel medio",
+    nvl_educ_padres == 3.50 ~ "Nivel medio-alto",
+    nvl_educ_padres == 4.00 ~ "Nivel alto",
+    nvl_educ_padres == 4.50 ~ "Nivel alto-muy alto",
+    nvl_educ_padres == 5.00 ~ "Nivel muy alto"))
+
+casen <- casen %>%
+  mutate(nvl_educ_padres_label = factor(nvl_educ_padres_label,
+                                        levels = c(
+                                          "Nivel muy bajo",
+                                          "Nivel bajo-muy bajo",
+                                          "Nivel bajo",
+                                          "Nivel medio-bajo",
+                                          "Nivel medio",
+                                          "Nivel medio-alto",
+                                          "Nivel alto",
+                                          "Nivel alto-muy alto",
+                                          "Nivel muy alto"
+                                        )))
+
+desc5.1 <- casen %>%
+  group_by(nvl_educ_padres_label) %>%
+  summarise(n = n()) %>%
+  mutate(prop = round((n / sum(n)) * 100, 2))
+
+tabla5.1 <- desc5.1 %>% 
+  kableExtra::kable(format = "html",
+                    align = "c",
+                    col.names = c("Nivel educacional", "n", "Proporción (%)"),
+                    caption = "Tabla 5.1: Nivel educacional máximo alcanzado por los padres") %>% 
+  kableExtra::kable_classic(full_width = FALSE, position = "center", font_size = 14) %>% 
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla5.1
+
 ```
 
 escala conectividad
@@ -285,7 +329,11 @@ tabla6 <- kableExtra::kbl(desc6, escape=F, full_width = F, caption = "Tabla 6: E
 tabla6
 ```
 
-comuna
+comuna:
+
+En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron.
+
+En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -307,8 +355,10 @@ top_25 <- freq_comunas %>%
 ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
   geom_col(fill = "darkgreen") +
   coord_flip() +
-  labs(title = "Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
+  labs(title = "Tabla 7: Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
   theme_minimal()
+
+
 
 ```
 
@@ -381,4 +431,4 @@ Aqui redactamos algunas conclusiones, de acuerdo con la [pauta](https://correlac
 
 -   Rodríguez, F., Pérez, M., & Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. *Revista Conrado*, 17(83). <https://www.redalyc.org/journal/280/28073811035/html/>
 
--   Salas, C. (2020). El ingreso familiar como determinante de la asistencia escolar de los jóvenes. *Problemas del Desarrollo*, 51(201). <https://www.probdes.iiec.unam.mx/index.php/pde/article/view/69395/61488>
+-   Mide UC. (2020). *Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena.* Pontificia Universidad Católica de Chile. Recuperado de <https://mideuc.cl>
