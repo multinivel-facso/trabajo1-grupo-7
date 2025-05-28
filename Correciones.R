@@ -62,7 +62,22 @@ results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna)
 screenreg(results_1, naive=TRUE)
 
 # Modelo 2 con predictores de nivel 2
+results_2 = lmer(nvl_educ ~ 1 + mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_2)
 
+# Modelo 3 con predictores de nivel 1 y 2
+results_3 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
+                   mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_3)
+
+
+# Comparación regresión nivel agregado, individual y multinivel
+reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
+
+agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=agg_casen)
+
+screenreg(list(reg_ind, reg_agg, results_3))
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # Coeficientes aleatorios
