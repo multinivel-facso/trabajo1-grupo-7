@@ -218,20 +218,16 @@ tabla6 <- kableExtra::kbl(desc6, escape=F, full_width = F, caption = "Tabla 6: E
 tabla6
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-#variable de anidación
-
-#Ingreso autónomo per cápita del hogar corregido
-summary(casen$comuna)
+#variable de anidación : comuna
 
 # Paso 1: Agrupar por comuna y contar
+casen <- casen %>%
+  mutate(comuna_label = as_factor(comuna))
+
 comuna_freq <- casen %>%
   count(comuna_label) %>%
   mutate(porcentaje = n / sum(n) * 100)
 
-
-
-casen <- casen %>%
-  mutate(comuna_label = as_factor(comuna))
 
 frq(casen$comuna_label)
 
