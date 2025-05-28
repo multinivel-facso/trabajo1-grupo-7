@@ -34,7 +34,7 @@ moda <- function(x) {
   uniq_x[which.max(tabulate(match(x, uniq_x)))]
 }
 
-#Vaiables: (nvl_educ, pueblo_indigena, dificultad_conc, area, nvl_educ_padres, conectividad, ypchautcor)
+#Vaiables: nvl_educ, pueblo_indigena, dificultad_conc, area, nvl_educ_padres, conectividad, ypchautcor
 
 #variable dependiente --> nivel educacional
 
@@ -178,25 +178,33 @@ tabla6
 #variable de anidación
 
 #Ingreso autónomo per cápita del hogar corregido
-summary(casen$ypchautcor)
+summary(casen$comuna)
 
-desc7 <- casen %>% 
-  summarise("Media" = mean(ypchautcor),
-            "Mediana" = median(ypchautcor),
-            "Cuartil 1" = quantile(ypchautcor, probs = .25),
-            "Cuartil 3" = quantile(ypchautcor, probs = .75),
-            "Rango" = max(ypchautcor) - min(ypchautcor),
-            "Desviacion estandar" = sd(ypchautcor),
-            "Varianza" = var(ypchautcor),
-            "Moda" = moda(casen$ypchautcor))
+# Paso 1: Agrupar por comuna y contar
+comuna_freq <- casen %>%
+  count(comuna_label) %>%
+  mutate(porcentaje = n / sum(n) * 100)
 
-tabla7 <- kableExtra::kbl(desc7, escape=F, full_width = F, caption = "Tabla 6: Estadísticos descriptivos Ingreso autónomo per cápita del hogar corregido")  %>%
-  kable_paper("hover") %>%
-  kableExtra::kable_classic(full_width = F, font_size = 14) %>% kable_minimal() %>%
-  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
-tabla7
+
+casen <- casen %>%
+  mutate(comuna_label = as_factor(comuna))
+
+frq(casen$comuna_label)
+
+
+# Calcular frecuencias y ordenar
+freq_comunas <- casen %>%
+  count(comuna_label, sort = TRUE)
+
+top_25 <- freq_comunas %>%
+  slice_max(n, n = 25)
+
+ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(title = "Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
+  theme_minimal()
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
 
