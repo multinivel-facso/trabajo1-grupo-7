@@ -290,5 +290,29 @@ ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
   labs(title = "Tabla 7: Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
   theme_minimal()
 
+comuna_freq <- casen %>%
+  group_by(comuna) %>%
+  summarise(frecuencia = n())
+
+desc7 <- comuna_freq %>% 
+  summarise(
+    Media = mean(frecuencia),
+    Mediana = median(frecuencia),
+    `Cuartil 1` = quantile(frecuencia, probs = .25),
+    `Cuartil 3` = quantile(frecuencia, probs = .75),
+    Rango = max(frecuencia) - min(frecuencia),
+    `Desviación estándar` = sd(frecuencia),
+    Varianza = var(frecuencia),
+    Moda = moda(frecuencia)  # asegúrate de tener la función `moda()` definida
+  )
+
+tabla7.1 <- kableExtra::kbl(desc7, escape = FALSE, full_width = FALSE,
+                            caption = "Tabla 7.1: Estadísticos descriptivos de la frecuencia de comunas") %>%
+  kableExtra::kable_classic(full_width = FALSE, font_size = 14) %>%
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla7.1
+
+  
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 

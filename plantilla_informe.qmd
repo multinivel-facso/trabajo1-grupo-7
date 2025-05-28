@@ -247,6 +247,10 @@ tabla4
 
 promedio maximo nivel educacional padres:
 
+Los resultados muestran que el nivel educacional de los padres se concentra en tramos bajos. La media es de 2,24 y la mediana es 2, lo que indica que la mayoría no supera la enseñanza básica. La moda también es 2, reafirmando esta tendencia. Aunque hay casos con niveles altos (rango hasta 5), estos son poco frecuentes.
+
+En términos proporcionales (Tabla 5.1), cerca del 61% de los padres se ubica entre niveles “muy bajo” y “bajo”, mientras que solo un 10% alcanza niveles “medio-alto” o superiores. Esto evidencia una fuerte desigualdad en el acceso educativo entre generaciones.
+
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 desc5 <- casen %>% 
   summarise("Media" = mean(nvl_educ_padres),
@@ -310,6 +314,8 @@ tabla5.1
 
 escala conectividad
 
+Los resultados muestran que el nivel de conectividad es mayoritariamente bajo. La media es de 2,22 y la moda es 1, lo que indica que muchas personas tienen poca o ninguna conexión a internet. El 25% de los casos está en el nivel más bajo (cuartil 1 = 1) en un rango de 0 a 5, y el 75% no supera el nivel 3. Aunque hay casos con alta conectividad (rango hasta 5), son pocos. En general, se observa una distribución desigual, con predominio de bajos niveles de acceso.
+
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 desc6 <- casen %>% 
   summarise("Media" = mean(conectividad),
@@ -331,14 +337,15 @@ tabla6
 
 comuna:
 
-En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron.
+En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron, por lo que nuestro N real es 324 comunas encuestadas.
 
-En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra.
+En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra. La media de respuestas por comuna es de 154.28, con una desviación estándar de 222.57 respuestas, lo que significa que hay comunas con mucha más representación que otras
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
 casen <- casen %>%
   mutate(comuna_label = as_factor(comuna))
+
 
 comuna_freq <- casen %>%
   count(comuna_label) %>%
@@ -358,7 +365,28 @@ ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
   labs(title = "Tabla 7: Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
   theme_minimal()
 
+comuna_freq2 <- casen %>%
+  group_by(comuna) %>%
+  summarise(frecuencia = n())
 
+desc7 <- comuna_freq2 %>% 
+  summarise(
+    Media = mean(frecuencia),
+    Mediana = median(frecuencia),
+    `Cuartil 1` = quantile(frecuencia, probs = .25),
+    `Cuartil 3` = quantile(frecuencia, probs = .75),
+    Rango = max(frecuencia) - min(frecuencia),
+    `Desviación estándar` = sd(frecuencia),
+    Varianza = var(frecuencia),
+    Moda = moda(frecuencia)  # asegúrate de tener la función `moda()` definida
+  )
+
+tabla7.1 <- kableExtra::kbl(desc7, escape = FALSE, full_width = FALSE,
+                            caption = "Tabla 7.1: Estadísticos descriptivos de la frecuencia de comunas") %>%
+  kableExtra::kable_classic(full_width = FALSE, font_size = 14) %>%
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla7.1
 
 ```
 
