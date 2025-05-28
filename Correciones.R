@@ -34,6 +34,8 @@ casen = casen %>%
   group_by(comuna) %>% 
   mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
 
+
+
 # Guardar base de datos
 save(casen, file = "~/Desktop/Github/grupo 7 trabajo 1/casen.RData")
 
