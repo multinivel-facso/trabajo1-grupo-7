@@ -55,6 +55,49 @@ tabla1 <- kableExtra::kbl(desc1, escape=F, full_width = F, caption = "Tabla 1: E
 
 tabla1
 
+casen <- casen %>%
+  mutate(nvl_educ_label = case_when(
+    nvl_educ == 0 ~ "Sin educación",
+    nvl_educ == 1 ~ "Básica incompleta",
+    nvl_educ == 2 ~ "Básica completa",
+    nvl_educ == 3 ~ "Media incompleta",
+    nvl_educ == 4 ~ "Media completa",
+    nvl_educ == 5 ~ "Superior incompleta",
+    nvl_educ == 6 ~ "Superior completa",
+    nvl_educ == 7 ~ "Postgrado incompleta",
+    nvl_educ == 8 ~ "Postgrado completa",
+    FALSE ~ "Otro / No especificado"
+  ))
+
+casen <- casen %>%
+  mutate(nvl_educ_label = factor(nvl_educ_label,
+                                 levels = c(
+                                   "Sin educación",
+                                   "Básica incompleta",
+                                   "Básica completa",
+                                   "Media incompleta",
+                                   "Media completa",
+                                   "Superior incompleta",
+                                   "Superior completa",
+                                   "Postgrado incompleta",
+                                   "Postgrado completa"
+                                 )))
+
+desc1.2 <- casen %>%
+  group_by(nvl_educ_label) %>%
+  summarise(n = n()) %>%
+  mutate(prop = round((n / sum(n)) * 100, 2))
+
+tabla1.2 <- desc1.2 %>% 
+  kableExtra::kable(format = "html",
+                    align = "c",
+                    col.names = c("Nivel máximo alcanzado", "n", "Proporción (%)"),
+                    caption = "Tabla 1.2: Nivel máximo alcanzado") %>% 
+  kableExtra::kable_classic(full_width = FALSE, position = "center", font_size = 14) %>% 
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla1.2
+
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 #variables independientes nivel 1 
 
