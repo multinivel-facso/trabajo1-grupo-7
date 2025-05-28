@@ -316,3 +316,74 @@ tabla7.1
   
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
+#analisis
+
+# Modelo con intercepto aleatorio por comuna
+
+modelo_base <- lmer(casen$nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+# Variables de nivel 1 con efecto aleatorio del intercepto por comuna
+modelo_nivel1 <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + (1 | comuna), data = casen)
+
+# Modelo con pendiente aleatoria para conectividad
+modelo_pendiente_aleatoria <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + (1 + conectividad | comuna), data = casen)
+
+# Modelo completo con nivel 1 y 2, pendiente aleatoria de conectividad
+modelo_completo <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + 
+                          casen$nvl_educ_padres + casen$area +
+                          (1 + conectividad | comuna), data = casen)
+
+# Ver resumen
+summary(modelo_completo)
+
+# Comparar modelos
+library(texreg)
+screenreg(list(modelo_nivel1, modelo_pendiente_aleatoria, modelo_completo))
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+# Estimación correlación intraclase (ICC) -------------------------------------
+
+# Modelo nulo (sin predictores), solo el intercepto aleatorio por comuna
+modelo_nulo <- lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+# Resumen del modelo
+summary(modelo_nulo)
+
+# Visualización con texreg
+screenreg(modelo_nulo)  # requiere library(texreg)
+
+# Cálculo del ICC
+reghelper::ICC(modelo_nulo)
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+#-------------------------------
+# COMPARACIÓN: REGRESIONES INDIVIDUAL, AGREGADA Y MULTINIVEL
+#-------------------------------
+
+# 1. REGRESIÓN INDIVIDUAL
+reg_ind <- lm(nvl_educ ~ pueblo_indigena + dificultad_conc, data = casen)
+
+# 2. CREAR BASE AGREGADA POR COMUNA
+agg_casen <- casen %>%
+  group_by(comuna) %>%
+  summarise(
+    prom_nvl_educ = mean(nvl_educ, na.rm = TRUE),
+    prom_pueblo_indigena = mean(pueblo_indigena, na.rm = TRUE),
+    prom_dificultad_conc = mean(dificultad_conc, na.rm = TRUE),
+    prom_nvl_educ_padres = mean(nvl_educ_padres, na.rm = TRUE)
+  )
+
+# 3. REGRESIÓN AGREGADA (por comuna)
+reg_agg <- lm(prom_nvl_educ ~ prom_pueblo_indigena + prom_dificultad_conc, data = agg_casen)
+
+# 4. MODELO MULTINIVEL (nivel 1)
+modelo_multinivel <- lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+
+# 5. COMPARACIÓN DE MODELOS
+screenreg(list(reg_ind, reg_agg, modelo_multinivel),
+          custom.model.names = c("Individual", "Agregado", "Multinivel"))
+
+
+
