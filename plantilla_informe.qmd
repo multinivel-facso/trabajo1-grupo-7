@@ -66,7 +66,7 @@ Analizar el efecto de factores individuales (variables de nivel 1) y contextuale
 
 -   **H₁:** γ01\>0\\gamma\_{01} \> 0γ01​\>0 → Un mayor promedio educacional de los padres en la comuna se asocia con un mayor nivel educacional de los individuos.
 
-#### **Varianza comunal** 
+#### **Varianza comunal**
 
 -   **H₀:** τ00=0\\tau\_{00} = 0τ00​=0 → No existe variación significativa en el nivel educacional máximo entre comunas.
 
