@@ -3,6 +3,7 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                car, # Recodificar
                sjPlot, # Tablas y graficos
                sjmisc, # Descriptivos
+               sjlabelled,
                kableExtra, # Tablas
                psych, # Bivariados
                corrplot, # Graficos correlación
@@ -36,41 +37,32 @@ casen = casen %>%
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # Crear modelo con datos individuales
-reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+area+pueblo_indigena + 
+reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
             dificultad_conc, data = casen)
 
 # Crear base de datos colapsada
 agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean)) %>% as.data.frame()
 
 # Crear modelo con datos agregados
-reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+area+pueblo_indigena + 
+reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
                dificultad_conc, data=agg_casen)
 
 # Comparación de modelos
 stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Individual","Agregado"), type ='text')
 
-pacman::p_load(sjPlot,sjmisc,sjlabelled)
+
 tab_model(reg, reg_agg, show.ci=F, show.se = T, dv.labels = c("Individual", "Agregado"))
 
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # Comparar modelos
 
-# Modelo individual:
-reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_educ_padres + 
-             mean_conectividad + area, data = casen)
+# Modelo 1 con predictores de nivel 1
+results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+screenreg(results_1, naive=TRUE)
 
-# Modelo agregado:
-agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+# Modelo 2 con predictores de nivel 2
 
-reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_educ_padres + 
-             mean_conectividad + area, data = casen)
-
-# Modelo multinivel
-reg_mnvl=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_educ_padres + 
-                 mean_conectividad + area + (1 | comuna), data=casen)
-
-screenreg(list(reg_ind, reg_agg, reg_mnvl))
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # Coeficientes aleatorios
