@@ -63,6 +63,11 @@ Esto lo podemos repetir para la carga de la base de datos y el procesamiento de 
 
 ```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
 load("casen.Rdata") #cargamos base de datos
+
+moda <- function(x) {
+  uniq_x <- unique(x)
+  uniq_x[which.max(tabulate(match(x, uniq_x)))]
+}
 ```
 
 A continuación, en nuestro ejemplo describiremos las variables necesarias para responder a nuestro objetivo.
