@@ -108,28 +108,6 @@ moda <- function(x) {
 }
 ```
 
-A continuación, en nuestro ejemplo describiremos las variables necesarias para responder a nuestro objetivo.
-
-## Descripción de variables
-
-En este ejemplo, se seleccionaron las variables:
-
--   sexo: sexo del encuestado, con nivel de medición nominal
--   edad: edad del encuestado, con nivel de medición intervalar
--   nedu: nivel educativo del encuestado, con nivel de medición ordinal
-
-Y las variables del módulo de Salud y Bienestar, referentes a *Estado de ánimo: sintomatología depresiva*, con nivel de medición ordinal, los ítems son los siguientes:
-
--   Frecuencia: Poco interés o alegría
--   Frecuencia: Decaimiento, pesadez o desesperanza
--   Frecuencia: Dificultad para dormir o exceso de sueño
--   Frecuencia: Cansancio o sensación de falta de energía
--   Frecuencia: Apetito disminuido o aumentado
--   Frecuencia: Dificultad para concentrarse
--   Frecuencia: Mala opinión de sí mismo
--   Frecuencia: Enlentecimiento físico
--   Frecuencia: Pensamiento de muerte o dañarse
-
 ### **Descripción estadisticos:**
 
 En la variable máximo nivel educacional alcanzado se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media , por otro lado un 25% de los encuestados llegaron a un nivel de educación básica incompleta. Y solamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
