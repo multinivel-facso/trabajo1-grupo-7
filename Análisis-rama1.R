@@ -330,7 +330,7 @@ modelo_pendiente_aleatoria <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + case
 
 # Modelo completo con nivel 1 y 2, pendiente aleatoria de conectividad
 modelo_completo <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + 
-                          casen$nvl_educ_padres + casen$area +
+                          casen$nvl_educ_padres +
                           (1 + conectividad | comuna), data = casen)
 
 # Ver resumen
@@ -339,6 +339,56 @@ summary(modelo_completo)
 # Comparar modelos
 library(texreg)
 screenreg(list(modelo_nivel1, modelo_pendiente_aleatoria, modelo_completo))
+
+sjPlot::tab_model(modelo_completo)
+
+coef(modelo_completo)
+
+casen$modelo_completo <- predict(modelo_completo)
+
+casen %>%  
+  ggplot(aes(ses, mlm1, color = schoolid, group = schoolid)) + 
+  geom_smooth(se = F, method = lm) 
+
+casen %>%
+  ggplot(aes(x = dificultad_conc, y = nvl_educ, color = as.factor(comuna), group = comuna)) +
+  geom_smooth(se = FALSE, method = "lm") +
+  labs(
+    title = "Relación entre dificultad para concentrarse y nivel educativo por comuna",
+    x = "Dificultad para concentrarse",
+    y = "Nivel educacional alcanzado",
+    color = "Comuna"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")  # Para ocultar la leyenda si hay muchas comunas
+
+######
+
+library(lme4)
+library(ggplot2)
+library(dplyr)
+
+# Modelo nulo (sin predictores de nivel 1)
+reg_mlm0 <- lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+# Modelo con predictores de nivel 1
+reg_mlm1 <- lmer(nvl_educ ~ 1 + dificultad_conc + pueblo_indigena + (1 | comuna), data = casen)
+
+# Guardar las predicciones del modelo con efectos aleatorios por comuna
+casen$pred_mlm1 <- predict(reg_mlm1)
+
+# Graficar relación entre dificultad para concentrarse y nivel educativo predicho, por comuna
+casen %>%
+  ggplot(aes(x = dificultad_conc, y = pred_mlm1, color = as.factor(comuna), group = comuna)) +
+  geom_smooth(se = FALSE, method = "lm") +
+  labs(
+    title = "Relación entre dificultad para concentrarse y nivel educativo por comuna",
+    x = "Dificultad para concentrarse",
+    y = "Nivel educacional predicho",
+    color = "Comuna"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "corner")  # Oculta la leyenda para no saturar el gráfico
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
