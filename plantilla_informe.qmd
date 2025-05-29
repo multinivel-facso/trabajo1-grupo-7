@@ -10,6 +10,8 @@ editor: visual
 
 # Abstract
 
+En esta investigación se ahondaran en los factores que inciden en el nivel educacional máximo alcanzado por personas con 20 años o más residentes en 324 comunas de Chile. Se trabajara con un N general de 51.686 casos. Se busca ahondar en la influencia que tienen las siguientes variables: si pertenece a un pueblo indígena; nivel educacional de los padres; conectividad a internet; y dificultad para concentrarse y poner atención. La relevancia de esta investigación radica en que la educación es uno de los pilares fundamentales de las sociedades modernas, tanto en los procesos de socialización como culturales. Existen diversos factores que pueden incidir en alcanzar o no un nivel determinado de educación, como pueden ser los ya nombrados o el nivel de ingresos, el sexo, la orientación sexual o la edad. Se buscará realizar un modelo multinivel donde trabajaremos con variables de nivel 1 y de nivel 2 para ver su incidencia en nuestra variable dependiente.
+
 # Introducción
 
 La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu & Passeron, 1990).
@@ -74,7 +76,7 @@ Analizar el efecto de factores individuales (variables de nivel 1) y contextuale
 
 # Variables
 
-```{r librerias, echo=FALSE, warning=FALSE, message=FALSE, collapse=TRUE}
+```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
 pacman::p_load(tidyverse, # Manipulacion de datos
                car, # Recodificar
                sjPlot, # Tablas y graficos
@@ -114,7 +116,7 @@ La variable nivel educacional máximo alcanzado por la persona encuestada es una
 
 Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
 
-```{r echo=FALSE, message=FALSE, collapse=TRUE}
+```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
   
 desc1 <- casen %>% 
   summarise("Media" = mean(nvl_educ),
@@ -126,7 +128,7 @@ desc1 <- casen %>%
             "Varianza" = var(nvl_educ),
             "Moda" = moda(casen$nvl_educ))
 
-tabla1 <- kableExtra::kbl(desc1, escape=F, full_width = F, caption = "Tabla 1: Estadísticos descriptivos nivel educacional")  %>%
+tabla1 <- kableExtra::kbl(desc1, escape=T, full_width = F, caption = "Tabla 1: Estadísticos descriptivos nivel educacional")  %>%
   kable_paper("hover") %>%
   kableExtra::kable_classic(full_width = F, font_size = 14) %>% kable_minimal() %>%
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
@@ -175,6 +177,9 @@ tabla1.2 <- desc1.2 %>%
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla1.2
+
+frq(casen$nvl_educ)
+frq(casen$nvl_educ_label)
 ```
 
 b\) Pertenencia a pueblos indígenas
@@ -217,6 +222,8 @@ desc3 <- casen %>%
             "Varianza" = var(dificultad_conc),
             "Moda" = moda(casen$dificultad_conc))
 
+frq(casen$dificultad_conc)
+
 tabla3 <- kableExtra::kbl(desc3, escape=F, full_width = F, caption = "Tabla 3: Estadísticos descriptivos de Dificultad de concentración")  %>%
   kable_paper("hover") %>%
   kableExtra::kable_classic(full_width = F, font_size = 14) %>% kable_minimal() %>%
@@ -248,6 +255,8 @@ tabla_apa_gt <- casen %>%
   gt::cols_align(align = "center", columns = gt::everything())
 
 tabla_apa_gt
+
+frq(casen$dificultad_conc) 
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -272,6 +281,9 @@ desc5 <- casen %>%
             "Desviacion estandar" = sd(nvl_educ_padres),
             "Varianza" = var(nvl_educ_padres),
             "Moda" = moda(casen$nvl_educ_padres))
+
+frq(casen$nvl_educ_padres)
+
 
 tabla5 <- kableExtra::kbl(desc5, escape=F, full_width = F, caption = "Tabla 5: Estadísticos descriptivos Maximo nivel educacional alcanzado padres (promedio)")  %>%
   kable_paper("hover") %>%
@@ -321,6 +333,9 @@ tabla5.1 <- desc5.1 %>%
 
 tabla5.1
 
+
+frq(casen$nvl_educ_padres)
+frq(casen$nvl_educ_padres_label)
 ```
 
 e\) Escala conectividad
@@ -346,6 +361,8 @@ tabla6 <- kableExtra::kbl(desc6, escape=F, full_width = F, caption = "Tabla 6: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla6
+
+frq(casen$conectividad)
 ```
 
 e\) Comuna (cluster)

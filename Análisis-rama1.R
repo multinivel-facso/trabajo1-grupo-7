@@ -25,9 +25,7 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 
 load("casen.Rdata") #cargamos base de datos
 
-names(casen)
-
-#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 #Analisis descriptivo
 
 #funcion para ver la moda
@@ -316,29 +314,6 @@ tabla7.1 <- kableExtra::kbl(desc7, escape = FALSE, full_width = FALSE,
 tabla7.1
 
   
-#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-
-# Modelo nulo (sin predictores de nivel 1)
-reg_mlm0 <- lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
-
-# Modelo con predictores de nivel 1
-reg_mlm1 <- lmer(nvl_educ ~ 1 + dificultad_conc + pueblo_indigena + (1 | comuna), data = casen)
-
-# Guardar las predicciones del modelo con efectos aleatorios por comuna
-casen$pred_mlm1 <- predict(reg_mlm1)
-
-# Graficar relación entre dificultad para concentrarse y nivel educativo predicho, por comuna
-casen %>%
-  ggplot(aes(x = dificultad_conc, y = pred_mlm1, color = as.factor(comuna), group = comuna)) +
-  geom_smooth(se = FALSE, method = "lm") +
-  labs(
-    title = "Relación entre dificultad para concentrarse y nivel educativo por comuna",
-    x = "Dificultad para concentrarse",
-    y = "Nivel educacional predicho",
-    color = "Comuna"
-  ) +
-  theme_minimal() +
-  theme(legend.position = "corner")  # Oculta la leyenda para no saturar el gráfico
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
