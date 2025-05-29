@@ -407,6 +407,32 @@ reghelper::ICC(modelo_nulo)
 
 # Comparación y construcción de modelos
 
+### Comparación de regresiones en modelo individual y grupal
+
+Se generó una base de datos agregada/colapsada agrupando las variables por la variable cluster: comuna. Esta base se construyó colapsando las variables por el promedio.
+
+Se puede observar que la variable de nivel 1 "pueblo_indigena" pierde su significación estadística dentro del modelo 2, y la segunda variable de nivel 1 "dificultad_conc" disminuye a más de la mitad, además de aumentar el error estándar. En el caso de las variables de nivel 2, "mean_educ_padres" disminuye poco más de 0.1 puntos en el modelo 2, y su error estándar se eleva casi a la mitad. Por otro lado, la variable "mean_conectividad" aumenta al pasar al modelo agregado.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Crear modelo con datos individuales
+reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
+            dificultad_conc, data = casen)
+
+# Crear base de datos colapsada
+agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+
+# Crear modelo con datos agregados
+reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
+               dificultad_conc, data=agg_casen)
+
+
+# Tabla para comparar
+stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Individual","Agregado"), type ='text')
+
+
+
+```
+
 ### Modelo 1 con predictores de nivel 1
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
@@ -434,6 +460,14 @@ screenreg(results_3)
 
 En base a estos resultados es posible ver que los resultados del modelo multinivel (Modelo 3) se asemejan más a los datos del modelo individual (Modelo 1). Esto puede deberse a que los datos de nivel 2 creados ya representaban de buena forma el nivel al que pertenecían, aunque debería haber una indagación mayor al por qué ocurre esto.
 
+Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.
+
+Sobre la variable de pertenencia a pueblos indígenas, también encontramos evidencia a favor de nuestra hipótesis nula, ya que, al ser dummy, se puede afirmar que el hecho de ser indígena hace que el nivel educacional máximo alcanzado disminuya en 0.32 puntos con un 99.9% de confianza.
+
+Dentro del impacto negativo, es la dificultad para concentrarse la que tiene el mayor impacto, ya que con un p-value menor a 0.001 podemos afirmar que por cada punto que aumenta, el nivel educacional máximo alcanzado disminuye en 0.75 puntos, rechazando así la hipótesis nula de no asociación.
+
+Finalmente, la conectividad tiene un impacto positivo en nuestra variable dependiente. Es posible rechazar la hipótesis nula con una probabilidad de error menor a 0.001 y encontrar evidencia a favor de nuestra hipótesis alternativa. Por cada punto que sube el promedio de conectividad por comuna, el nivel educacional máximo alcanzado por la persona encuestada aumenta en 0.22 puntos.
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
 
@@ -446,11 +480,8 @@ screenreg(list(reg_ind, reg_agg, results_3))
 ```
 
 ```         
+{r echo=FALSE, message=FALSE, warning=FALSE}
 ```
-
-# Conclusiones
-
-Aqui redactamos algunas conclusiones, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
 
 # Biliografía
 
