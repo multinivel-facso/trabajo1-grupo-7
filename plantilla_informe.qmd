@@ -99,7 +99,7 @@ options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
 ```
 
-```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos1, echo=FALSE, warning=FALSE, message=FALSE}
 load("casen.Rdata") #cargamos base de datos
 
 moda <- function(x) {
@@ -116,9 +116,8 @@ La variable nivel educacional máximo alcanzado por la persona encuestada es una
 
 Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
 
-```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
-  
-desc1 <- casen %>% 
+```{r datos2, echo=FALSE, warning=FALSE, message=FALSE}
+desc1 <- casen %>% ungroup() %>%
   summarise("Media" = mean(nvl_educ),
             "Mediana" = median(nvl_educ),
             "Cuartil 1" = quantile(nvl_educ, probs = .25),
@@ -134,7 +133,9 @@ tabla1 <- kableExtra::kbl(desc1, escape=T, full_width = F, caption = "Tabla 1: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla1
+```
 
+```{r datos3, echo=FALSE, warning=FALSE, message=FALSE}
 casen <- casen %>%
   mutate(nvl_educ_label = case_when(
     nvl_educ == 0 ~ "Sin educación",
@@ -177,9 +178,6 @@ tabla1.2 <- desc1.2 %>%
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla1.2
-
-frq(casen$nvl_educ)
-frq(casen$nvl_educ_label)
 ```
 
 b\) Pertenencia a pueblos indígenas
@@ -188,7 +186,7 @@ La variable pertenencia a pueblos indígenas identifica si la persona se reconoc
 
 En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos4, echo=FALSE, warning=FALSE, message=FALSE}
 desc2 <- casen %>%
   group_by(pueblo_indigena) %>% # agrupamos 
   summarise(n = n()) %>% # contamos por categ de respuesta
@@ -211,8 +209,8 @@ La variable dificultad de concentración mide el grado en que la persona declara
 
 En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-desc3 <- casen %>% 
+```{r datos5, echo=FALSE, warning=FALSE, message=FALSE}
+desc3 <- casen %>% ungroup() %>%
   summarise("Media" = mean(dificultad_conc),
             "Mediana" = median(dificultad_conc),
             "Cuartil 1" = quantile(dificultad_conc, probs = .25),
@@ -221,8 +219,6 @@ desc3 <- casen %>%
             "Desviacion estandar" = sd(dificultad_conc),
             "Varianza" = var(dificultad_conc),
             "Moda" = moda(casen$dificultad_conc))
-
-frq(casen$dificultad_conc)
 
 tabla3 <- kableExtra::kbl(desc3, escape=F, full_width = F, caption = "Tabla 3: Estadísticos descriptivos de Dificultad de concentración")  %>%
   kable_paper("hover") %>%
@@ -235,7 +231,7 @@ tabla3
 library(dplyr)
 library(gt)
 
-tabla_apa_gt <- casen %>%
+tabla_apa_gt <- casen %>% ungroup() %>%
   dplyr::count(dificultad_conc) %>%
   dplyr::mutate(
     Porcentaje = round(n / sum(n) * 100, 2)
@@ -255,8 +251,6 @@ tabla_apa_gt <- casen %>%
   gt::cols_align(align = "center", columns = gt::everything())
 
 tabla_apa_gt
-
-frq(casen$dificultad_conc) 
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -271,8 +265,8 @@ Los resultados muestran que el nivel educacional de los padres se concentra en t
 
 En términos proporcionales (Tabla 5.1), cerca del 61% de los padres se ubica entre niveles “muy bajo” y “bajo”, mientras que solo un 10% alcanza niveles “medio-alto” o superiores.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-desc5 <- casen %>% 
+```{r datos6, echo=FALSE, warning=FALSE, message=FALSE}
+desc5 <- casen %>% ungroup() %>%
   summarise("Media" = mean(nvl_educ_padres),
             "Mediana" = median(nvl_educ_padres),
             "Cuartil 1" = quantile(nvl_educ_padres, probs = .25),
@@ -281,9 +275,6 @@ desc5 <- casen %>%
             "Desviacion estandar" = sd(nvl_educ_padres),
             "Varianza" = var(nvl_educ_padres),
             "Moda" = moda(casen$nvl_educ_padres))
-
-frq(casen$nvl_educ_padres)
-
 
 tabla5 <- kableExtra::kbl(desc5, escape=F, full_width = F, caption = "Tabla 5: Estadísticos descriptivos Maximo nivel educacional alcanzado padres (promedio)")  %>%
   kable_paper("hover") %>%
@@ -332,10 +323,6 @@ tabla5.1 <- desc5.1 %>%
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla5.1
-
-
-frq(casen$nvl_educ_padres)
-frq(casen$nvl_educ_padres_label)
 ```
 
 e\) Escala conectividad
@@ -344,8 +331,8 @@ Esta variable indica el nivel de acceso a conexión a internet del encuestado, y
 
 Los resultados muestran que el nivel de conectividad es mayoritariamente bajo. La media es de 2,22 y la moda es 1, lo que indica que muchas personas tienen poca o ninguna conexión a internet. El 25% de los casos está en el nivel más bajo (cuartil 1 = 1) en un rango de 0 a 5, y el 75% no supera el nivel 3. Aunque hay casos con alta conectividad (rango hasta 5), son pocos. En general, se observa una distribución desigual, con predominio de bajos niveles de acceso.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-desc6 <- casen %>% 
+```{r datos7, echo=FALSE, warning=FALSE, message=FALSE}
+desc6 <- casen %>% ungroup() %>%
   summarise("Media" = mean(conectividad),
             "Mediana" = median(conectividad),
             "Cuartil 1" = quantile(conectividad, probs = .25),
@@ -361,8 +348,6 @@ tabla6 <- kableExtra::kbl(desc6, escape=F, full_width = F, caption = "Tabla 6: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla6
-
-frq(casen$conectividad)
 ```
 
 e\) Comuna (cluster)
@@ -373,7 +358,7 @@ En esta variable se encuestaron a 335 comunas en total, de las cuales las siguie
 
 En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra. La media de respuestas por comuna es de 154.28, con una desviación estándar de 222.57 respuestas, lo que significa que hay comunas con mucha más representación que otras
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos8, echo=FALSE, warning=FALSE, message=FALSE}
 
 casen <- casen %>%
   mutate(comuna_label = as_factor(comuna))
@@ -385,7 +370,7 @@ comuna_freq <- casen %>%
 
 
 # Calcular frecuencias y ordenar
-freq_comunas <- casen %>%
+freq_comunas <- casen %>% ungroup() %>%
   count(comuna_label, sort = FALSE)
 
 top_25 <- freq_comunas %>%
@@ -426,7 +411,7 @@ tabla7.1
 
 Se calculó la correlación intraclase para la variable dependiente nvl_educ, resultando en un 14% aproximadamente. Esto quiere decir que un 14% de la varianza de nuestra variable dependiente corresponde a unidades de nivel 2.
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos9, echo=FALSE, warning=FALSE, message=FALSE}
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 
 screenreg(modelo_nulo)
@@ -442,7 +427,7 @@ Se generó una base de datos agregada/colapsada agrupando las variables por la v
 
 Se puede observar que la variable de nivel 1 "pueblo_indigena" pierde su significación estadística dentro del modelo 2, y la segunda variable de nivel 1 "dificultad_conc" disminuye a más de la mitad, además de aumentar el error estándar. En el caso de las variables de nivel 2, "mean_educ_padres" disminuye poco más de 0.1 puntos en el modelo 2, y su error estándar se eleva casi a la mitad. Por otro lado, la variable "mean_conectividad" aumenta al pasar al modelo agregado.
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos10, echo=FALSE, warning=FALSE, message=FALSE}
 # Crear modelo con datos individuales
 reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
             dificultad_conc, data = casen)
@@ -464,14 +449,14 @@ stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Indivi
 
 ### Modelo 1 con predictores de nivel 1
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos11, echo=FALSE, warning=FALSE, message=FALSE}
 results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
 screenreg(results_1, naive=TRUE)
 ```
 
 ### Modelo 2 con predictores de nivel 2
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos12, echo=FALSE, warning=FALSE, message=FALSE}
 results_2 = lmer(nvl_educ ~ 1 + mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
 screenreg(results_2)
 
@@ -479,7 +464,7 @@ screenreg(results_2)
 
 ### Modelo 3 con predictores de nivel 1 y 2
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos13, echo=FALSE, warning=FALSE, message=FALSE}
 results_3 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
                    mean_educ_padres + (1 | comuna), data = casen)
 screenreg(results_3)
@@ -497,7 +482,7 @@ Dentro del impacto negativo, es la dificultad para concentrarse la que tiene el 
 
 Finalmente, la conectividad tiene un impacto positivo en nuestra variable dependiente. Es posible rechazar la hipótesis nula con una probabilidad de error menor a 0.001 y encontrar evidencia a favor de nuestra hipótesis alternativa. Por cada punto que sube el promedio de conectividad por comuna, el nivel educacional máximo alcanzado por la persona encuestada aumenta en 0.22 puntos.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r datos14, echo=FALSE, message=FALSE, warning=FALSE}
 reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
 
 reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + 
@@ -510,8 +495,6 @@ screenreg(list(reg_ind, reg_agg, results_3))
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ```
-
-### Efectos aleatorios:
 
 # Biliografía
 
