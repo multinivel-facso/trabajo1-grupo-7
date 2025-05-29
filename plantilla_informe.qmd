@@ -494,6 +494,8 @@ screenreg(list(reg_ind, reg_agg, results_3))
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ```
 
+### Efectos aleatorios:
+
 # Biliografía
 
 -   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
