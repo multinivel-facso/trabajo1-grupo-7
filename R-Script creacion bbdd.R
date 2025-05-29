@@ -158,8 +158,21 @@ reghelper::ICC(results_0)
 
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-#VI- Guardar base de datos 
+# VI- Creear variables de nvl 2
+
+#1) Promedio nivel educacional de los padres por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_educ_padres = mean(nvl_educ_padres, na.rm = TRUE))
+
+#2) Promedio de conectividad por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
+
+# VII- Guardar base de datos 
 save(casen, file = "~/Desktop/Github/grupo 7 trabajo 1/casen.RData")
+
 
 
 
