@@ -100,18 +100,6 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 ```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
 load("casen.Rdata") #cargamos base de datos
 
-# Creear variables de nvl 2
-
-#1) Promedio nivel educacional de los padres por comuna
-casen = casen %>%  
-  group_by(comuna) %>% 
-  mutate(mean_educ_padres = mean(nvl_educ_padres, na.rm = TRUE))
-
-#2) Promedio de conectividad por comuna
-casen = casen %>%  
-  group_by(comuna) %>% 
-  mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
-
 moda <- function(x) {
   uniq_x <- unique(x)
   uniq_x[which.max(tabulate(match(x, uniq_x)))]
