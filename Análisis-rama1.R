@@ -25,6 +25,8 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 
 load("casen.Rdata") #cargamos base de datos
 
+names(casen)
+
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 #Analisis descriptivo
 
@@ -322,6 +324,7 @@ tabla7.1
 
 modelo_base <- lmer(casen$nvl_educ ~ 1 + (1 | comuna), data = casen)
 
+sjPlot::tab_model((modelo_base))
 # Variables de nivel 1 con efecto aleatorio del intercepto por comuna
 modelo_nivel1 <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + (1 | comuna), data = casen)
 
