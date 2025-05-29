@@ -318,59 +318,6 @@ tabla7.1
   
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-#analisis
-
-# Modelo con intercepto aleatorio por comuna
-
-modelo_base <- lmer(casen$nvl_educ ~ 1 + (1 | comuna), data = casen)
-
-sjPlot::tab_model((modelo_base))
-# Variables de nivel 1 con efecto aleatorio del intercepto por comuna
-modelo_nivel1 <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + (1 | comuna), data = casen)
-
-# Modelo con pendiente aleatoria para conectividad
-modelo_pendiente_aleatoria <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + (1 + conectividad | comuna), data = casen)
-
-# Modelo completo con nivel 1 y 2, pendiente aleatoria de conectividad
-modelo_completo <- lmer(casen$nvl_educ ~ casen$pueblo_indigena + casen$dificultad_conc + casen$conectividad + 
-                          casen$nvl_educ_padres +
-                          (1 + conectividad | comuna), data = casen)
-
-# Ver resumen
-summary(modelo_completo)
-
-# Comparar modelos
-library(texreg)
-screenreg(list(modelo_nivel1, modelo_pendiente_aleatoria, modelo_completo))
-
-sjPlot::tab_model(modelo_completo)
-
-coef(modelo_completo)
-
-casen$modelo_completo <- predict(modelo_completo)
-
-casen %>%  
-  ggplot(aes(ses, mlm1, color = schoolid, group = schoolid)) + 
-  geom_smooth(se = F, method = lm) 
-
-casen %>%
-  ggplot(aes(x = dificultad_conc, y = nvl_educ, color = as.factor(comuna), group = comuna)) +
-  geom_smooth(se = FALSE, method = "lm") +
-  labs(
-    title = "Relación entre dificultad para concentrarse y nivel educativo por comuna",
-    x = "Dificultad para concentrarse",
-    y = "Nivel educacional alcanzado",
-    color = "Comuna"
-  ) +
-  theme_minimal() +
-  theme(legend.position = "none")  # Para ocultar la leyenda si hay muchas comunas
-
-######
-
-library(lme4)
-library(ggplot2)
-library(dplyr)
-
 # Modelo nulo (sin predictores de nivel 1)
 reg_mlm0 <- lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 
