@@ -108,11 +108,13 @@ moda <- function(x) {
 }
 ```
 
-### **Descripción estadisticos:**
+### **Estadísticos descriptivos:**
 
-En la variable máximo nivel educacional alcanzado se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media , por otro lado un 25% de los encuestados llegaron a un nivel de educación básica incompleta. Y solamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
+a\) Nivel educacional máximo alcanzado (dependiente)
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+En la variable máximo nivel educacional alcanzado se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
+
+```{r echo=FALSE, message=FALSE, collapse=TRUE}
   
 desc1 <- casen %>% 
   summarise("Media" = mean(nvl_educ),
@@ -242,10 +244,11 @@ tabla_apa_gt <- casen %>%
 tabla_apa_gt
 ```
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
 ```
 
-promedio maximo nivel educacional padres:
+Promedio maximo nivel educacional padres:
 
 Los resultados muestran que el nivel educacional de los padres se concentra en tramos bajos. La media es de 2,24 y la mediana es 2, lo que indica que la mayoría no supera la enseñanza básica. La moda también es 2, reafirmando esta tendencia. Aunque hay casos con niveles altos (rango hasta 5), estos son poco frecuentes.
 
@@ -312,7 +315,7 @@ tabla5.1
 
 ```
 
-escala conectividad
+Escala conectividad
 
 Los resultados muestran que el nivel de conectividad es mayoritariamente bajo. La media es de 2,22 y la moda es 1, lo que indica que muchas personas tienen poca o ninguna conexión a internet. El 25% de los casos está en el nivel más bajo (cuartil 1 = 1) en un rango de 0 a 5, y el 75% no supera el nivel 3. Aunque hay casos con alta conectividad (rango hasta 5), son pocos. En general, se observa una distribución desigual, con predominio de bajos niveles de acceso.
 
@@ -335,7 +338,7 @@ tabla6 <- kableExtra::kbl(desc6, escape=F, full_width = F, caption = "Tabla 6: E
 tabla6
 ```
 
-comuna:
+Comuna:
 
 En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron, por lo que nuestro N real es 324 comunas encuestadas.
 
@@ -390,55 +393,59 @@ tabla7.1
 
 ```
 
-En la @tbl-sexo podemos ver que la proporción de mujeres que responde la encuesta corresponde a `r pm`%, mientras que la propoción de hombres corresponde a `r ph`%.
+# **Correlación intraclase (ICC)**
 
-```{r tbl-sexo, echo=FALSE, warning=FALSE, message=FALSE}
-#| label: tbl-sexo
-#| tbl-cap: "Distribución de sexo"
-#| tbl-cap-location: top
-#| warning: false
-tabla1
-```
-
-# Análisis
-
-Aqui ponemos el análisis, de acuerdo con la [pauta](https://correlacional.netlify.app/trabajos).
-
-En nuestro ejemplo, analizaremos la correlación entre algunas variables.
+Se calculó la correlación intraclase para la variable dependiente nvl_educ, resultando en un 14% aproximadamente. Esto quiere decir que un 14% de la varianza de nuestra variable dependiente corresponde a unidades de nivel 2.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-cor_edad_dep <- cor(data$edad, data$sint_depresivos)
-cor_nedu_dep <- cor(data$nedu, data$sint_depresivos)
-cor_nedu_edad <- cor(data$nedu, data$edad)
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+screenreg(modelo_nulo)
+
+reghelper::ICC(modelo_nulo)
 ```
+
+# Comparación y construcción de modelos
+
+### Modelo 1 con predictores de nivel 1
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+screenreg(results_1, naive=TRUE)
+```
+
+### Modelo 2 con predictores de nivel 2
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-g1 <- data %>% 
-  group_by(nedu) %>% 
-  summarise(sint_dep = mean(sint_depresivos, na.rm = T),
-            edad=mean(edad, na.rm = T))
-
-grafico1 <- ggplot(data = g1,
-       mapping = aes(x = sint_dep, y = edad, label = nedu)) +
-  geom_point() +
-  geom_smooth(method = "lm",colour = "black",fill="lightblue",size=0.5) + 
-  labs(x = "Sintomatología depresiva",
-       y = "Edad",
-       caption = "Fuente: Elaboración propia en base a ELSOC 2026") +
-  theme_bw()
+results_2 = lmer(nvl_educ ~ 1 + mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_2)
 
 ```
 
-En la @fig-cor_edad_dep es posible apreciar... La correlación entre la edad y el promedio de la sintomatología depresiva corresponde a `r cor_edad_dep`.
+### Modelo 3 con predictores de nivel 1 y 2
 
-```{r fig-cor_edad_dep, echo=FALSE}
-#| label: fig-cor_edad_dep
-#| fig-cap: "Correlación entre edad y sintomatología depresiva"
-#| warning: false
-#| message: false
-#| fig-align: center
-#| out-width: 80%
-grafico1
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+results_3 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
+                   mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_3)
+```
+
+### Comparación de regresiones a nivel individual, agregado y multinivel
+
+En base a estos resultados es posible ver que los resultados del modelo multinivel (Modelo 3) se asemejan más a los datos del modelo individual (Modelo 1). Esto puede deberse a que los datos de nivel 2 creados ya representaban de buena forma el nivel al que pertenecían, aunque debería haber una indagación mayor al por qué ocurre esto.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
+
+reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + 
+mean_conectividad + mean_educ_padres, data=agg_casen)
+
+screenreg(list(reg_ind, reg_agg, results_3)) 
+
+
+```
+
+```         
 ```
 
 # Conclusiones
