@@ -412,28 +412,59 @@ reghelper::ICC(modelo_nulo)
 # COMPARACIÓN: REGRESIONES INDIVIDUAL, AGREGADA Y MULTINIVEL
 #-------------------------------
 
-# 1. REGRESIÓN INDIVIDUAL
-reg_ind <- lm(nvl_educ ~ pueblo_indigena + dificultad_conc, data = casen)
+# Creear variables de nvl 2
 
-# 2. CREAR BASE AGREGADA POR COMUNA
-agg_casen <- casen %>%
-  group_by(comuna) %>%
-  summarise(
-    prom_nvl_educ = mean(nvl_educ, na.rm = TRUE),
-    prom_pueblo_indigena = mean(pueblo_indigena, na.rm = TRUE),
-    prom_dificultad_conc = mean(dificultad_conc, na.rm = TRUE),
-    prom_nvl_educ_padres = mean(nvl_educ_padres, na.rm = TRUE)
-  )
+#1) Promedio nivel educacional de los padres por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_educ_padres = mean(nvl_educ_padres, na.rm = TRUE))
 
-# 3. REGRESIÓN AGREGADA (por comuna)
-reg_agg <- lm(prom_nvl_educ ~ prom_pueblo_indigena + prom_dificultad_conc, data = agg_casen)
+#2) Promedio de conectividad por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
 
-# 4. MODELO MULTINIVEL (nivel 1)
-modelo_multinivel <- lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Crear modelo con datos individuales
+reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
+            dificultad_conc, data = casen)
 
-# 5. COMPARACIÓN DE MODELOS
-screenreg(list(reg_ind, reg_agg, modelo_multinivel),
-          custom.model.names = c("Individual", "Agregado", "Multinivel"))
+# Crear base de datos colapsada
+agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+
+# Crear modelo con datos agregados
+reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
+               dificultad_conc, data=agg_casen)
+
+# Comparación de modelos
+stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Individual","Agregado"), type ='text')
+
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Comparar modelos
+
+# Modelo 1 con predictores de nivel 1
+results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+screenreg(results_1, naive=TRUE)
+
+# Modelo 2 con predictores de nivel 2
+results_2 = lmer(nvl_educ ~ 1 + mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_2)
+
+# Modelo 3 con predictores de nivel 1 y 2
+results_3 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
+                   mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_3)
+
+
+# Comparación regresión nivel agregado, individual y multinivel
+reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
+
+reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=agg_casen)
+
+
+screenreg(list(reg_ind, reg_agg, results_3))     
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 
 
