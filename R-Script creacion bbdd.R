@@ -40,7 +40,7 @@ casen2022_full <- merge(casen2022,
                         all.x = TRUE)
 
 rec_casen <- casen2022_full %>% 
-  filter(edad >= 20) %>% select(educ, r3, h7d, r12a, r12b,
+  filter(edad >= 20) %>% select(educ, r3, h7d, area, r12a, r12b,
          r17a, r17b, r17c, r17d, r17e, comuna)
 
 # Filtramos por personas con 20 años o más, ya que a 
@@ -77,7 +77,13 @@ rec_casen <- rec_casen %>%
     h7d == 3 ~ 2,
     h7d == 4 ~ 3))
 
-# 4) Nivel educacional de los padres (1-5)
+# 4) Area urbana o rural (1=urbana, 0=rural)
+rec_casen <- rec_casen %>%
+  mutate(area = case_when(
+    area == 1 ~ 1,
+    area == 2 ~ 0))
+
+# 5) Nivel educacional de los padres (1-5)
 # a) Nivel educacional madre
 rec_casen <- rec_casen %>%
   mutate(educ_madre = case_when(
@@ -101,7 +107,7 @@ rec_casen <- rec_casen %>%
   mutate(nvl_educ_padres = rowMeans(
     select(., educ_padre, educ_madre)))
 
-# 5) Índice de conectividad
+# 6) Índice de conectividad
 # a) Recodificar variables
 rec_casen <- rec_casen %>%
   mutate(r17a = case_when(
@@ -141,7 +147,7 @@ colSums(is.na(rec_casen))
 rec_casen <- na.omit(rec_casen) # 51.686 obs.
 
 casen <- rec_casen %>% select(nvl_educ, pueblo_indigena, dificultad_conc,
-                              nvl_educ_padres, conectividad, comuna)
+                              area, nvl_educ_padres, conectividad, comuna)
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 # V- Correlación Intra Clase (ICC) y modelo nulo
@@ -152,9 +158,21 @@ reghelper::ICC(results_0)
 
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-#VI- Guardar base de datos 
+# VI- Creear variables de nvl 2
+
+#1) Promedio nivel educacional de los padres por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_educ_padres = mean(nvl_educ_padres, na.rm = TRUE))
+
+#2) Promedio de conectividad por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
+
+# VII- Guardar base de datos 
 save(casen, file = "~/Desktop/Github/grupo 7 trabajo 1/casen.RData")
- 
+
 
 
 

@@ -25,7 +25,7 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 
 load("casen.Rdata") #cargamos base de datos
 
-#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 #Analisis descriptivo
 
 #funcion para ver la moda
@@ -34,7 +34,7 @@ moda <- function(x) {
   uniq_x[which.max(tabulate(match(x, uniq_x)))]
 }
 
-#Vaiables: (nvl_educ, pueblo_indigena, dificultad_conc, area, nvl_educ_padres, conectividad, ypchautcor)
+#Vaiables: nvl_educ, pueblo_indigena, dificultad_conc, area, nvl_educ_padres, conectividad, ypchautcor
 
 #variable dependiente --> nivel educacional
 
@@ -54,6 +54,49 @@ tabla1 <- kableExtra::kbl(desc1, escape=F, full_width = F, caption = "Tabla 1: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla1
+
+casen <- casen %>%
+  mutate(nvl_educ_label = case_when(
+    nvl_educ == 0 ~ "Sin educación",
+    nvl_educ == 1 ~ "Básica incompleta",
+    nvl_educ == 2 ~ "Básica completa",
+    nvl_educ == 3 ~ "Media incompleta",
+    nvl_educ == 4 ~ "Media completa",
+    nvl_educ == 5 ~ "Superior incompleta",
+    nvl_educ == 6 ~ "Superior completa",
+    nvl_educ == 7 ~ "Postgrado incompleta",
+    nvl_educ == 8 ~ "Postgrado completa",
+    FALSE ~ "Otro / No especificado"
+  ))
+
+casen <- casen %>%
+  mutate(nvl_educ_label = factor(nvl_educ_label,
+                                 levels = c(
+                                   "Sin educación",
+                                   "Básica incompleta",
+                                   "Básica completa",
+                                   "Media incompleta",
+                                   "Media completa",
+                                   "Superior incompleta",
+                                   "Superior completa",
+                                   "Postgrado incompleta",
+                                   "Postgrado completa"
+                                 )))
+
+desc1.2 <- casen %>%
+  group_by(nvl_educ_label) %>%
+  summarise(n = n()) %>%
+  mutate(prop = round((n / sum(n)) * 100, 2))
+
+tabla1.2 <- desc1.2 %>% 
+  kableExtra::kable(format = "html",
+                    align = "c",
+                    col.names = c("Nivel máximo alcanzado", "n", "Proporción (%)"),
+                    caption = "Tabla 1.2: Nivel máximo alcanzado") %>% 
+  kableExtra::kable_classic(full_width = FALSE, position = "center", font_size = 14) %>% 
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla1.2
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 #variables independientes nivel 1 
@@ -138,6 +181,7 @@ tabla4 <- desc4 %>%
 
 tabla4
 
+
 #Maximo nivel educacional padres (promedio)
 desc5 <- casen %>% 
   summarise("Media" = mean(nvl_educ_padres),
@@ -155,6 +199,50 @@ tabla5 <- kableExtra::kbl(desc5, escape=F, full_width = F, caption = "Tabla 5: E
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
 tabla5
+
+frq(casen$nvl_educ_padres)
+
+casen <- casen %>%
+  mutate(nvl_educ_padres_label = case_when(
+    nvl_educ_padres == 1.00 ~ "Nivel muy bajo",
+    nvl_educ_padres == 1.50 ~ "Nivel bajo-muy bajo",
+    nvl_educ_padres == 2.00 ~ "Nivel bajo",
+    nvl_educ_padres == 2.50 ~ "Nivel medio-bajo",
+    nvl_educ_padres == 3.00 ~ "Nivel medio",
+    nvl_educ_padres == 3.50 ~ "Nivel medio-alto",
+    nvl_educ_padres == 4.00 ~ "Nivel alto",
+    nvl_educ_padres == 4.50 ~ "Nivel alto-muy alto",
+    nvl_educ_padres == 5.00 ~ "Nivel muy alto"))
+
+casen <- casen %>%
+  mutate(nvl_educ_padres_label = factor(nvl_educ_padres_label,
+                                        levels = c(
+                                          "Nivel muy bajo",
+                                          "Nivel bajo-muy bajo",
+                                          "Nivel bajo",
+                                          "Nivel medio-bajo",
+                                          "Nivel medio",
+                                          "Nivel medio-alto",
+                                          "Nivel alto",
+                                          "Nivel alto-muy alto",
+                                          "Nivel muy alto"
+                                        )))
+
+desc5.1 <- casen %>%
+  group_by(nvl_educ_padres_label) %>%
+  summarise(n = n()) %>%
+  mutate(prop = round((n / sum(n)) * 100, 2))
+
+tabla5.1 <- desc5.1 %>% 
+  kableExtra::kable(format = "html",
+                    align = "c",
+                    col.names = c("Nivel educacional", "n", "Proporción (%)"),
+                    caption = "Tabla 5.1: Nivel educacional máximo alcanzado por los padres") %>% 
+  kableExtra::kable_classic(full_width = FALSE, position = "center", font_size = 14) %>% 
+  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
+
+tabla5.1
+
 
 #escala conectividad
 desc6 <- casen %>% 
@@ -175,28 +263,133 @@ tabla6 <- kableExtra::kbl(desc6, escape=F, full_width = F, caption = "Tabla 6: E
 tabla6
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-#variable de anidación
+#variable de anidación : comuna
 
-#Ingreso autónomo per cápita del hogar corregido
-summary(casen$ypchautcor)
+# Paso 1: Agrupar por comuna y contar
+casen <- casen %>%
+  mutate(comuna_label = as_factor(comuna))
 
-desc7 <- casen %>% 
-  summarise("Media" = mean(ypchautcor),
-            "Mediana" = median(ypchautcor),
-            "Cuartil 1" = quantile(ypchautcor, probs = .25),
-            "Cuartil 3" = quantile(ypchautcor, probs = .75),
-            "Rango" = max(ypchautcor) - min(ypchautcor),
-            "Desviacion estandar" = sd(ypchautcor),
-            "Varianza" = var(ypchautcor),
-            "Moda" = moda(casen$ypchautcor))
+comuna_freq <- casen %>%
+  count(comuna_label) %>%
+  mutate(porcentaje = n / sum(n) * 100)
 
-tabla7 <- kableExtra::kbl(desc7, escape=F, full_width = F, caption = "Tabla 6: Estadísticos descriptivos Ingreso autónomo per cápita del hogar corregido")  %>%
-  kable_paper("hover") %>%
-  kableExtra::kable_classic(full_width = F, font_size = 14) %>% kable_minimal() %>%
+
+frq(casen$comuna_label)
+
+
+# Calcular frecuencias y ordenar
+freq_comunas <- casen %>%
+  count(comuna_label, sort = TRUE)
+
+top_25 <- freq_comunas %>%
+  slice_max(n, n = 25)
+
+ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(title = "Tabla 7: Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
+  theme_minimal()
+
+comuna_freq <- casen %>%
+  group_by(comuna) %>%
+  summarise(frecuencia = n())
+
+desc7 <- comuna_freq %>% 
+  summarise(
+    Media = mean(frecuencia),
+    Mediana = median(frecuencia),
+    `Cuartil 1` = quantile(frecuencia, probs = .25),
+    `Cuartil 3` = quantile(frecuencia, probs = .75),
+    Rango = max(frecuencia) - min(frecuencia),
+    `Desviación estándar` = sd(frecuencia),
+    Varianza = var(frecuencia),
+    Moda = moda(frecuencia)  # asegúrate de tener la función `moda()` definida
+  )
+
+tabla7.1 <- kableExtra::kbl(desc7, escape = FALSE, full_width = FALSE,
+                            caption = "Tabla 7.1: Estadísticos descriptivos de la frecuencia de comunas") %>%
+  kableExtra::kable_classic(full_width = FALSE, font_size = 14) %>%
   kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
 
-tabla7
+tabla7.1
+
+  
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+# Estimación correlación intraclase (ICC) -------------------------------------
+
+# Modelo nulo (sin predictores), solo el intercepto aleatorio por comuna
+modelo_nulo <- lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+# Resumen del modelo
+summary(modelo_nulo)
+
+# Visualización con texreg
+screenreg(modelo_nulo)  # requiere library(texreg)
+
+# Cálculo del ICC
+reghelper::ICC(modelo_nulo)
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
+#-------------------------------
+# COMPARACIÓN: REGRESIONES INDIVIDUAL, AGREGADA Y MULTINIVEL
+#-------------------------------
+
+# Creear variables de nvl 2
+
+#1) Promedio nivel educacional de los padres por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_educ_padres = mean(nvl_educ_padres, na.rm = TRUE))
+
+#2) Promedio de conectividad por comuna
+casen = casen %>%  
+  group_by(comuna) %>% 
+  mutate(mean_conectividad = mean(conectividad, na.rm = TRUE))
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Crear modelo con datos individuales
+reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
+            dificultad_conc, data = casen)
+
+# Crear base de datos colapsada
+agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+
+# Crear modelo con datos agregados
+reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
+               dificultad_conc, data=agg_casen)
+
+# Comparación de modelos
+stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Individual","Agregado"), type ='text')
+
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+# Comparar modelos
+
+# Modelo 1 con predictores de nivel 1
+results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+screenreg(results_1, naive=TRUE)
+
+# Modelo 2 con predictores de nivel 2
+results_2 = lmer(nvl_educ ~ 1 + mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_2)
+
+# Modelo 3 con predictores de nivel 1 y 2
+results_3 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
+                   mean_educ_padres + (1 | comuna), data = casen)
+screenreg(results_3)
+
+
+# Comparación regresión nivel agregado, individual y multinivel
+reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
+
+reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=agg_casen)
+
+
+screenreg(list(reg_ind, reg_agg, results_3))     
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
 
 

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Equipo docente">
+<meta name="author" content="Matilda Raccagni, Rodrigo Huerta">
 
-<title>Título del trabajo grupal</title>
+<title>Incidencia en el nivel educacional máximo alcanzado de adultos chilenos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,8 +49,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Título del trabajo grupal</h1>
-<p class="subtitle lead">Estadística Correlacional 2023</p>
+<h1 class="title">Incidencia en el nivel educacional máximo alcanzado de adultos chilenos</h1>
+<p class="subtitle lead">Análisis de datos Multinivel</p>
 </div>
 
 
@@ -60,14 +60,14 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Autor/a</div>
     <div class="quarto-title-meta-contents">
-             <p>Equipo docente </p>
+             <p>Matilda Raccagni, Rodrigo Huerta </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">7 de noviembre de 2023</p>
+      <p class="date">28 de mayo de 2025</p>
     </div>
   </div>
   
@@ -77,107 +77,1188 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>En esta investigación se ahondaran en los factores que inciden en el nivel educacional máximo alcanzado por personas con 20 años o más residentes en 324 comunas de Chile. Se trabajara con un N general de 51.686 casos. Se busca ahondar en la influencia que tienen las siguientes variables: si pertenece a un pueblo indígena; nivel educacional de los padres; conectividad a internet; y dificultad para concentrarse y poner atención. La relevancia de esta investigación radica en que la educación es uno de los pilares fundamentales de las sociedades modernas, tanto en los procesos de socialización como culturales. Existen diversos factores que pueden incidir en alcanzar o no un nivel determinado de educación, como pueden ser los ya nombrados o el nivel de ingresos, el sexo, la orientación sexual o la edad. Se buscará realizar un modelo multinivel donde trabajaremos con variables de nivel 1 y de nivel 2 para ver su incidencia en nuestra variable dependiente.</p>
+</section>
 <section id="introducción" class="level1">
 <h1>Introducción</h1>
-<p>Aqui ponemos la introducción, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-<p>En este ejemplo daremos una mirada a la salud mental, y exploraremos posibles asociaciones con la edad, sexo y nivel educacional.</p>
+<p>La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu &amp; Passeron, 1990).</p>
+<p>Diversos estudios han demostrado que el nivel educativo de los padres constituye un predictor sólido del rendimiento académico y de las trayectorias escolares de sus hijos. Mejía y Mejía (2023) sostienen que los hijos de padres con mayor nivel de instrucción (capital cultural) tienden a alcanzar logros educativos más altos, en parte por el capital cultural que se transmite en el hogar y por el acompañamiento en el proceso educativo. Este fenómeno ha sido ampliamente documentado en donde el capital familiar actúa como una ventaja comparativa.</p>
+<p>Otro eje de desigualdad significativa es la pertenencia a pueblos indígenas. En su análisis sobre el acceso y permanencia de estudiantes indígenas en la educación superior, López y Escobar (2008) destacan las múltiples barreras—lingüísticas, económicas y culturales—que enfrentan estos estudiantes. Además, señalan que la discriminación estructural reduce las expectativas de éxito escolar y limita la movilidad educativa de esta población. Esta situación historica que requieren una atención particular.</p>
+<p>La conectividad digital ha adquirido una relevancia especial en los últimos años, particularmente a raíz de la pandemia de COVID-19. Rodríguez et al.&nbsp;(2021) muestran cómo la falta de acceso a dispositivos tecnológicos y a internet de calidad afectó negativamente el proceso formativo de miles de estudiantes. Las brechas digitales se han convertido así en un nuevo eje de desigualdad educativa, afectando especialmente a estudiantes de zonas rurales o de bajos ingresos, quienes vieron restringido su derecho a la educación durante largos periodos.</p>
+<p>En esta línea, también es relevante considerar la <strong>comuna de residencia</strong> como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.</p>
+<p>En el plano individual, factores como la dificultad de concentración también inciden en el rendimiento académico. Jiménez y Fernández (2022) analizan cómo los problemas de concentración afectan negativamente el aprendizaje, y cómo estas dificultades se ven exacerbadas en contextos de pobreza, estrés familiar o ausencia de acompañamiento educativo. Las condiciones del entorno, por tanto, pueden potenciar o mitigar estas dificultades individuales, lo que evidencia la necesidad de un enfoque integral.</p>
+<p>En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.</p>
+<p>Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y “conectividad”, y nuestra variable de anidación serán las “comunas”</p>
+<section id="objetivos" class="level3">
+<h3 class="anchored" data-anchor-id="objetivos"><strong>Objetivos:</strong></h3>
+<p>Analizar el efecto de factores individuales (variables de nivel 1) y contextuales (variables de nivel 2 y de anidación) sobre el nivel educativo máximo alcanzado por las personas en Chile, utilizando modelos estadísticos que consideren la estructura anidada de los datos a nivel de comuna.</p>
+</section>
+<section id="objetivos-especificos" class="level3">
+<h3 class="anchored" data-anchor-id="objetivos-especificos"><strong>Objetivos Especificos:</strong></h3>
+<p>1) Cuantificar la variación del intercepto del nivel educativo máximo entre comunas mediante la estimación de efectos aleatorios.</p>
+<p>2) Examinar si el efecto del nivel educacional promedio de los padres en la comuna sobre el nivel educativo máximo alcanzado por los individuos varía según la comuna de residencia, considerando la comuna como una variable de nivel contextual que modera dicha relación en un modelo multinivel.</p>
+</section>
+<section id="hipotesis-nivel-1" class="level3">
+<h3 class="anchored" data-anchor-id="hipotesis-nivel-1"><strong>Hipotesis</strong> Nivel 1:</h3>
+<section id="pertenencia-a-pueblos-originarios" class="level4">
+<h4 class="anchored" data-anchor-id="pertenencia-a-pueblos-originarios"><strong>Pertenencia a pueblos originarios</strong></h4>
+<ul>
+<li><p><strong>H₀:</strong> β1=0\beta_1 = 0β1​=0 → La pertenencia a pueblos originarios no se asocia significativamente con el nivel educacional máximo alcanzado.</p></li>
+<li><p><strong>H₁:</strong> β1&lt;0\beta_1 &lt; 0β1​&lt;0 → La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.</p></li>
+</ul>
+<p><strong>Dificultad para concentrarse</strong></p>
+<ul>
+<li><p><strong>H₀:</strong> β2=0\beta_2 = 0β2​=0 → La dificultad para concentrarse no tiene efecto significativo sobre el nivel educacional máximo.</p></li>
+<li><p><strong>H₁:</strong> β2&lt;0\beta_2 &lt; 0β2​&lt;0 → La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo.</p></li>
+</ul>
+</section>
+</section>
+<section id="hipotesis-nivel-2" class="level3">
+<h3 class="anchored" data-anchor-id="hipotesis-nivel-2"><strong>Hipotesis</strong> Nivel 2:</h3>
+<section id="conectividad-digital" class="level4">
+<h4 class="anchored" data-anchor-id="conectividad-digital"><strong>Conectividad digital</strong></h4>
+<ul>
+<li><p><strong>H₀:</strong> β3=0\beta_3 = 0β3​=0 → La conectividad digital no se asocia significativamente con el nivel educacional máximo.</p></li>
+<li><p><strong>H₁:</strong> β3&gt;0\beta_3 &gt; 0β3​&gt;0 → Una mayor conectividad digital se asocia con un mayor nivel educacional máximo.</p></li>
+</ul>
+</section>
+<section id="promedio-del-nivel-educacional-de-los-padres-en-la-comuna" class="level4">
+<h4 class="anchored" data-anchor-id="promedio-del-nivel-educacional-de-los-padres-en-la-comuna"><strong>Promedio del nivel educacional de los padres en la comuna</strong></h4>
+<ul>
+<li><p><strong>H₀:</strong> γ01=0\gamma_{01} = 0γ01​=0 → El promedio educacional de los padres en la comuna no influye significativamente en el nivel educacional de los individuos.</p></li>
+<li><p><strong>H₁:</strong> γ01&gt;0\gamma_{01} &gt; 0γ01​&gt;0 → Un mayor promedio educacional de los padres en la comuna se asocia con un mayor nivel educacional de los individuos.</p></li>
+</ul>
+</section>
+<section id="varianza-comunal" class="level4">
+<h4 class="anchored" data-anchor-id="varianza-comunal"><strong>Varianza comunal</strong></h4>
+<ul>
+<li><p><strong>H₀:</strong> τ00=0\tau_{00} = 0τ00​=0 → No existe variación significativa en el nivel educacional máximo entre comunas.</p></li>
+<li><p><strong>H₁:</strong> τ00&gt;0\tau_{00} &gt; 0τ00​&gt;0 → Existe variación significativa entre comunas en el nivel educacional máximo.<br>
+</p></li>
+</ul>
+</section>
+</section>
 </section>
 <section id="variables" class="level1">
 <h1>Variables</h1>
-<p>Aqui ponemos las variables, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-<p>Podemos cargar las librerías sin que aparezca en nuestro informe, señalando la especificación al chunk <code>echo=FALSE</code>.</p>
-<p>Esto lo podemos repetir para la carga de la base de datos y el procesamiento de los datos.</p>
-<p>A continuación, en nuestro ejemplo describiremos las variables necesarias para responder a nuestro objetivo.</p>
-<section id="descripción-de-variables" class="level2">
-<h2 class="anchored" data-anchor-id="descripción-de-variables">Descripción de variables</h2>
-<p>En este ejemplo, se seleccionaron las variables:</p>
-<ul>
-<li>sexo: sexo del encuestado, con nivel de medición nominal</li>
-<li>edad: edad del encuestado, con nivel de medición intervalar</li>
-<li>nedu: nivel educativo del encuestado, con nivel de medición ordinal</li>
-</ul>
-<p>Y las variables del módulo de Salud y Bienestar, referentes a <em>Estado de ánimo: sintomatología depresiva</em>, con nivel de medición ordinal, los ítems son los siguientes:</p>
-<ul>
-<li>Frecuencia: Poco interés o alegría</li>
-<li>Frecuencia: Decaimiento, pesadez o desesperanza</li>
-<li>Frecuencia: Dificultad para dormir o exceso de sueño</li>
-<li>Frecuencia: Cansancio o sensación de falta de energía</li>
-<li>Frecuencia: Apetito disminuido o aumentado</li>
-<li>Frecuencia: Dificultad para concentrarse</li>
-<li>Frecuencia: Mala opinión de sí mismo</li>
-<li>Frecuencia: Enlentecimiento físico</li>
-<li>Frecuencia: Pensamiento de muerte o dañarse</li>
-</ul>
+<section id="estadísticos-descriptivos" class="level3">
+<h3 class="anchored" data-anchor-id="estadísticos-descriptivos"><strong>Estadísticos descriptivos:</strong></h3>
+<p>a) Nivel educacional máximo alcanzado (dependiente)</p>
+<p>La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.</p>
+<p>Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://www.desarrollosocialyfamilia.gob.cl/storage/image/banner-saludmental.png" class="img-fluid"></p>
-</div>
-</div>
-<p>En la <a href="#tbl-sexo">Tabla&nbsp;1</a> podemos ver que la proporción de mujeres que responde la encuesta corresponde a 60.12%, mientras que la propoción de hombres corresponde a 39.88%.</p>
-<div class="cell tbl-cap-location-top">
-<div class="cell-output-display">
-<div id="tbl-sexo" class="anchored">
-<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Tabla&nbsp;1: Distribución de sexo</caption>
+<table class="lightable-paper lightable-hover lightable-classic lightable-minimal table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 1: Estadísticos descriptivos nivel educacional</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;" data-quarto-table-cell-role="th">Sexo</th>
-<th style="text-align: center;" data-quarto-table-cell-role="th">n</th>
-<th style="text-align: center;" data-quarto-table-cell-role="th">Proporción</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Media</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mediana</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rango</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Desviacion estandar</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Varianza</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Moda</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1151</td>
-<td style="text-align: center;">39.88</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">1735</td>
-<td style="text-align: center;">60.12</td>
+<td style="text-align: right;">3.756046</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1.859821</td>
+<td style="text-align: right;">3.458934</td>
+<td style="text-align: right;">4</td>
 </tr>
 </tbody><tfoot>
+<tr class="even">
+<td style="text-align: right; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 1.2: Nivel máximo alcanzado</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Nivel máximo alcanzado</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Proporción (%)</th>
+</tr>
+</thead>
+<tbody>
 <tr class="odd">
-<td style="text-align: center; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a ELSOC 2016.</td>
+<td style="text-align: center;">Sin educación</td>
+<td style="text-align: center;">1040</td>
+<td style="text-align: center;">2.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Básica incompleta</td>
+<td style="text-align: center;">7397</td>
+<td style="text-align: center;">14.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Básica completa</td>
+<td style="text-align: center;">5887</td>
+<td style="text-align: center;">11.39</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Media incompleta</td>
+<td style="text-align: center;">6147</td>
+<td style="text-align: center;">11.89</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Media completa</td>
+<td style="text-align: center;">14875</td>
+<td style="text-align: center;">28.78</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Superior incompleta</td>
+<td style="text-align: center;">3332</td>
+<td style="text-align: center;">6.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Superior completa</td>
+<td style="text-align: center;">11695</td>
+<td style="text-align: center;">22.63</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Postgrado incompleta</td>
+<td style="text-align: center;">311</td>
+<td style="text-align: center;">0.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Postgrado completa</td>
+<td style="text-align: center;">1002</td>
+<td style="text-align: center;">1.94</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: center; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 </tr>
 </tfoot>
 
 </table>
-</div>
 
 
 </div>
 </div>
-</section>
-</section>
-<section id="análisis" class="level1">
-<h1>Análisis</h1>
-<p>Aqui ponemos el análisis, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-<p>En nuestro ejemplo, analizaremos la correlación entre algunas variables.</p>
-<p>En la <a href="#fig-cor_edad_dep">Figura&nbsp;1</a> es posible apreciar… La correlación entre la edad y el promedio de la sintomatología depresiva corresponde a 0.0176236.</p>
-<div class="cell" data-layout-align="center">
+<p>b) Pertenencia a pueblos indígenas</p>
+<p>La variable pertenencia a pueblos indígenas identifica si la persona se reconoce como perteneciente a uno de los 10 pueblos originarios reconocidos en Chile. Es una dummy, donde el valor 1 índica pertenencia y el 0 indica no pertenencia. Esta variable permite observar los porcentajes de pertenencia indígena y no indígena.</p>
+<p>En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.</p>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-cor_edad_dep" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="plantilla_informe_files/figure-html/fig-cor_edad_dep-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figura&nbsp;1: Correlación entre edad y sintomatología depresiva</figcaption>
-</figure>
+<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 2: Pertenencia pueblo indigena</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Pertenencia pueblo indigena (1=si)</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Proporción (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">44883</td>
+<td style="text-align: center;">86.84</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">6803</td>
+<td style="text-align: center;">13.16</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: center; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
 </div>
+</div>
+<p>c) Dificultad para concentrarse:</p>
+<p>La variable dificultad de concentración mide el grado en que la persona declara tener dificultades para concentrarse o mantener la atención. Es una variable categórica, con una escala que va desde el 0 (no tiene dificultad) hasta el 3 (sí presenta bastante dificultad).</p>
+<p>En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-paper lightable-hover lightable-classic lightable-minimal table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 3: Estadísticos descriptivos de Dificultad de concentración</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Media</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mediana</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rango</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Desviacion estandar</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Varianza</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Moda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.1734706</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.43247</td>
+<td style="text-align: right;">0.1870303</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: right; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
+</div>
+<div class="cell-output-display">
+
+<div id="nhvdlvqqxh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nhvdlvqqxh table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nhvdlvqqxh thead, #nhvdlvqqxh tbody, #nhvdlvqqxh tfoot, #nhvdlvqqxh tr, #nhvdlvqqxh td, #nhvdlvqqxh th {
+  border-style: none;
+}
+
+#nhvdlvqqxh p {
+  margin: 0;
+  padding: 0;
+}
+
+#nhvdlvqqxh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nhvdlvqqxh .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nhvdlvqqxh .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nhvdlvqqxh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nhvdlvqqxh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nhvdlvqqxh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nhvdlvqqxh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nhvdlvqqxh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nhvdlvqqxh .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nhvdlvqqxh .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nhvdlvqqxh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nhvdlvqqxh .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nhvdlvqqxh .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nhvdlvqqxh .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nhvdlvqqxh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nhvdlvqqxh .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nhvdlvqqxh .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nhvdlvqqxh .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nhvdlvqqxh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nhvdlvqqxh .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nhvdlvqqxh .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nhvdlvqqxh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nhvdlvqqxh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nhvdlvqqxh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nhvdlvqqxh .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nhvdlvqqxh .gt_left {
+  text-align: left;
+}
+
+#nhvdlvqqxh .gt_center {
+  text-align: center;
+}
+
+#nhvdlvqqxh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nhvdlvqqxh .gt_font_normal {
+  font-weight: normal;
+}
+
+#nhvdlvqqxh .gt_font_bold {
+  font-weight: bold;
+}
+
+#nhvdlvqqxh .gt_font_italic {
+  font-style: italic;
+}
+
+#nhvdlvqqxh .gt_super {
+  font-size: 65%;
+}
+
+#nhvdlvqqxh .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nhvdlvqqxh .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nhvdlvqqxh .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nhvdlvqqxh .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nhvdlvqqxh .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nhvdlvqqxh .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nhvdlvqqxh .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#nhvdlvqqxh .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#nhvdlvqqxh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="3" class="gt_heading gt_title gt_font_normal" style=""><span data-qmd-base64="KipUYWJsYSAzLjIuKiogRnJlY3VlbmNpYXMgeSBwb3JjZW50YWplcyBkZSBkaWZpY3VsdGFkIGRlIGNvbmNlbnRyYWNpw7Nu"><span class="gt_from_md"><strong>Tabla 3.2.</strong> Frecuencias y porcentajes de dificultad de concentración</span></span></td>
+    </tr>
+    <tr class="gt_heading">
+      <td colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="">Encuesta CASEN 2022</td>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Categoría">Categoría</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Frecuencia">Frecuencia</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="a%">%</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Categoría" class="gt_row gt_center">0</td>
+<td headers="Frecuencia" class="gt_row gt_center">43796</td>
+<td headers="%" class="gt_row gt_center">84.73</td></tr>
+    <tr><td headers="Categoría" class="gt_row gt_center">1</td>
+<td headers="Frecuencia" class="gt_row gt_center">6866</td>
+<td headers="%" class="gt_row gt_center">13.28</td></tr>
+    <tr><td headers="Categoría" class="gt_row gt_center">2</td>
+<td headers="Frecuencia" class="gt_row gt_center">972</td>
+<td headers="%" class="gt_row gt_center">1.88</td></tr>
+    <tr><td headers="Categoría" class="gt_row gt_center">3</td>
+<td headers="Frecuencia" class="gt_row gt_center">52</td>
+<td headers="%" class="gt_row gt_center">0.10</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3">Fuente: Elaboración propia con base en CASEN 2022</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+</div>
+</div>
+<p>d) Promedio maximo nivel educacional padres:</p>
+<p>Esta variable representa el nivel educacional más alto alcanzado por ambos padres de la persona encuestada, calculando un promedio entre ambos. Es una variable categórica ordinal que va de valores 1 a 5, y como es un promedio puede tener valores intermedios como 2.5 o 3.5. Valores más altos indican un mayor nivel de educación parental, lo que suele estar asociado positivamente con el nivel educacional alcanzado por los hijos. Este promedio se calculo en base a una pregunta que medía el nivel educacional de la madre y del padre, la cual fue recodificada para que cada una pudiera tener valores entre 1-5 para luego calcular el promedio.</p>
+<p>Los resultados muestran que el nivel educacional de los padres se concentra en tramos bajos. La media es de 2,24 y la mediana es 2, lo que indica que la mayoría no supera la enseñanza básica. La moda también es 2, reafirmando esta tendencia. Aunque hay casos con niveles altos (rango hasta 5), estos son poco frecuentes.</p>
+<p>En términos proporcionales (Tabla 5.1), cerca del 61% de los padres se ubica entre niveles “muy bajo” y “bajo”, mientras que solo un 10% alcanza niveles “medio-alto” o superiores.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-paper lightable-hover lightable-classic lightable-minimal table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 5: Estadísticos descriptivos Maximo nivel educacional alcanzado padres (promedio)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Media</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mediana</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rango</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Desviacion estandar</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Varianza</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Moda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2.239668</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.801582</td>
+<td style="text-align: right;">0.6425338</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: right; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
+</div>
+<div class="cell-output-display">
+<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 5.1: Nivel educacional máximo alcanzado por los padres</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Nivel educacional</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Proporción (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Nivel muy bajo</td>
+<td style="text-align: center;">6972</td>
+<td style="text-align: center;">13.49</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Nivel bajo-muy bajo</td>
+<td style="text-align: center;">4391</td>
+<td style="text-align: center;">8.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Nivel bajo</td>
+<td style="text-align: center;">20034</td>
+<td style="text-align: center;">38.76</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Nivel medio-bajo</td>
+<td style="text-align: center;">5972</td>
+<td style="text-align: center;">11.55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Nivel medio</td>
+<td style="text-align: center;">8820</td>
+<td style="text-align: center;">17.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Nivel medio-alto</td>
+<td style="text-align: center;">2754</td>
+<td style="text-align: center;">5.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Nivel alto</td>
+<td style="text-align: center;">2545</td>
+<td style="text-align: center;">4.92</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Nivel alto-muy alto</td>
+<td style="text-align: center;">132</td>
+<td style="text-align: center;">0.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Nivel muy alto</td>
+<td style="text-align: center;">66</td>
+<td style="text-align: center;">0.13</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: center; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
+</div>
+</div>
+<p>e) Escala conectividad</p>
+<p>Esta variable indica el nivel de acceso a conexión a internet del encuestado, ya sea medianta banda ancha móvil, mediante datos moviles en un celular o por fibra óptica. Esta variable es cuantitativa y tiene valores entre 0 a 5, y es una variable construida como escala sumativa, es decir los valores más altos tienen mas posibilidades de una mejor conexión o una conexión mas constante a internet, mientras que el 0 representa que la persona no tiene acceso a internet.</p>
+<p>Los resultados muestran que el nivel de conectividad es mayoritariamente bajo. La media es de 2,22 y la moda es 1, lo que indica que muchas personas tienen poca o ninguna conexión a internet. El 25% de los casos está en el nivel más bajo (cuartil 1 = 1) en un rango de 0 a 5, y el 75% no supera el nivel 3. Aunque hay casos con alta conectividad (rango hasta 5), son pocos. En general, se observa una distribución desigual, con predominio de bajos niveles de acceso.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="lightable-paper lightable-hover lightable-classic lightable-minimal table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 6: Estadísticos descriptivos Nivel de conectividad</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Media</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mediana</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rango</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Desviacion estandar</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Varianza</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Moda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2.223581</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1.270697</td>
+<td style="text-align: right;">1.614672</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: right; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
+</div>
+</div>
+<p>e) Comuna (cluster)</p>
+<p>La variable comuna identifica la unidad territorial en la que reside cada persona encuestada. Corresponde a una variable categórica nominal con 335 categorías posibles, una por cada comuna del país. En este análisis se utilizará esta variable como la variable de anidación o cluster.</p>
+<p>En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron, por lo que nuestro N real es 324 comunas encuestadas.</p>
+<p>En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra. La media de respuestas por comuna es de 154.28, con una desviación estándar de 222.57 respuestas, lo que significa que hay comunas con mucha más representación que otras</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="plantilla_informe_files/figure-html/datos8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Tabla 7.1: Estadísticos descriptivos de la frecuencia de comunas</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Media</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Mediana</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Cuartil 3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Rango</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Desviación estándar</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Varianza</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Moda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">154.2866</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">46.5</td>
+<td style="text-align: right;">142.5</td>
+<td style="text-align: right;">1799</td>
+<td style="text-align: right;">222.5782</td>
+<td style="text-align: right;">49541.07</td>
+<td style="text-align: right;">59</td>
+</tr>
+</tbody><tfoot>
+<tr class="even">
+<td style="text-align: right; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a Encuesta CASEN 2022.</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tfoot>
+
+</table>
+
+
 </div>
 </div>
 </section>
-<section id="conclusiones" class="level1">
-<h1>Conclusiones</h1>
-<p>Aqui redactamos algunas conclusiones, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
+</section>
+<section id="correlación-intraclase-icc" class="level1">
+<h1><strong>Correlación intraclase (ICC)</strong></h1>
+<p>Se calculó la correlación intraclase para la variable dependiente nvl_educ, resultando en un 14% aproximadamente. Esto quiere decir que un 14% de la varianza de nuestra variable dependiente corresponde a unidades de nivel 2.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=======================================
+                         Model 1       
+---------------------------------------
+(Intercept)                    3.27 ***
+                              (0.04)   
+---------------------------------------
+AIC                       203143.76    
+BIC                       203170.32    
+Log Likelihood           -101568.88    
+Num. obs.                  51686       
+Num. groups: comuna          335       
+Var: comuna (Intercept)        0.48    
+Var: Residual                  2.93    
+=======================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1416866</code></pre>
+</div>
+</div>
+</section>
+<section id="comparación-y-construcción-de-modelos" class="level1">
+<h1>Comparación y construcción de modelos</h1>
+<section id="comparación-de-regresiones-en-modelo-individual-y-grupal" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-de-regresiones-en-modelo-individual-y-grupal">Comparación de regresiones en modelo individual y grupal</h3>
+<p>Se generó una base de datos agregada/colapsada agrupando las variables por la variable cluster: comuna. Esta base se construyó colapsando las variables por el promedio.</p>
+<p>Se puede observar que la variable de nivel 1 “pueblo_indigena” pierde su significación estadística dentro del modelo 2, y la segunda variable de nivel 1 “dificultad_conc” disminuye a más de la mitad, además de aumentar el error estándar. En el caso de las variables de nivel 2, “mean_educ_padres” disminuye poco más de 0.1 puntos en el modelo 2, y su error estándar se eleva casi a la mitad. Por otro lado, la variable “mean_conectividad” aumenta al pasar al modelo agregado.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Comparación de modelos
+=========================================================================
+                                     Dependent variable:                 
+                    -----------------------------------------------------
+                                          nvl_educ                       
+                             Individual                  Agregado        
+                                (1)                        (2)           
+-------------------------------------------------------------------------
+mean_educ_padres              1.769***                   1.655***        
+                              (0.037)                    (0.064)         
+                                                                         
+mean_conectividad             0.217***                   0.322***        
+                              (0.023)                    (0.038)         
+                                                                         
+pueblo_indigena              -0.301***                    0.097          
+                              (0.022)                    (0.074)         
+                                                                         
+dificultad_conc              -0.740***                   -0.295**        
+                              (0.017)                    (0.143)         
+                                                                         
+Constant                     -0.521***                  -0.654***        
+                              (0.053)                    (0.104)         
+                                                                         
+-------------------------------------------------------------------------
+Observations                   51,686                      335           
+R2                             0.183                      0.889          
+Adjusted R2                    0.183                      0.888          
+Residual Std. Error      1.681 (df = 51681)          0.242 (df = 330)    
+F Statistic         2,892.966*** (df = 4; 51681) 659.827*** (df = 4; 330)
+=========================================================================
+Note:                                         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+</div>
+</section>
+<section id="modelo-1-con-predictores-de-nivel-1" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-1-con-predictores-de-nivel-1">Modelo 1 con predictores de nivel 1</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=======================================
+                         Model 1       
+---------------------------------------
+(Intercept)                    3.46 ***
+                              (0.04)   
+pueblo_indigena               -0.36 ***
+                              (0.02)   
+dificultad_conc               -0.75 ***
+                              (0.02)   
+---------------------------------------
+AIC                       201046.58    
+BIC                       201090.85    
+Log Likelihood           -100518.29    
+Num. obs.                  51686       
+Num. groups: comuna          335       
+Var: comuna (Intercept)        0.45    
+Var: Residual                  2.81    
+=======================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+</section>
+<section id="modelo-2-con-predictores-de-nivel-2" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-2-con-predictores-de-nivel-2">Modelo 2 con predictores de nivel 2</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=======================================
+                         Model 1       
+---------------------------------------
+(Intercept)                   -0.87 ***
+                              (0.07)   
+mean_conectividad              0.24 ***
+                              (0.03)   
+mean_educ_padres               1.82 ***
+                              (0.05)   
+---------------------------------------
+AIC                       202354.65    
+BIC                       202398.92    
+Log Likelihood           -101172.33    
+Num. obs.                  51686       
+Num. groups: comuna          335       
+Var: comuna (Intercept)        0.01    
+Var: Residual                  2.93    
+=======================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+</section>
+<section id="modelo-3-con-predictores-de-nivel-1-y-2" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-3-con-predictores-de-nivel-1-y-2">Modelo 3 con predictores de nivel 1 y 2</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=======================================
+                         Model 1       
+---------------------------------------
+(Intercept)                   -0.54 ***
+                              (0.08)   
+pueblo_indigena               -0.32 ***
+                              (0.02)   
+dificultad_conc               -0.75 ***
+                              (0.02)   
+mean_conectividad              0.22 ***
+                              (0.03)   
+mean_educ_padres               1.77 ***
+                              (0.06)   
+---------------------------------------
+AIC                       200313.72    
+BIC                       200375.69    
+Log Likelihood           -100149.86    
+Num. obs.                  51686       
+Num. groups: comuna          335       
+Var: comuna (Intercept)        0.01    
+Var: Residual                  2.81    
+=======================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+</section>
+<section id="comparación-de-regresiones-a-nivel-individual-agregado-y-multinivel" class="level3">
+<h3 class="anchored" data-anchor-id="comparación-de-regresiones-a-nivel-individual-agregado-y-multinivel">Comparación de regresiones a nivel individual, agregado y multinivel</h3>
+<p>En base a estos resultados es posible ver que los resultados del modelo multinivel (Modelo 3) se asemejan más a los datos del modelo individual (Modelo 1). Esto puede deberse a que los datos de nivel 2 creados ya representaban de buena forma el nivel al que pertenecían, aunque debería haber una indagación mayor al por qué ocurre esto.</p>
+<p>Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.</p>
+<p>Sobre la variable de pertenencia a pueblos indígenas, también encontramos evidencia a favor de nuestra hipótesis nula, ya que, al ser dummy, se puede afirmar que el hecho de ser indígena hace que el nivel educacional máximo alcanzado disminuya en 0.32 puntos con un 99.9% de confianza.</p>
+<p>Dentro del impacto negativo, es la dificultad para concentrarse la que tiene el mayor impacto, ya que con un p-value menor a 0.001 podemos afirmar que por cada punto que aumenta, el nivel educacional máximo alcanzado disminuye en 0.75 puntos, rechazando así la hipótesis nula de no asociación.</p>
+<p>Finalmente, la conectividad tiene un impacto positivo en nuestra variable dependiente. Es posible rechazar la hipótesis nula con una probabilidad de error menor a 0.001 y encontrar evidencia a favor de nuestra hipótesis alternativa. Por cada punto que sube el promedio de conectividad por comuna, el nivel educacional máximo alcanzado por la persona encuestada aumenta en 0.22 puntos.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=================================================================
+                         Model 1       Model 2     Model 3       
+-----------------------------------------------------------------
+(Intercept)                 -0.52 ***   -0.65 ***       -0.54 ***
+                            (0.05)      (0.10)          (0.08)   
+pueblo_indigena             -0.30 ***    0.10           -0.32 ***
+                            (0.02)      (0.07)          (0.02)   
+dificultad_conc             -0.74 ***   -0.30 *         -0.75 ***
+                            (0.02)      (0.14)          (0.02)   
+mean_conectividad            0.22 ***    0.32 ***        0.22 ***
+                            (0.02)      (0.04)          (0.03)   
+mean_educ_padres             1.77 ***    1.65 ***        1.77 ***
+                            (0.04)      (0.06)          (0.06)   
+-----------------------------------------------------------------
+R^2                          0.18        0.89                    
+Adj. R^2                     0.18        0.89                    
+Num. obs.                51686         335           51686       
+AIC                                                 200313.72    
+BIC                                                 200375.69    
+Log Likelihood                                     -100149.86    
+Num. groups: comuna                                    335       
+Var: comuna (Intercept)                                  0.01    
+Var: Residual                                            2.81    
+=================================================================
+*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="biliografía" class="level1">
 <h1>Biliografía</h1>
 <ul>
-<li><p>COES (2023). <em>Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2022. Presentación de Resultados COES</em>. Marzo, Santiago de Chile.</p></li>
-<li><p>R Core Team (2023). <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing, Vienna, Austria. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p></li>
+<li><p>Bourdieu, P., &amp; Passeron, J.-C. (1990). <em>La reproducción. Elementos para una teoría del sistema de enseñanza</em>. Laia.</p></li>
+<li><p>Jiménez, J. M., &amp; Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. <em>Latinoamérica. Revista de Estudios Educativos</em>, 52(1). <a href="https://latam.redilat.org/index.php/lt/article/view/3246" class="uri">https://latam.redilat.org/index.php/lt/article/view/3246</a></p></li>
+<li><p>López, J., &amp; Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? <em>Estudios Sociológicos</em>, 26(78), 713–736. <a href="https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&amp;script=sci_arttext" class="uri">https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&amp;script=sci_arttext</a></p></li>
+<li><p>Mejía, D. A., &amp; Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. <em>ResearchGate</em>. <a href="https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement">https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children’s_academic_achievement</a></p></li>
+<li><p>Rodríguez, F., Pérez, M., &amp; Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. <em>Revista Conrado</em>, 17(83). <a href="https://www.redalyc.org/journal/280/28073811035/html/" class="uri">https://www.redalyc.org/journal/280/28073811035/html/</a></p></li>
+<li><p>Mide UC. (2020). <em>Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena.</em> Pontificia Universidad Católica de Chile. Recuperado de <a href="https://mideuc.cl" class="uri">https://mideuc.cl</a></p></li>
 </ul>
 </section>
 
