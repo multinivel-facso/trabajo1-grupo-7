@@ -12,7 +12,7 @@ editor: visual
 
 En esta investigación se ahondaran en los factores que inciden en el nivel educacional máximo alcanzado por personas con 20 años o más residentes en 324 comunas de Chile. Se trabajara con un N general de 51.686 casos. Se busca ahondar en la influencia que tienen las siguientes variables: si pertenece a un pueblo indígena; nivel educacional de los padres; conectividad a internet; y dificultad para concentrarse y poner atención. La relevancia de esta investigación radica en que la educación es uno de los pilares fundamentales de las sociedades modernas, tanto en los procesos de socialización como culturales. Existen diversos factores que pueden incidir en alcanzar o no un nivel determinado de educación, como pueden ser los ya nombrados o el nivel de ingresos, el sexo, la orientación sexual o la edad. Se buscará realizar un modelo multinivel donde trabajaremos con variables de nivel 1 y de nivel 2 para ver su incidencia en nuestra variable dependiente.
 
-# Introducción
+# 1) Introducción
 
 La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu & Passeron, 1990).
 
@@ -28,51 +28,31 @@ En el plano individual, factores como la dificultad de concentración también i
 
 En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.
 
-Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y "conectividad", y nuestra variable de anidación serán las “comunas”
+Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y "conectividad", y nuestra variable de anidación serán las “comunas”.
 
-### **Objetivos:**
+# 2) Objetivos
 
-Analizar el efecto de factores individuales (variables de nivel 1) y contextuales (variables de nivel 2 y de anidación) sobre el nivel educativo máximo alcanzado por las personas en Chile, utilizando modelos estadísticos que consideren la estructura anidada de los datos a nivel de comuna.
+### Objetivo general**:**
+
+Calcular y analizar el efecto de factores individuales (variables de nivel 1) y contextuales (variables de nivel 2 y de anidación) sobre el nivel educativo máximo alcanzado por las personas en Chile.
 
 ### **Objetivos Especificos:**
 
-1\) Cuantificar la variación del intercepto del nivel educativo máximo entre comunas mediante la estimación de efectos aleatorios.
+1\) Determinar la influencia de variables de nivel 1, como la pertenencia a pueblos indígenas o la dificultad para concentrarse, en el nivel educacional máximo alcanzado.
 
-2\) Examinar si el efecto del nivel educacional promedio de los padres en la comuna sobre el nivel educativo máximo alcanzado por los individuos varía según la comuna de residencia, considerando la comuna como una variable de nivel contextual que modera dicha relación en un modelo multinivel.
+2\) Determinar la influencia de variables de nivel 2 (agrupadas por comuna), como el promedio de conectividad de la comuna o el promedio del nivel educacional máximo de los padres de la comuna, en el nivel educacional máximo alcanzado
 
-### **Hipotesis** Nivel 1:
+### **Hipótesis** Nivel 1:
 
-#### **Pertenencia a pueblos originarios**
+-   **H1:** La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.
 
--   **H₀:** β1=0\\beta_1 = 0β1​=0 → La pertenencia a pueblos originarios no se asocia significativamente con el nivel educacional máximo alcanzado.
+-   **H2:** La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo alcanzado.
 
--   **H₁:** β1\<0\\beta_1 \< 0β1​\<0 → La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.
+### **Hipótesis** Nivel 2:
 
-**Dificultad para concentrarse**
+-   **H3:** Pertenecer a una comuna con un alto nivel de conectividad tiene un efecto positivo sobre el nivel educacional máximo.
 
--   **H₀:** β2=0\\beta_2 = 0β2​=0 → La dificultad para concentrarse no tiene efecto significativo sobre el nivel educacional máximo.
-
--   **H₁:** β2\<0\\beta_2 \< 0β2​\<0 → La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo.
-
-### **Hipotesis** Nivel 2:
-
-#### **Conectividad digital**
-
--   **H₀:** β3=0\\beta_3 = 0β3​=0 → La conectividad digital no se asocia significativamente con el nivel educacional máximo.
-
--   **H₁:** β3\>0\\beta_3 \> 0β3​\>0 → Una mayor conectividad digital se asocia con un mayor nivel educacional máximo.
-
-#### **Promedio del nivel educacional de los padres en la comuna**
-
--   **H₀:** γ01=0\\gamma\_{01} = 0γ01​=0 → El promedio educacional de los padres en la comuna no influye significativamente en el nivel educacional de los individuos.
-
--   **H₁:** γ01\>0\\gamma\_{01} \> 0γ01​\>0 → Un mayor promedio educacional de los padres en la comuna se asocia con un mayor nivel educacional de los individuos.
-
-#### **Varianza comunal**
-
--   **H₀:** τ00=0\\tau\_{00} = 0τ00​=0 → No existe variación significativa en el nivel educacional máximo entre comunas.
-
--   **H₁:** τ00\>0\\tau\_{00} \> 0τ00​\>0 → Existe variación significativa entre comunas en el nivel educacional máximo.\
+-   **H4:** La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado
 
 # Variables
 
@@ -259,14 +239,19 @@ tabla7.1
 
 # **Correlación intraclase (ICC)**
 
-Se calculó la correlación intraclase para la variable dependiente nvl_educ, resultando en un 14% aproximadamente. Esto quiere decir que un 14% de la varianza de nuestra variable dependiente corresponde a unidades de nivel 2.
+Se construyó un modelo nulo sin predictores, integrando únicamente la variable dependiente y la variable cluster, para conocer los componentes de la varianza.
 
-```{r datos9, echo=FALSE, warning=FALSE, message=FALSE}
+```{r datos9, echo=FALSE, message=FALSE, warning=FALSE}
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 
 screenreg(modelo_nulo)
+```
 
+Se calculó la correlación intraclase para conocer qué porcentaje de la varianza del nivel educacional máximo alcanzado se debe a variables de nivel 2. El resultado fue de 0.14, lo que significa que el 14% de la varianza de la variable dependiente se asocia a la pertenencia a la comuna (NO SE SI ES A LA COMUNA O A VARIABLES DE NIVEL 2 EN GENERAL)
+
+```{r correlacionicc, echo=FALSE, message=FALSE, warning=FALSE}
 reghelper::ICC(modelo_nulo)
+
 ```
 
 # Comparación y construcción de modelos

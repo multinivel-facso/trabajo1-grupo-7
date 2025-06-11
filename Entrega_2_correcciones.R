@@ -74,7 +74,11 @@ tabla_cluster %>% ungroup() %>%
   kable(caption = "Descriptivos generales de la variable cluster") %>%
   kable_styling(full_width = TRUE) # 335 comunas, min=6 max=1805
 
-# 2) 
+# 2) Resultados
+
+
+
+
 
 
 
