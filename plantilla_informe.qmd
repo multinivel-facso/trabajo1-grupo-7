@@ -54,7 +54,9 @@ Calcular y analizar el efecto de factores individuales (variables de nivel 1) y 
 
 -   **H4:** La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado
 
-# Variables
+-   H5: El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional se ve moderado por la comuna
+
+# 3) Variables y estadísticos descriptivos
 
 ```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
 pacman::p_load(tidyverse, # Manipulacion de datos
@@ -83,15 +85,13 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 load("casen.Rdata") #cargamos base de datos
 ```
 
-### **Estadísticos descriptivos:**
+### **Estadísticos descriptivos para variables de nivel 1**
 
 a\) Nivel educacional máximo alcanzado (dependiente)
 
 La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.
 
 Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
-
-#### Estadísticos descriptivos para variables de nivel 1
 
 ```{r descriptivos1, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -112,7 +112,7 @@ casen_desc1 %>% ungroup() %>%
   kable_styling(full_width = TRUE)
 ```
 
-#### Estadísticos descriptivos para variables de nivel 2
+### **Estadísticos descriptivos para variables de nivel 2**
 
 poner análisis descriptivos de variables de nivel 2
 
@@ -134,8 +134,6 @@ casen_desc2 %>% ungroup() %>%
   kable_styling(full_width = TRUE)
 
 ```
-
-#### Estadísticos descriptivos para la variable cluster
 
 ```{r descriptivos3, echo=FALSE, warning=FALSE, message=FALSE}
 # Tabla de descriptivos de la variable cluster
@@ -237,7 +235,9 @@ tabla7.1
 
 ```
 
-# **Correlación intraclase (ICC)**
+# **4) Modelos y métodos**
+
+### **Correlación intraclase (ICC)**
 
 Se construyó un modelo nulo sin predictores, integrando únicamente la variable dependiente y la variable cluster, para conocer los componentes de la varianza.
 
@@ -247,67 +247,14 @@ modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 screenreg(modelo_nulo)
 ```
 
-Se calculó la correlación intraclase para conocer qué porcentaje de la varianza del nivel educacional máximo alcanzado se debe a variables de nivel 2. El resultado fue de 0.14, lo que significa que el 14% de la varianza de la variable dependiente se asocia a la pertenencia a la comuna (NO SE SI ES A LA COMUNA O A VARIABLES DE NIVEL 2 EN GENERAL)
+Se calculó la correlación intraclase para conocer qué porcentaje de la varianza del nivel educacional máximo alcanzado se debe a variables de nivel 2. El resultado fue de 0.14, lo que significa que el 14% de la varianza de la variable dependiente se asocia a la pertenencia a la comuna.
 
 ```{r correlacionicc, echo=FALSE, message=FALSE, warning=FALSE}
 reghelper::ICC(modelo_nulo)
 
 ```
 
-# Comparación y construcción de modelos
-
-### Comparación de regresiones en modelo individual y grupal
-
-Se generó una base de datos agregada/colapsada agrupando las variables por la variable cluster: comuna. Esta base se construyó colapsando las variables por el promedio.
-
-Se puede observar que la variable de nivel 1 "pueblo_indigena" pierde su significación estadística dentro del modelo 2, y la segunda variable de nivel 1 "dificultad_conc" disminuye a más de la mitad, además de aumentar el error estándar. En el caso de las variables de nivel 2, "mean_educ_padres" disminuye poco más de 0.1 puntos en el modelo 2, y su error estándar se eleva casi a la mitad. Por otro lado, la variable "mean_conectividad" aumenta al pasar al modelo agregado.
-
-```{r datos10, echo=FALSE, warning=FALSE, message=FALSE}
-# Crear modelo con datos individuales
-reg <- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
-            dificultad_conc, data = casen)
-
-# Crear base de datos colapsada
-agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
-
-# Crear modelo con datos agregados
-reg_agg<- lm(nvl_educ~mean_educ_padres+mean_conectividad+pueblo_indigena + 
-               dificultad_conc, data=agg_casen)
-
-
-# Tabla para comparar
-stargazer(reg,reg_agg, title = "Comparación de modelos",column.labels=c("Individual","Agregado"), type ='text')
-
-
-
-```
-
-### Modelo 1 con predictores de nivel 1
-
-```{r datos11, echo=FALSE, warning=FALSE, message=FALSE}
-results_1 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
-screenreg(results_1, naive=TRUE)
-```
-
-### Modelo 2 con predictores de nivel 2
-
-```{r datos12, echo=FALSE, warning=FALSE, message=FALSE}
-results_2 = lmer(nvl_educ ~ 1 + mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
-screenreg(results_2)
-
-```
-
-### Modelo 3 con predictores de nivel 1 y 2
-
-```{r datos13, echo=FALSE, warning=FALSE, message=FALSE}
-results_3 = lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
-                   mean_educ_padres + (1 | comuna), data = casen)
-screenreg(results_3)
-```
-
-### Comparación de regresiones a nivel individual, agregado y multinivel
-
-En base a estos resultados es posible ver que los resultados del modelo multinivel (Modelo 3) se asemejan más a los datos del modelo individual (Modelo 1). Esto puede deberse a que los datos de nivel 2 creados ya representaban de buena forma el nivel al que pertenecían, aunque debería haber una indagación mayor al por qué ocurre esto.
+### **Modelo multinivel**
 
 Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.
 
@@ -317,19 +264,48 @@ Dentro del impacto negativo, es la dificultad para concentrarse la que tiene el 
 
 Finalmente, la conectividad tiene un impacto positivo en nuestra variable dependiente. Es posible rechazar la hipótesis nula con una probabilidad de error menor a 0.001 y encontrar evidencia a favor de nuestra hipótesis alternativa. Por cada punto que sube el promedio de conectividad por comuna, el nivel educacional máximo alcanzado por la persona encuestada aumenta en 0.22 puntos.
 
-```{r datos14, echo=FALSE, message=FALSE, warning=FALSE}
-reg_ind=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + mean_conectividad + mean_educ_padres, data=casen)
+```{r modelomultinivel, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+resultados_1 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
+                    mean_educ_padres + mean_conectividad + 
+                    (1 | comuna), data = casen)
 
-reg_agg=lm(nvl_educ ~ pueblo_indigena + dificultad_conc + 
-mean_conectividad + mean_educ_padres, data=agg_casen)
+tab_model(resultados_1,
+          show.ci = FALSE,
+          show.icc = FALSE,
+          title = "Modelo multinivel",
+          dv.labels = c("Nivel educacional máximo"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio educativo de los padres (comuna)", 
+                          "Promedio conectividad (comuna)"))
+```
 
-screenreg(list(reg_ind, reg_agg, results_3)) 
+### **Modelos con pendiente aleatoria**
+
+```{r modeloal1, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# Pendiente aleatoria para pueblo_indigena
+reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
+               mean_educ_padres + ( 1 + pueblo_indigena | comuna), data = casen)
+
+
+tab_model(resultados_1, reg_al1,
+          show.ci = FALSE,
+          show.icc = FALSE,
+          title = "Comparación de modelos",
+          dv.labels = c("Modelo multinivel",
+                        "Modelo con pendiente aleatoria"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio educativo de los padres (comuna)", 
+                          "Promedio conectividad (comuna)"))
+
 
 
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-```
+### **Modelos con interacción entre niveles**
 
 # Biliografía
 
