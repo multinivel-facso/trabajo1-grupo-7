@@ -70,35 +70,30 @@ casen_desc2 %>%
 
 
 # 2) Resultados
+# 1) Modelo nulo
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 
-# MODELO MULTINIVEL
-resultados_1 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
+screenreg(modelo_nulo)
+
+# 2) Modelo con variables de nivel 1
+resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
+
+# 3) Modelo con variables de nivel 2
+resultados_2 = lmer(nvl_educ ~ mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
+
+# 4) Modelo con variables de nivel 1 y 2
+resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
                     mean_educ_padres + mean_conectividad + 
                     (1 | comuna), data = casen)
 
-screenreg(resultados_1)
 
-tab_model(resultados_1,
-          show.ci = FALSE,
-          show.icc = FALSE,
-          title = "Modelo multinivel",
-          dv.labels = c("Nivel educacional máximo"),
-          pred.labels = c("(Intercepto)", 
-                          "Pertenencia a pueblo indígena", 
-                          "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)"))
-
-
-
-  # 3) Efecto aleatorio 
-
+# 5) Pendiente aleatoria (+ test de devianza)
 # Pendiente aleatoria para pueblo_indigena
 reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
                mean_educ_padres + ( 1 + pueblo_indigena | comuna), data = casen)
 
 
-tab_model(resultados_1, reg_al1,
+tab_model(resultados_3, reg_al1,
           show.ci = FALSE,
           show.icc = FALSE,
           title = "Comparación de modelos",
@@ -110,6 +105,32 @@ tab_model(resultados_1, reg_al1,
                           "Promedio educativo de los padres (comuna)", 
                           "Promedio conectividad (comuna)"))
 
-anova(resultados_1, reg_al1)
+# CÓDIGO PARA COMPARAR MODELOS
+tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1,
+          show.ci = FALSE,
+          show.icc = FALSE,
+          title = "Comparación de modelos",
+          dv.labels = c("Modelo Nulo", 
+                        "Modelo con variables de nivel 1", 
+                        "Modelo con variables de nivel 2", 
+                        "Modelo multinivel",
+                        "Modelo con pendiente aleatoria"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio educativo de los padres (comuna)", 
+                          "Promedio conectividad (comuna)"))
+
+# Test de devianza
+anova(resultados_3, reg_al1)
+
+# Graficar pendiente aleatoria
+
+graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna [sample=9]"), type="random")
+
+plot(graf1)
+
+# 6) Interacción entre niveles
+
 
 
