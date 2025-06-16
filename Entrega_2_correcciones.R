@@ -10,6 +10,7 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                broom, 
                gginference,
                ggplot2,
+               knitr,
                sjlabelled,
                dplyr,
                stargazer,
@@ -47,35 +48,26 @@ casen_desc1 %>% ungroup() %>%
   kable_styling(full_width = TRUE)
 
 
-# Descriptivos variables de nivel 2
-agg_casen=casen %>% group_by(comuna) %>% summarise_all(funs(mean))
+# Tabla de descriptivos de las variables de nivel 2
+casen_desc2 <- casen %>%
+  group_by(comuna) %>%
+  summarise(
+    mean_educ_padres = mean(mean_educ_padres),
+    mean_conectividad = mean(mean_conectividad),
+    N_comunas = n()
+  )
 
-casen_desc2 = agg_casen %>% select(mean_educ_padres, mean_conectividad)
-
-casen_desc2 %>% ungroup() %>%
-  select(mean_educ_padres, mean_conectividad) %>%
+casen_desc2 %>%
+  select(mean_educ_padres, mean_conectividad, N_comunas) %>%
   psych::describe() %>%
-  select(n, mean, sd, median, min, max, range, median) %>%
+  select(n, mean, sd, median, min, max, range) %>%
   kable(
-    caption = "Descriptivos generales de variables nivel 2",
+    caption = "Descriptivos generales de variables de nivel 2",
     digits = 2
   ) %>%
   kable_styling(full_width = TRUE)
 
-# Tabla de descriptivos de la variable cluster AGREGAR A LA TABLA DE DESCRIPTIVOS DE NIVEL 2
-tabla_cluster <- casen %>%
-  count(comuna_factor, name = "N")
 
-tabla_cluster %>% ungroup() %>%
-  summarise(
-    Promedio = mean(N),
-    Valor_minimo = min(N),
-    Valor_maximo = max(N),
-    Rango = max(N) - min(N),
-    Total_de_comunas = n()
-  ) %>%
-  kable(caption = "Descriptivos generales de la variable cluster") %>%
-  kable_styling(full_width = TRUE) # 335 comunas, min=6 max=1805
 
 # 2) Resultados
 
