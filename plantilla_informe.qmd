@@ -56,6 +56,8 @@ Calcular y analizar el efecto de factores individuales (variables de nivel 1) y 
 
 -   H5: El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional se ve moderado por la comuna
 
+-   H6: El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
+
 # 3) Variables y estadísticos descriptivos
 
 ```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
@@ -241,7 +243,7 @@ reghelper::ICC(modelo_nulo)
 
 ```
 
-### **Modelo multinivel**
+### **Construcción de modelos e interpretación**
 
 Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.
 

@@ -70,6 +70,11 @@ casen_desc2 %>%
 
 
 # 2) Resultados
+# 0) Centrado
+
+
+
+
 # 1) Modelo nulo
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 
@@ -105,22 +110,6 @@ tab_model(resultados_3, reg_al1,
                           "Promedio educativo de los padres (comuna)", 
                           "Promedio conectividad (comuna)"))
 
-# CÓDIGO PARA COMPARAR MODELOS
-tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1,
-          show.ci = FALSE,
-          show.icc = FALSE,
-          title = "Comparación de modelos",
-          dv.labels = c("Modelo Nulo", 
-                        "Modelo con variables de nivel 1", 
-                        "Modelo con variables de nivel 2", 
-                        "Modelo multinivel",
-                        "Modelo con pendiente aleatoria"),
-          pred.labels = c("(Intercepto)", 
-                          "Pertenencia a pueblo indígena", 
-                          "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)"))
-
 # Test de devianza
 anova(resultados_3, reg_al1)
 
@@ -131,6 +120,28 @@ graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna [sample=9]"), type=
 plot(graf1)
 
 # 6) Interacción entre niveles
+reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres + dificultad_conc + 
+                  mean_conectividad + (1 + pueblo_indigena | comuna), data = casen)
 
+plot_model(reg_int, type = "int")
+
+
+# CÓDIGO PARA COMPARAR MODELOS
+tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
+          show.ci = FALSE,
+          show.icc = FALSE,
+          title = "Comparación de modelos",
+          dv.labels = c("Modelo Nulo", 
+                        "Modelo con variables de nivel 1", 
+                        "Modelo con variables de nivel 2", 
+                        "Modelo multinivel",
+                        "Modelo con pendiente aleatoria",
+                        "Modelo con interacción entre niveles"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio educativo de los padres (comuna)", 
+                          "Promedio conectividad (comuna)",
+                          "Interacción (pueblo_indigena:mean_educ_padres)"))
 
 
