@@ -40,7 +40,7 @@ casen$comuna_factor <- as_factor(casen$comuna)
 casen_desc1 %>% ungroup() %>%
   select(-comuna) %>%
   psych::describe() %>%
-  select(n, mean, sd, median, min, max, range, median) %>%
+  select(n, mean, sd, median, min, max, range) %>%
   kable(
     caption = "Descriptivos generales de variables nivel 1",
     digits = 2
