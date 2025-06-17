@@ -71,9 +71,9 @@ casen_desc2 %>%
 
 # 2) Resultados
 # 0) Centrado
-
-
-
+# Centrado de la variable comprometida en la interacción
+casen <- casen %>%
+  mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
 
 # 1) Modelo nulo
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
@@ -97,10 +97,11 @@ resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc +
 reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
                mean_educ_padres + ( 1 + pueblo_indigena | comuna), data = casen)
 
-
+# Comparar modelo con y sin pendiente aleatoria
 tab_model(resultados_3, reg_al1,
           show.ci = FALSE,
           show.icc = FALSE,
+          show.dev = TRUE,
           title = "Comparación de modelos",
           dv.labels = c("Modelo multinivel",
                         "Modelo con pendiente aleatoria"),
