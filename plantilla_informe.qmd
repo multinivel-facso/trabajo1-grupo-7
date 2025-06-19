@@ -58,7 +58,7 @@ Calcular y analizar el efecto de factores individuales (variables de nivel 1) y 
 
 -   H6: El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
 
-# 3) Variables y estadísticos descriptivos
+# 3) Datos, variables y métodos
 
 ```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
 pacman::p_load(tidyverse, # Manipulacion de datos
@@ -89,30 +89,42 @@ load("casen.Rdata") #cargamos base de datos
 
 ### **Estadísticos descriptivos para variables de nivel 1**
 
-a\) Nivel educacional máximo alcanzado (dependiente)
-
-La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.
-
-Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
-
 ```{r descriptivos1, echo=FALSE, warning=FALSE, message=FALSE}
 
 casen$comuna_factor <- as_factor(casen$comuna)
 
+# Descriptivos variables de nivel 1
 casen_desc1 = casen %>% select(nvl_educ, pueblo_indigena,
                               dificultad_conc, comuna)
 
-# Descriptivos variables de nivel 1
 casen_desc1 %>% ungroup() %>%
   select(-comuna) %>%
   psych::describe() %>%
-  select(n, mean, sd, median, min, max, range, median) %>%
+  select(n, mean, sd, median, min, max, range) %>%
   kable(
     caption = "Descriptivos generales de variables nivel 1",
     digits = 2
   ) %>%
   kable_styling(full_width = TRUE)
 ```
+
+a\) Nivel educacional máximo alcanzado (dependiente):
+
+La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.
+
+Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
+
+b\) Pertenencia a pueblos indígenas (independiente, nivel 1):
+
+La variable pertenencia a pueblos indígenas identifica si la persona se reconoce como perteneciente a uno de los 10 pueblos originarios reconocidos en Chile. Es una dummy, donde el valor 1 índica pertenencia y el 0 indica no pertenencia. Esta variable permite observar los porcentajes de pertenencia indígena y no indígena.
+
+En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.
+
+c\) Dificultad para concentrarse (independiente, nivel 2):
+
+La variable dificultad de concentración mide el grado en que la persona declara tener dificultades para concentrarse o mantener la atención. Es una variable categórica, con una escala que va desde el 0 (no tiene dificultad) hasta el 3 (sí presenta bastante dificultad).
+
+En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
 
 ### **Estadísticos descriptivos para variables de nivel 2**
 
@@ -126,11 +138,11 @@ casen_desc2 <- casen %>%
   summarise(
     mean_educ_padres = mean(mean_educ_padres),
     mean_conectividad = mean(mean_conectividad),
-    N_comunas = n()
+    comunas = n()
   )
 
 casen_desc2 %>%
-  select(mean_educ_padres, mean_conectividad, N_comunas) %>%
+  select(mean_educ_padres, mean_conectividad, comunas) %>%
   psych::describe() %>%
   select(n, mean, sd, median, min, max, range) %>%
   kable(
@@ -141,33 +153,11 @@ casen_desc2 %>%
 
 ```
 
-b\) Pertenencia a pueblos indígenas
+d\) Promedio del nivel educacional de los padres por comuna (independiente, nivel 2)
 
-La variable pertenencia a pueblos indígenas identifica si la persona se reconoce como perteneciente a uno de los 10 pueblos originarios reconocidos en Chile. Es una dummy, donde el valor 1 índica pertenencia y el 0 indica no pertenencia. Esta variable permite observar los porcentajes de pertenencia indígena y no indígena.
+e\) Promedio de conectividad por comuna (independiente, nivel 2)
 
-En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.
-
-c\) Dificultad para concentrarse:
-
-La variable dificultad de concentración mide el grado en que la persona declara tener dificultades para concentrarse o mantener la atención. Es una variable categórica, con una escala que va desde el 0 (no tiene dificultad) hasta el 3 (sí presenta bastante dificultad).
-
-En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
-
-d\) Promedio maximo nivel educacional padres:
-
-Esta variable representa el nivel educacional más alto alcanzado por ambos padres de la persona encuestada, calculando un promedio entre ambos. Es una variable categórica ordinal que va de valores 1 a 5, y como es un promedio puede tener valores intermedios como 2.5 o 3.5. Valores más altos indican un mayor nivel de educación parental, lo que suele estar asociado positivamente con el nivel educacional alcanzado por los hijos. Este promedio se calculo en base a una pregunta que medía el nivel educacional de la madre y del padre, la cual fue recodificada para que cada una pudiera tener valores entre 1-5 para luego calcular el promedio.
-
-Los resultados muestran que el nivel educacional de los padres se concentra en tramos bajos. La media es de 2,24 y la mediana es 2, lo que indica que la mayoría no supera la enseñanza básica. La moda también es 2, reafirmando esta tendencia. Aunque hay casos con niveles altos (rango hasta 5), estos son poco frecuentes.
-
-En términos proporcionales (Tabla 5.1), cerca del 61% de los padres se ubica entre niveles “muy bajo” y “bajo”, mientras que solo un 10% alcanza niveles “medio-alto” o superiores.
-
-e\) Escala conectividad
-
-Esta variable indica el nivel de acceso a conexión a internet del encuestado, ya sea medianta banda ancha móvil, mediante datos moviles en un celular o por fibra óptica. Esta variable es cuantitativa y tiene valores entre 0 a 5, y es una variable construida como escala sumativa, es decir los valores más altos tienen mas posibilidades de una mejor conexión o una conexión mas constante a internet, mientras que el 0 representa que la persona no tiene acceso a internet.
-
-Los resultados muestran que el nivel de conectividad es mayoritariamente bajo. La media es de 2,22 y la moda es 1, lo que indica que muchas personas tienen poca o ninguna conexión a internet. El 25% de los casos está en el nivel más bajo (cuartil 1 = 1) en un rango de 0 a 5, y el 75% no supera el nivel 3. Aunque hay casos con alta conectividad (rango hasta 5), son pocos. En general, se observa una distribución desigual, con predominio de bajos niveles de acceso.
-
-e\) Comuna (cluster)
+f\) Comuna (cluster)
 
 La variable comuna identifica la unidad territorial en la que reside cada persona encuestada. Corresponde a una variable categórica nominal con 335 categorías posibles, una por cada comuna del país. En este análisis se utilizará esta variable como la variable de anidación o cluster.
 
@@ -175,58 +165,17 @@ En esta variable se encuestaron a 335 comunas en total, de las cuales las siguie
 
 En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra. La media de respuestas por comuna es de 154.28, con una desviación estándar de 222.57 respuestas, lo que significa que hay comunas con mucha más representación que otras
 
-```{r datos8, echo=FALSE, warning=FALSE, message=FALSE}
+### Modelos a utilizar
 
-casen <- casen %>%
-  mutate(comuna_label = as_factor(comuna))
+!!!!!!!!aquí describir los modelos a usar. Usamos el nulo, predictores nvl1, predictores nvl2, multinivel, pendiente aleatoria y de interacción entre niveles
 
+# **4) Resultados**
 
-comuna_freq <- casen %>%
-  count(comuna_label) %>%
-  mutate(porcentaje = n / sum(n) * 100)
+### a) Gráficos bivariados (ESTO FALTA)
 
+### **b) Modelos y discusión sobre centrado**
 
-# Calcular frecuencias y ordenar
-freq_comunas <- casen %>% ungroup() %>%
-  count(comuna_label, sort = FALSE)
-
-top_25 <- freq_comunas %>%
-  slice_max(n, n = 25)
-
-ggplot(top_25, aes(x = reorder(comuna_label, n), y = n)) +
-  geom_col(fill = "darkgreen") +
-  coord_flip() +
-  labs(title = "Tabla 7: Top 25 comunas más frecuentes", x = "Comuna", y = "Frecuencia") +
-  theme_minimal()
-
-comuna_freq2 <- casen %>%
-  group_by(comuna) %>%
-  summarise(frecuencia = n())
-
-desc7 <- comuna_freq2 %>% 
-  summarise(
-    Media = mean(frecuencia),
-    Mediana = median(frecuencia),
-    `Cuartil 1` = quantile(frecuencia, probs = .25),
-    `Cuartil 3` = quantile(frecuencia, probs = .75),
-    Rango = max(frecuencia) - min(frecuencia),
-    `Desviación estándar` = sd(frecuencia),
-    Varianza = var(frecuencia),
-    Moda = moda(frecuencia)  # asegúrate de tener la función `moda()` definida
-  )
-
-tabla7.1 <- kableExtra::kbl(desc7, escape = FALSE, full_width = FALSE,
-                            caption = "Tabla 7.1: Estadísticos descriptivos de la frecuencia de comunas") %>%
-  kableExtra::kable_classic(full_width = FALSE, font_size = 14) %>%
-  kableExtra::add_footnote(label = "Fuente: Elaboración propia en base a Encuesta CASEN 2022.")
-
-tabla7.1
-
-```
-
-# **4) Modelos y métodos**
-
-### **Correlación intraclase (ICC)**
+Explicar la organización de las tablas y comentar
 
 Se construyó un modelo nulo sin predictores, integrando únicamente la variable dependiente y la variable cluster, para conocer los componentes de la varianza.
 
@@ -243,7 +192,7 @@ reghelper::ICC(modelo_nulo)
 
 ```
 
-### **Construcción de modelos e interpretación**
+### **b) Construcción de modelos e interpretación de resultados**
 
 Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.
 

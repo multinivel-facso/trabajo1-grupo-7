@@ -20,20 +20,23 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                texreg, 
                gt,
                ggeffects,
-               labelled) # Varios
+               labelled,
+               influence.ME) # Varios
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
 
 load("casen.Rdata") #cargamos base de datos
 
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+
 # 1) Ver descriptivos en una única tabla
+
+casen$comuna_factor <- as_factor(casen$comuna)
 
 # Descriptivos variables de nivel 1
 casen_desc1 = casen %>% select(nvl_educ, pueblo_indigena,
                               dificultad_conc, comuna)
-
-casen$comuna_factor <- as_factor(casen$comuna)
 
 casen_desc1 %>% ungroup() %>%
   select(-comuna) %>%
@@ -65,6 +68,7 @@ casen_desc2 %>%
   ) %>%
   kable_styling(full_width = TRUE)
 
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 # 2) Centrado
 # Centrado de la variable comprometida en la interacción
@@ -80,6 +84,8 @@ casen <- casen %>% ungroup() %>%
 mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
 
 # mg = media general de las variables
+
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 # 3) Resultados
 
@@ -154,14 +160,13 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
                           "Promedio conectividad (comuna)",
                           "Interacción (pueblo_indigena:mean_educ_padres)"))
 
+#/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
-################################################################################
+# 4) Analisis de casos influyentes
 
-#Analisis de casos influyentes
+# Crear objeto con las estimaciones de influencia
 
-#Primer paso
-
-dcook <- influence(resultados_3, "comuna_factor")
+inf_casen <- influence(resultados_3, group = "comuna_factor")
 
 # ¿lo hacemos con el modelo multinivel o con el modelo con pendiente aleatoria?
 
@@ -170,16 +175,39 @@ dcook <- influence(resultados_3, "comuna_factor")
 cooks.distance(dcook, sort = TRUE)
 
 cut_dcook <- 4/51686
-
 cut_dcook
 
-plot(dcook, which="cook",
+plot(inf_casen, which="cook",
      cutoff=(.0000773904), sort=TRUE,
      xlab="Cooks Distance",
      ylab="ID Comuna")
 
-# ESTE NOS DA NULL, NO SABEMOS SI ES PORQUE NO TENEMOS CASOS INFLUYENTES O PORQUE LO HICIMOS MAL
-# AYUDA####
-sigtest(dcook, test=-1.96)$structure[1:335,] 
+# Test de significancia, no tenemos nada
+sigtest(inf_casen, test=-1.96)$pueblo_indigena[1:335,] # nada
+sigtest(inf_casen, test=-1.96)$dificultad_conc[1:335,]  # nada
+sigtest(inf_casen, test=-1.96)$mean_educ_padres_gmc[1:335,] # nada
+sigtest(inf_casen, test=-1.96)$mean_conectividad_gmc[1:335,] # nada
+
+sig <- sigtest(inf_casen, test=-1.96)
+
+any(sig$pueblo_indigena$Changed.Sig)
+any(sig$dificultad_conc$Changed.Sig)
+any(sig$mean_educ_padres$Changed.Sig)
+any(sig$mean_conectividad$Changed.Sig)
+
+
+# DFBETAS (ya no es necesario pero lo dejo por si acaso)
+
+dfbetas(inf_casen) 
+
+cut_dfbetas <- 4/sqrt(51686)
+cut_dfbetas
+
+dfbeta_casen=as.data.frame(dfbetas(inf_casen))
+
+dfbeta_casen %>% filter(mean_conectividad_gmc > 0.0176 | mean_educ_padres_gmc > 0.0176 | pueblo_indigena > 0.0176 
+                         | dificultad_conc > 0.0176)
+
+plot(inf_casen, which="dfbetas", parameters=c(2, 3, 4, 5), xlab="DFbetas", ylab="Comuna")
 
 
