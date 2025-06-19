@@ -75,7 +75,7 @@ casen_desc2 %>%
 casen <- casen %>% ungroup() %>%
   mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
 
-frq(casen$mean_educ_padres_gmc)
+mg_educ_padres <- mean(casen$mean_educ_padres) # 2.24 = media general del nivel educacional de los padres
 
 # Centrado de la variable mean_conectividad
 casen <- casen %>% ungroup() %>%
@@ -161,9 +161,19 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
 
 #Primer paso
 
-objeto <- influence(modelo_multinivel, "cluster")
+dcook <- influence(resultados_3, "comuna")
 
 #Distancia de cook
 
-cooks.distance(objeto, sort = TRUE)
+cooks.distance(dcook, sort = TRUE)
+
+cut_cook <- 4/51686
+
+cut_cook
+
+plot(dcook, which="cook",
+     cutoff=(.0000773904), sort=TRUE,
+     xlab="Cooks Distance",
+     ylab="ID Comuna")
+
 
