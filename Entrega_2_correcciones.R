@@ -72,8 +72,16 @@ casen_desc2 %>%
 # 2) Resultados
 # 0) Centrado
 # Centrado de la variable comprometida en la interacción
-casen <- casen %>%
+casen <- casen %>% ungroup() %>%
   mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
+
+frq(casen$mean_educ_padres_gmc)
+
+# Centrado de la variable mean_conectividad
+casen <- casen %>% ungroup() %>%
+  mutate(mean_conectividad_gmc = mean_conectividad-mean(mean_conectividad))
+
+mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
 
 # 1) Modelo nulo
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
@@ -84,18 +92,19 @@ screenreg(modelo_nulo)
 resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + (1 | comuna), data = casen)
 
 # 3) Modelo con variables de nivel 2
-resultados_2 = lmer(nvl_educ ~ mean_conectividad + mean_educ_padres + (1 | comuna), data = casen)
+resultados_2 = lmer(nvl_educ ~ mean_conectividad_gmc + mean_educ_padres_gmc + (1 | comuna), data = casen)
 
 # 4) Modelo con variables de nivel 1 y 2
 resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
-                    mean_educ_padres + mean_conectividad + 
+                       mean_conectividad_gmc + mean_educ_padres_gmc + 
                     (1 | comuna), data = casen)
 
+screenreg(resultados_3)
 
 # 5) Pendiente aleatoria (+ test de devianza)
 # Pendiente aleatoria para pueblo_indigena
-reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
-               mean_educ_padres + ( 1 + pueblo_indigena | comuna), data = casen)
+reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad_gmc + 
+               mean_educ_padres_gmc + ( 1 + pueblo_indigena | comuna), data = casen)
 
 # Comparar modelo con y sin pendiente aleatoria
 tab_model(resultados_3, reg_al1,
@@ -121,8 +130,8 @@ graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna [sample=9]"), type=
 plot(graf1)
 
 # 6) Interacción entre niveles
-reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres + dificultad_conc + 
-                  mean_conectividad + (1 + pueblo_indigena | comuna), data = casen)
+reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + 
+                  mean_conectividad_gmc + (1 + pueblo_indigena | comuna), data = casen)
 
 plot_model(reg_int, type = "int")
 
@@ -145,4 +154,16 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
                           "Promedio conectividad (comuna)",
                           "Interacción (pueblo_indigena:mean_educ_padres)"))
 
+
+################################################################################
+
+#Analisis de casos influyentes
+
+#Primer paso
+
+objeto <- influence(modelo_multinivel, "cluster")
+
+#Distancia de cook
+
+cooks.distance(objeto, sort = TRUE)
 
