@@ -27,8 +27,6 @@ rm(list = ls()) # para limpiar el entorno de trabajo
 
 load("casen.Rdata") #cargamos base de datos
 
-attach(casen)
-
 # 1) Ver descriptivos en una única tabla
 
 # Descriptivos variables de nivel 1
@@ -54,11 +52,11 @@ casen_desc2 <- casen %>%
   summarise(
     mean_educ_padres = mean(mean_educ_padres),
     mean_conectividad = mean(mean_conectividad),
-    N_comunas = n()
+    comunas = n()
   )
 
 casen_desc2 %>%
-  select(mean_educ_padres, mean_conectividad, N_comunas) %>%
+  select(mean_educ_padres, mean_conectividad, comunas) %>%
   psych::describe() %>%
   select(n, mean, sd, median, min, max, range) %>%
   kable(
@@ -68,9 +66,7 @@ casen_desc2 %>%
   kable_styling(full_width = TRUE)
 
 
-
-# 2) Resultados
-# 0) Centrado
+# 2) Centrado
 # Centrado de la variable comprometida en la interacción
 casen <- casen %>% ungroup() %>%
   mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
@@ -82,6 +78,10 @@ casen <- casen %>% ungroup() %>%
   mutate(mean_conectividad_gmc = mean_conectividad-mean(mean_conectividad))
 
 mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
+
+# mg = media general de las variables
+
+# 3) Resultados
 
 # 1) Modelo nulo
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
@@ -125,13 +125,15 @@ anova(resultados_3, reg_al1)
 
 graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [sample=9]"), type="random")
 
-plot(graf1)
+plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
+
+# Poner varios gráficos para mostrar cómo varía por comuna
 
 # 6) Interacción entre niveles
 reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + 
                   mean_conectividad_gmc + (1 + pueblo_indigena | comuna_factor), data = casen)
 
-plot_model(reg_int, type = "int")
+plot_model(reg_int, type = "int") # esto ponerlo dsp en el análisis separado de cada modelo
 
 
 # CÓDIGO PARA COMPARAR MODELOS
@@ -159,113 +161,25 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
 
 #Primer paso
 
-dcook <- influence(resultados_3, "comuna")
+dcook <- influence(resultados_3, "comuna_label")
+
+# ¿lo hacemos con el modelo multinivel o con el modelo con pendiente aleatoria?
 
 #Distancia de cook
 
 cooks.distance(dcook, sort = TRUE)
 
-cut_cook <- 4/51686
+cut_dcook <- 4/51686
 
-cut_cook
+cut_dcook
 
 plot(dcook, which="cook",
      cutoff=(.0000773904), sort=TRUE,
      xlab="Cooks Distance",
      ylab="ID Comuna")
 
-
-
-# 1) Modelo nulo
-modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
-
-screenreg(modelo_nulo)
-
-# 2) Modelo con variables de nivel 1
-resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + (1 | comuna_factor), data = casen)
-
-# 3) Modelo con variables de nivel 2
-resultados_2 = lmer(nvl_educ ~ mean_conectividad_gmc + mean_educ_padres_gmc + (1 | comuna_factor), data = casen)
-
-# 4) Modelo con variables de nivel 1 y 2
-resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
-                       mean_conectividad_gmc + mean_educ_padres_gmc + 
-                       (1 | comuna_factor), data = casen)
-
-screenreg(resultados_3)
-
-# 5) Pendiente aleatoria (+ test de devianza)
-# Pendiente aleatoria para pueblo_indigena
-reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad_gmc + 
-               mean_educ_padres_gmc + ( 1 + pueblo_indigena | comuna_factor), data = casen)
-
-# Comparar modelo con y sin pendiente aleatoria
-tab_model(resultados_3, reg_al1,
-          show.ci = FALSE,
-          show.icc = FALSE,
-          show.dev = TRUE,
-          title = "Comparación de modelos",
-          dv.labels = c("Modelo multinivel",
-                        "Modelo con pendiente aleatoria"),
-          pred.labels = c("(Intercepto)", 
-                          "Pertenencia a pueblo indígena", 
-                          "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)"))
-
-# Test de devianza
-anova(resultados_3, reg_al1)
-
-# Graficar pendiente aleatoria
-
-graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [sample=9]"), type="random")
-
-plot(graf1)
-
-# 6) Interacción entre niveles
-reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + 
-                  mean_conectividad_gmc + (1 + pueblo_indigena | comuna_factor), data = casen)
-
-plot_model(reg_int, type = "int")
-
-
-# CÓDIGO PARA COMPARAR MODELOS
-tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
-          show.ci = FALSE,
-          show.icc = FALSE,
-          title = "Comparación de modelos",
-          dv.labels = c("Modelo Nulo", 
-                        "Modelo con variables de nivel 1", 
-                        "Modelo con variables de nivel 2", 
-                        "Modelo multinivel",
-                        "Modelo con pendiente aleatoria",
-                        "Modelo con interacción entre niveles"),
-          pred.labels = c("(Intercepto)", 
-                          "Pertenencia a pueblo indígena", 
-                          "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)",
-                          "Interacción (pueblo_indigena:mean_educ_padres)"))
-
-
-################################################################################
-
-#Analisis de casos influyentes
-
-#Primer paso
-
-dcook <- influence(resultados_3, "comuna_factor")
-
-#Distancia de cook
-
-cut_dcook <- 4/51686
-
-plot(dcook, which="cook",
-     cutoff=0.0000773904, sort=TRUE,
-     xlab="Cooks Distance",
-     ylab="Comuna")
-
-
 # ESTE NOS DA NULL, NO SABEMOS SI ES PORQUE NO TENEMOS CASOS INFLUYENTES O PORQUE LO HICIMOS MAL
 # AYUDA####
-sigtest(dcook, test=-1.96)$structure[1:100,] 
+sigtest(dcook, test=-1.96)$structure[1:335,] 
+
+
