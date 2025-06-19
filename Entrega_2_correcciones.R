@@ -161,7 +161,7 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
 
 #Primer paso
 
-dcook <- influence(resultados_3, "comuna_label")
+dcook <- influence(resultados_3, "comuna_factor")
 
 # ¿lo hacemos con el modelo multinivel o con el modelo con pendiente aleatoria?
 
