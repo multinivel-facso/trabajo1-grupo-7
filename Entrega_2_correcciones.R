@@ -152,7 +152,7 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
           dv.labels = c("Modelo Nulo", 
                         "Modelo con predictores de nivel 1", 
                         "Modelo con predictores de nivel 2", 
-                        "Modelo con predictores de nivel 1 y 2l",
+                        "Modelo con predictores de nivel 1 y 2",
                         "Modelo con pendiente aleatoria",
                         "Modelo con interacción entre niveles"),
           pred.labels = c("(Intercepto)", 
