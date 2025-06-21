@@ -58,6 +58,7 @@ casen_desc2 <- casen %>%
     comunas = n()
   )
 
+
 casen_desc2 %>%
   select(mean_educ_padres, mean_conectividad, comunas) %>%
   psych::describe() %>%
@@ -67,6 +68,7 @@ casen_desc2 %>%
     digits = 2
   ) %>%
   kable_styling(full_width = TRUE)
+
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
@@ -145,7 +147,7 @@ plot_model(reg_int, type = "int") # esto ponerlo dsp en el análisis separado de
 # CÓDIGO PARA COMPARAR MODELOS
 tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
           show.ci = FALSE,
-          show.icc = FALSE,
+          show.icc = TRUE,
           title = "Comparación de modelos",
           dv.labels = c("Modelo Nulo", 
                         "Modelo con variables de nivel 1", 
@@ -159,6 +161,7 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
                           "Promedio educativo de los padres (comuna)", 
                           "Promedio conectividad (comuna)",
                           "Interacción (pueblo_indigena:mean_educ_padres)"))
+
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
