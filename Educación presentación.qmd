@@ -1,0 +1,44 @@
+---
+title: "Factores influyentes para el desarrollo de la educación"
+author: "Rodrigo Huerta y Matilda Raccagni"
+format: 
+  revealjs:
+    theme: dark
+    incremental: true
+    slide-number: true
+editor: visual
+---
+
+## Introducción lol
+
+#### Problematización
+
+-   La educación es uno de los pilares fundamentales de desarrollo tanto individual como colectivo
+
+-   La sociedad chilena actual, el acceso y logro educativo son procesos muy influenciados por factores estructurales e individuales
+
+-   Pregunta de investigación:
+
+## Hipotesis
+
+#### Nivel 1
+
+-   H1: La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.
+
+-   H2: La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo alcanzado.
+
+::: \#### Nivel 2
+
+-   H3: Pertenecer a una comuna con un alto nivel de conectividad tiene un efecto positivo sobre el nivel educacional máximo.
+
+-   H4: La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado
+
+-   H5: El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional se ve moderado por la comuna
+
+-   H6: El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
+
+::: \## Code
+
+```{r}
+1 + 1
+```
