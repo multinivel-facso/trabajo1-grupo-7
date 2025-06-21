@@ -1,6 +1,5 @@
 ---
-author: "Rodrigo Huerta y Matilda Raccagni"
-title: "Factores influyentes para el desarrollo de la educación"
+title: "Factores influyentes para el desarrollo de la educación" 
 format: 
   revealjs:
     theme: multinivel.scss
@@ -9,14 +8,24 @@ format:
 editor: visual
 ---
 
+# Factores influyentes para el desarrollo de la educación en Chile
+Matilda Raccagni y Rodrigo Huerta
+
+Analisis de datos Multinivel 2025
+
+
+---
+
 # Introducción
 
-* La educación es uno de los pilares fundamentales del desarrollo individual y colectivo. 
+* **Problematización:** La educación es uno de los pilares fundamentales del desarrollo individual y colectivo, en la sociedad chilena actual, el acceso y logro educativo son procesos muy influenciados por factores estructurales e individuales
 
-* La sociedad chilena actual, el acceso y logro educativo son procesos muy influenciados por factores estructurales e individuales
+* **Variables a utilizar:** nivel educacional (dependiente), nivel educativo de los padres, etnicidad, conectividad digital y capacidad para concentrarse.
 
-* **Pregunta de investigación: ¿En qué grado inciden los factores individuales y estructurales inciden en el nivel educativo máximo alcanzado por las personas en Chile?**
 
+---
+
+# ¿En qué grado inciden los factores individuales y estructurales inciden en el nivel educativo máximo alcanzado por las personas en Chile?
 
 ---
 
@@ -40,44 +49,148 @@ editor: visual
 
 ---
 
-## Metodología
+# Metodología
 
 - **Base de datos**: Encuesta CASEN 2022  
 - Diseño probabilístico, representatividad nacional  
 - **Submuestra**: 51.686 personas de 20+ años en 335 comunas
 
----
-
-# Justificación del enfoque multinivel
-
-- Existe evidencia de factores contextuales relevantes  
-- Correlación intraclase (ICC) de **0.14** justifica modelo jerárquico  
-- Permite evaluar simultáneamente efectos individuales y comunales
+Para el analisis utilizamos la metodología multinivel, ya que sengún la literatura revisada, los factores de nivel dos inciden en nuestra variable dependiente.
 
 ---
 
-# Variables – Nivel 1
+## Tablas de descriptivos variables nivel 1 y 2
 
-- **Dependiente**: Nivel educacional máximo (0–8), promedio: 3.76  
-- **Predictoras**:  
-  - Pueblo indígena (dummy, 13%)  
-  - Dificultad para concentrarse (0–3), promedio: 0.17, DE: 0.43
+Las variables que vamos a utilizar son las siguientes
+
+```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
+pacman::p_load(tidyverse, # Manipulacion de datos
+               car, # Recodificar
+               sjPlot, # Tablas y graficos
+               sjmisc, # Descriptivos
+               kableExtra, # Tablas
+               psych, # Bivariados
+               corrplot, # Graficos correlación
+               broom, 
+               gginference,
+               ggplot2,
+               dplyr,
+               stargazer,
+               lme4,
+               haven,
+               reghelper,
+               texreg, 
+               gt) # Varios           
+
+options(scipen = 999) # para desactivar notacion cientifica
+rm(list = ls()) # para limpiar el entorno de trabajo
+```
+
+```{r datos1, echo=FALSE, warning=FALSE, message=FALSE}
+load("casen.Rdata") #cargamos base de datos
+
+```
+
+```{r descriptivos1, echo=FALSE, warning=FALSE, message=FALSE}
+
+casen$comuna_factor <- as_factor(casen$comuna)
+
+casen_desc1 = casen %>% select(nvl_educ, pueblo_indigena,
+                              dificultad_conc, comuna)
+
+# Descriptivos variables de nivel 1
+casen_desc1 %>% ungroup() %>%
+  select(-comuna) %>%
+  psych::describe() %>%
+  select(n, mean, sd, median, min, max, range, median) %>%
+  kable(
+    caption = "Descriptivos generales de variables nivel 1",
+    digits = 2
+  ) %>%
+  kable_styling(full_width = TRUE)
+```
+
+```{r descriptivos2, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Tabla de descriptivos de las variables de nivel 2
+casen_desc2 <- casen %>%
+  group_by(comuna) %>%
+  summarise(
+    mean_educ_padres = mean(mean_educ_padres),
+    mean_conectividad = mean(mean_conectividad),
+    N_comunas = n()
+  )
+
+casen_desc2 %>%
+  select(mean_educ_padres, mean_conectividad, N_comunas) %>%
+  psych::describe() %>%
+  select(n, mean, sd, median, min, max, range) %>%
+  kable(
+    caption = "Descriptivos generales de variables de nivel 2",
+    digits = 2
+  ) %>%
+  kable_styling(full_width = TRUE)
+
+```
 
 ---
 
-# Variables – Nivel 2
+# Graficos bivariados
 
-- Educación promedio de padres por comuna (1–5), promedio ≈ 2  
-- Conectividad promedio por comuna (0–5), promedio: 1.81  
-- N comunas: 335, con ≈154 casos por comuna
+
+
 
 ---
 
-# Procesamiento de variables
+# Centrado de variables
 
-- **Centrado a la gran media** de las variables de nivel 2  
-- Verificación de casos influyentes con **Distancia de Cook**  
-  → No se detectaron casos influyentes significativos
+
+
+---
+
+# Modelo Nulo
+
+El modelo nulo se representa como $NivelEduc_{ij} = \beta_0 + u_{0j} + \epsilon_{ij}$.
+
+```{r datos9, echo=FALSE, message=FALSE, warning=FALSE}
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+screenreg(modelo_nulo)
+
+reghelper::ICC(modelo_nulo)
+
+```
+
+```{r}
+reghelper::ICC(modelo_nulo)
+```
+
+
+---
+
+# Modelo con predictores de nivel 1
+
+
+
+```{r modelomultinivel, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+resultados_1 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
+                    mean_educ_padres + mean_conectividad + 
+                    (1 | comuna), data = casen)
+
+tab_model(resultados_1,
+          show.ci = FALSE,
+          show.icc = FALSE,
+          title = "Modelo multinivel",
+          dv.labels = c("Nivel educacional máximo"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio educativo de los padres (comuna)", 
+                          "Promedio conectividad (comuna)"))
+
+```
+
+
 
 ---
 
