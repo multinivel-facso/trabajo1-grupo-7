@@ -89,6 +89,22 @@ mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
 
 # 3) Resultados
 
+# Gráficos bivariados
+
+casen_biv1=casen %>% group_by(comuna) %>% select(mean_conectividad, nvl_educ, comuna) %>% na.omit() %>% summarise_all(mean)
+
+sjPlot::plot_scatter(
+  data = casen_biv1,
+  x = mean_conectividad,
+  y = nvl_educ,
+  dot.labels = to_label(casen_biv1$comuna),
+  fit.line = "lm",
+  show.ci = TRUE,
+  title = "Relación entre conectividad comunal y nivel educacional alcanzado",
+  axis.title = c("Promedio de conectividad comunal", 
+                 "Nivel educacional máximo alcanzado")
+)
+
 # 1) Modelo nulo
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
 
@@ -127,13 +143,9 @@ anova(resultados_3, reg_al1)
 
 # Graficar pendiente aleatoria
 
-
-
-graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [sample=9]"), type="random")
-
+graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [Iquique, Calama, La Serena, Vallenar, Santiago, Concepción, Temuco, Valdivia, Punta Arenas]"), type = "random")
+                                   
 plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
-
-# Poner varios gráficos para mostrar cómo varía por comuna
 
 # 6) Interacción entre niveles
 reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + 
