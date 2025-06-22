@@ -47,7 +47,7 @@ Analisis de datos Multinivel 2025
 
 **H4**: Mayor educación promedio de los padres en la comuna se asocia positivamente con el nivel educacional.
 
-**H5**: El efecto de la pertenencia a un pueblo indígena es moderado por la comuna.
+**H5**: El efecto de la pertenencia a un pueblo indígena sobre el nivel educacional varía por la comuna de residencia.
 
 ### **Hipótesis – Interacción entre niveles**
 
