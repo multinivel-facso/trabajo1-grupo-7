@@ -79,7 +79,8 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                haven,
                reghelper,
                texreg, 
-               gt) # Varios           
+               gt,
+               ggrepel) # Varios           
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
@@ -136,6 +137,23 @@ casen_desc2 %>%
 
 # Graficos bivariados
 
+```{r graficos bivariados, echo=FALSE, warning=FALSE, message=FALSE}
+
+casen_biv1=casen %>% group_by(comuna) %>% select(mean_conectividad, nvl_educ, comuna) %>% na.omit() %>% summarise_all(mean)
+
+sjPlot::plot_scatter(
+  data = casen_biv1,
+  x = mean_conectividad,
+  y = nvl_educ,
+  dot.labels = to_label(casen_biv1$comuna),
+  fit.line = "lm",
+  show.ci = TRUE,
+  title = "Relación entre conectividad comunal y nivel educacional alcanzado",
+  axis.title = c("Promedio de conectividad comunal", 
+                 "Nivel educacional máximo alcanzado")
+)
+```
+
 ------------------------------------------------------------------------
 
 # Centrado de variables
@@ -161,36 +179,24 @@ reghelper::ICC(modelo_nulo)
 
 ------------------------------------------------------------------------
 
-# Modelo con predictores de nivel 1
+# Modelo con predictores de nivel 1 {.small}
 
-```{r modelomultinivel, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
-resultados_1 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
-                    mean_educ_padres + mean_conectividad + 
-                    (1 | comuna), data = casen)
-
-tab_model(resultados_1,
-          show.ci = FALSE,
-          show.icc = FALSE,
-          title = "Modelo multinivel",
-          dv.labels = c("Nivel educacional máximo"),
-          pred.labels = c("(Intercepto)", 
-                          "Pertenencia a pueblo indígena", 
-                          "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)"))
-
-```
+$$
+\text{NivelEduc}_{ij} = \beta_0 + \beta_1 \cdot \text{Indígena}_{ij} + \beta_2 \cdot \text{DificultadConc}_{ij} + \beta_3 \cdot \text{EducPadres}_{j} + \beta_4 \cdot \text{Conectividad}_{j} 
++ u_{0j} + \epsilon_{ij}
+$$
 
 ------------------------------------------------------------------------
 
-# Modelos estimados
+# Modelos con predictores de nivel 2
 
--   Modelo 0: Nulo\
--   Modelo 1: Nivel 1 (pueblo indígena y concentración)\
--   Modelo 2: Nivel 2\
--   Modelo 3: Ambos niveles\
--   Modelo 4: Pendientes aleatorias\
--   Modelo 5: Interacción entre niveles
+Formula bla bla
+
+---
+
+# Modelos
+
+---
 
 ------------------------------------------------------------------------
 
@@ -228,6 +234,16 @@ tab_model(resultados_1,
 
 # Bibliografía
 
-*Agrega aquí tu bibliografía formateada si la necesitas (o usa Zotero/BibTeX con Quarto)*
+-   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
+
+-   Jiménez, J. M., & Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. *Latinoamérica. Revista de Estudios Educativos*, 52(1). <https://latam.redilat.org/index.php/lt/article/view/3246>
+
+-   López, J., & Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? *Estudios Sociológicos*, 26(78), 713–736. <https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext>
+
+-   Mejía, D. A., & Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. *ResearchGate*. [https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement](https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement)
+
+-   Rodríguez, F., Pérez, M., & Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. *Revista Conrado*, 17(83). <https://www.redalyc.org/journal/280/28073811035/html/>
+
+-   Mide UC. (2020). *Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena.* Pontificia Universidad Católica de Chile. Recuperado de <https://mideuc.cl>
 
 ------------------------------------------------------------------------
