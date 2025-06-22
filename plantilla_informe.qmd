@@ -192,7 +192,7 @@ reghelper::ICC(modelo_nulo)
 
 ```
 
-### **b) Construcción de modelos e interpretación de resultados**
+### **c) Construcción de modelos e interpretación de resultados**
 
 Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.
 
