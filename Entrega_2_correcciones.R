@@ -92,8 +92,6 @@ mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
 # 1) Modelo nulo
 modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
 
-screenreg(modelo_nulo)
-
 # 2) Modelo con variables de nivel 1
 resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + (1 | comuna_factor), data = casen)
 
@@ -129,6 +127,8 @@ anova(resultados_3, reg_al1)
 
 # Graficar pendiente aleatoria
 
+
+
 graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [sample=9]"), type="random")
 
 plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
@@ -145,19 +145,19 @@ plot_model(reg_int, type = "int") # esto ponerlo dsp en el análisis separado de
 # CÓDIGO PARA COMPARAR MODELOS
 tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
           show.ci = FALSE,
-          show.icc = FALSE,
+          show.icc = TRUE,
           title = "Comparación de modelos",
           dv.labels = c("Modelo Nulo", 
-                        "Modelo con variables de nivel 1", 
-                        "Modelo con variables de nivel 2", 
-                        "Modelo multinivel",
+                        "Modelo con predictores de nivel 1", 
+                        "Modelo con predictores de nivel 2", 
+                        "Modelo con predictores de nivel 1 y 2",
                         "Modelo con pendiente aleatoria",
                         "Modelo con interacción entre niveles"),
           pred.labels = c("(Intercepto)", 
                           "Pertenencia a pueblo indígena", 
                           "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)",
+                          "Promedio nivel educativo de los padres (centrado)", 
+                          "Promedio conectividad (centrado)",
                           "Interacción (pueblo_indigena:mean_educ_padres)"))
 
 #/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
