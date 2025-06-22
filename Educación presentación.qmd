@@ -15,7 +15,7 @@ format:
 editor: visual
 ---
 
-# Factores influyentes para el desarrollo de la educación en Chile
+# Factores influyentes para el desarrollo de la educación en Chile 
 
 Matilda Raccagni y Rodrigo Huerta
 
@@ -31,7 +31,7 @@ Analisis de datos Multinivel 2025
 
 ------------------------------------------------------------------------
 
-# ¿En qué grado inciden los factores individuales y estructurales inciden en el nivel educativo máximo alcanzado por las personas en Chile?
+# ¿En qué grado inciden los factores individuales y estructurales inciden en el nivel educativo máximo alcanzado por las personas en Chile? 
 
 ------------------------------------------------------------------------
 
@@ -80,6 +80,8 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                broom, 
                gginference,
                ggplot2,
+               knitr,
+               sjlabelled,
                dplyr,
                stargazer,
                lme4,
@@ -87,7 +89,9 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                reghelper,
                texreg, 
                gt,
-               ggrepel) # Varios           
+               ggeffects,
+               labelled,
+               influence.ME) # Varios          
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
@@ -168,7 +172,7 @@ mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
 
 ```
 
----
+------------------------------------------------------------------------
 
 # Modelos
 
@@ -198,69 +202,57 @@ $$
 
 ------------------------------------------------------------------------
 
-# Modelos con predictores de nivel 2  {.small}
+# Modelos con predictores de nivel 2 {.small}
 
 $$
 \text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{mean_educ_padres_gmc}_{ij} + \gamma_{02}  \text{mean_conectividad_gmc}_{ij}   
 + u_{0j} + r_{ij}
 $$
 
----
+------------------------------------------------------------------------
 
-# Modelos con predictores de nivel 1 y 2  {.small}
+# Modelos con predictores de nivel 1 y 2 {.small}
 
-:::: {style="font-size:85%"}
-
+::: {style="font-size:85%"}
 ::: {style="overflow-x: auto; white-space: nowrap;"}
-
 $$
 \text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij}  
 + u_{0j} + r_{ij}
 $$
-
+:::
 :::
 
-::::
-
----
+------------------------------------------------------------------------
 
 # Modelo con pendiente aleatoria {.small}
 
-:::: {style="font-size:85%"}
-
+::: {style="font-size:85%"}
 ::: {style="overflow-x: auto; white-space: nowrap;"}
-
 $$
 \text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij}  
 + u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
 $$
-
+:::
 :::
 
-::::
-
----
+------------------------------------------------------------------------
 
 # Modelo con interacción entre niveles {.small}
 
-:::: {style="font-size:85%"}
-
+::: {style="font-size:85%"}
 ::: {style="overflow-x: auto; white-space: nowrap;"}
-
 $$
 \text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij} +  \gamma_{05} \text{pueblo_indigena*mean_educ_padres_gmc}
 + u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
 $$
-
 :::
-
-::::
+:::
 
 ------------------------------------------------------------------------
 
-# Resultados 
+# Resultados
 
----
+------------------------------------------------------------------------
 
 # Gráfico Bivariado
 
@@ -282,12 +274,11 @@ sjPlot::plot_scatter(
 
 ```
 
----
+------------------------------------------------------------------------
 
 # Resultados {.tiny}
 
 ::: {.scrollable style="overflow: auto; max-height: 500px;"}
-
 ```{r grafico modelo multinivel, echo=FALSE, warning=FALSE, message=FALSE, results='asis'}
 
 
@@ -338,7 +329,6 @@ tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_in
 invisible(NULL)      # evita ecos adicionales
 
 ```
-
 :::
 
 <div>
@@ -351,11 +341,39 @@ invisible(NULL)      # evita ecos adicionales
 
 ------------------------------------------------------------------------
 
-# Resultados – Modelo con interacción
+# Test de Devianza
 
--   Se modeló interacción entre pertenencia indígena y educación parental comunal\
--   No se encontró interacción significativa\
--   Se incluyen gráficos exploratorios
+```{r test anova, echo=FALSE, warning=FALSE, message=FALSE}
+# Ver test ANOVA en una tabla
+anova_resultados <- anova(resultados_3, reg_al1)
+
+kable(anova_resultados, caption = "Comparación de modelos con test ANOVA")
+```
+
+---
+
+# Gráfico de pendiente aleatoria (pueblo_indigena)
+
+```{r grafico de pendiente aleatoria, echo=FALSE, warning=FALSE, message=FALSE}
+
+install.packages("ggeffects")
+
+# Graficar pendiente aleatoria
+
+graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [Iquique, Calama, La Serena, Vallenar, Santiago, Concepción, Temuco, Valdivia, Punta Arenas]"), type = "random")
+                                   
+plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
+```
+
+---
+
+# Interracción entre niveles
+
+```{r interracción entre niveles, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+plot_model(reg_int, type = "int")
+```
 
 ------------------------------------------------------------------------
 
