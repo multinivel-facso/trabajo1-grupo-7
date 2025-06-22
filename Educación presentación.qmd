@@ -5,6 +5,13 @@ format:
     theme: multinivel.scss
     incremental: true
     slide-number: true
+    auto-stretch: false
+    transition: fade
+    transition-speed: slow
+    scrollable: true
+    scrollOverflow: true           
+    css: estilos.css 
+    self-contained: true
 editor: visual
 ---
 
@@ -135,7 +142,127 @@ casen_desc2 %>%
 
 ------------------------------------------------------------------------
 
-# Graficos bivariados
+# Centrado y casos influyentes
+
+-   Centramos ambas variables de nivel 2 a la gran media para lograr una mejor consistencia de los resultados. 
+
+-   No detectamos casos influyentes
+
+```{r centrado de variables, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+# 2) Centrado
+# Centrado de la variable comprometida en la interacción
+casen <- casen %>% ungroup() %>%
+  mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
+
+mg_educ_padres <- mean(casen$mean_educ_padres) # 2.24 = media general del nivel educacional de los padres
+
+# Centrado de la variable mean_conectividad
+casen <- casen %>% ungroup() %>%
+  mutate(mean_conectividad_gmc = mean_conectividad-mean(mean_conectividad))
+
+mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
+
+# mg = media general de las variables
+
+```
+
+---
+
+# Modelos
+
+------------------------------------------------------------------------
+
+# Modelo Nulo
+
+El modelo nulo se representa como
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + u_{0j} + r_{ij}
+$$
+
+```{r datos9, echo=FALSE, message=FALSE, warning=FALSE}
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+```
+
+------------------------------------------------------------------------
+
+# Modelo con predictores de nivel 1 {.small}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij}   
++ u_{0j} + r_{ij}
+$$
+
+------------------------------------------------------------------------
+
+# Modelos con predictores de nivel 2  {.small}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{mean_educ_padres_gmc}_{ij} + \gamma_{02}  \text{mean_conectividad_gmc}_{ij}   
++ u_{0j} + r_{ij}
+$$
+
+---
+
+# Modelos con predictores de nivel 1 y 2  {.small}
+
+:::: {style="font-size:85%"}
+
+::: {style="overflow-x: auto; white-space: nowrap;"}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij}  
++ u_{0j} + r_{ij}
+$$
+
+:::
+
+::::
+
+---
+
+# Modelo con pendiente aleatoria {.small}
+
+:::: {style="font-size:85%"}
+
+::: {style="overflow-x: auto; white-space: nowrap;"}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij}  
++ u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
+$$
+
+:::
+
+::::
+
+---
+
+# Modelo con interacción entre niveles {.small}
+
+:::: {style="font-size:85%"}
+
+::: {style="overflow-x: auto; white-space: nowrap;"}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij} +  \gamma_{05} \text{pueblo_indigena*mean_educ_padres_gmc}
++ u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
+$$
+
+:::
+
+::::
+
+------------------------------------------------------------------------
+
+# Resultados 
+
+---
+
+# Gráfico Bivariado
 
 ```{r graficos bivariados, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -152,66 +279,75 @@ sjPlot::plot_scatter(
   axis.title = c("Promedio de conectividad comunal", 
                  "Nivel educacional máximo alcanzado")
 )
-```
-
-------------------------------------------------------------------------
-
-# Centrado de variables
-
-------------------------------------------------------------------------
-
-# Modelo Nulo
-
-El modelo nulo se representa como $NivelEduc_{ij} = \beta_0 + u_{0j} + \epsilon_{ij}$.
-
-```{r datos9, echo=FALSE, message=FALSE, warning=FALSE}
-modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
-
-screenreg(modelo_nulo)
-
-reghelper::ICC(modelo_nulo)
 
 ```
-
-```{r}
-reghelper::ICC(modelo_nulo)
-```
-
-------------------------------------------------------------------------
-
-# Modelo con predictores de nivel 1 {.small}
-
-$$
-\text{NivelEduc}_{ij} = \beta_0 + \beta_1 \cdot \text{Indígena}_{ij} + \beta_2 \cdot \text{DificultadConc}_{ij} + \beta_3 \cdot \text{EducPadres}_{j} + \beta_4 \cdot \text{Conectividad}_{j} 
-+ u_{0j} + \epsilon_{ij}
-$$
-
-------------------------------------------------------------------------
-
-# Modelos con predictores de nivel 2
-
-Formula bla bla
 
 ---
 
-# Modelos
+# Resultados {.tiny}
 
----
+::: {.scrollable style="overflow: auto; max-height: 500px;"}
 
-------------------------------------------------------------------------
+```{r grafico modelo multinivel, echo=FALSE, warning=FALSE, message=FALSE, results='asis'}
 
-# Resultados – Nivel 1
 
--   **Efectos significativos** y negativos:
-    -   Ser indígena: −0.36\
-    -   Dificultad para concentrarse: −0.75
+casen$comuna_factor <- as_factor(casen$comuna)
 
-------------------------------------------------------------------------
+# 1) Modelo nulo
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
 
-# Resultados – Nivel 2
+# 2) Modelo con variables de nivel 1
+resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + (1 | comuna_factor), data = casen)
 
--   Educación parental comunal centrada: +0.24\
--   Conectividad comunal centrada: **+1.82**
+# 3) Modelo con variables de nivel 2
+resultados_2 = lmer(nvl_educ ~ mean_conectividad_gmc + mean_educ_padres_gmc + (1 | comuna_factor), data = casen)
+
+# 4) Modelo con variables de nivel 1 y 2
+resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
+                       mean_conectividad_gmc + mean_educ_padres_gmc + 
+                    (1 | comuna_factor), data = casen)
+
+# 5) Pendiente aleatoria (+ test de devianza)
+# Pendiente aleatoria para pueblo_indigena
+reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad_gmc + 
+               mean_educ_padres_gmc + ( 1 + pueblo_indigena | comuna_factor), data = casen)
+
+# 6) Interacción entre niveles
+reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + 
+                  mean_conectividad_gmc + (1 + pueblo_indigena | comuna_factor), data = casen)
+
+# CÓDIGO PARA COMPARAR MODELOS
+tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
+          show.ci = FALSE,
+          show.icc = TRUE,
+          title = "Comparación de modelos",
+          dv.labels = c("Modelo Nulo", 
+                        "Modelo con predictores de nivel 1", 
+                        "Modelo con predictores de nivel 2", 
+                        "Modelo con predictores de nivel 1 y 2",
+                        "Modelo con pendiente aleatoria",
+                        "Modelo con interacción entre niveles"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio nivel educativo de los padres (centrado)", 
+                          "Promedio conectividad (centrado)",
+                          "Interacción (pueblo_indigena:mean_educ_padres)"))
+
+
+invisible(NULL)      # evita ecos adicionales
+
+```
+
+:::
+
+<div>
+
+<div>
+
+</div>
+
+</div>
 
 ------------------------------------------------------------------------
 
