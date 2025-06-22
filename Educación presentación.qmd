@@ -31,7 +31,7 @@ Analisis de datos Multinivel 2025
 
 ------------------------------------------------------------------------
 
-# ¿En qué grado inciden los factores individuales y estructurales inciden en el nivel educativo máximo alcanzado por las personas en Chile? 
+# ¿En qué grado inciden los factores individuales y estructurales en el nivel educativo máximo alcanzado por las personas en Chile? 
 
 ------------------------------------------------------------------------
 
@@ -379,10 +379,13 @@ plot_model(reg_int, type = "int")
 
 # Conclusiones
 
--   Se confirma incidencia de factores individuales y estructurales\
--   Variables comunales tienen **efectos importantes**\
--   Interacción propuesta no se encontró significativa\
--   Implicancias para políticas territoriales
+-   Se confirma incidencia de factores individuales y estructurales
+
+-   Variables comunales tienen **efectos importantes**
+
+-   Interacción propuesta no se encontró significativa
+
+-   Efecto de la conectividad
 
 ------------------------------------------------------------------------
 
