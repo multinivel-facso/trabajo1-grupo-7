@@ -9,29 +9,28 @@ editor: visual
 ---
 
 # Factores influyentes para el desarrollo de la educación en Chile
+
 Matilda Raccagni y Rodrigo Huerta
 
 Analisis de datos Multinivel 2025
 
-
----
+------------------------------------------------------------------------
 
 # Introducción
 
-* **Problematización:** La educación es uno de los pilares fundamentales del desarrollo individual y colectivo, en la sociedad chilena actual, el acceso y logro educativo son procesos muy influenciados por factores estructurales e individuales
+-   **Problematización:** La educación es uno de los pilares fundamentales del desarrollo individual y colectivo, en la sociedad chilena actual, el acceso y logro educativo son procesos muy influenciados por factores estructurales e individuales
 
-* **Variables a utilizar:** nivel educacional (dependiente), nivel educativo de los padres, etnicidad, conectividad digital y capacidad para concentrarse.
+-   **Variables a utilizar:** nivel educacional (dependiente), nivel educativo de los padres, etnicidad, conectividad digital y capacidad para concentrarse.
 
-
----
+------------------------------------------------------------------------
 
 # ¿En qué grado inciden los factores individuales y estructurales inciden en el nivel educativo máximo alcanzado por las personas en Chile?
 
----
+------------------------------------------------------------------------
 
 ### **Hipótesis – Nivel 1**
 
- **H1**: La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional.
+**H1**: La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional.
 
 **H2**: La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional.
 
@@ -47,17 +46,17 @@ Analisis de datos Multinivel 2025
 
 **H6**: En comunas con mayor educación parental, el efecto negativo de ser indígena es menor.
 
----
+------------------------------------------------------------------------
 
 # Metodología
 
-- **Base de datos**: Encuesta CASEN 2022  
-- Diseño probabilístico, representatividad nacional  
-- **Submuestra**: 51.686 personas de 20+ años en 335 comunas
+-   **Base de datos**: Encuesta CASEN 2022\
+-   Diseño probabilístico, representatividad nacional\
+-   **Submuestra**: 51.686 personas de 20+ años en 335 comunas
 
 Para el analisis utilizamos la metodología multinivel, ya que sengún la literatura revisada, los factores de nivel dos inciden en nuestra variable dependiente.
 
----
+------------------------------------------------------------------------
 
 ## Tablas de descriptivos variables nivel 1 y 2
 
@@ -133,20 +132,15 @@ casen_desc2 %>%
 
 ```
 
----
+------------------------------------------------------------------------
 
 # Graficos bivariados
 
-
-
-
----
+------------------------------------------------------------------------
 
 # Centrado de variables
 
-
-
----
+------------------------------------------------------------------------
 
 # Modelo Nulo
 
@@ -165,12 +159,9 @@ reghelper::ICC(modelo_nulo)
 reghelper::ICC(modelo_nulo)
 ```
 
-
----
+------------------------------------------------------------------------
 
 # Modelo con predictores de nivel 1
-
-
 
 ```{r modelomultinivel, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 resultados_1 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
@@ -190,56 +181,53 @@ tab_model(resultados_1,
 
 ```
 
-
-
----
+------------------------------------------------------------------------
 
 # Modelos estimados
 
-- Modelo 0: Nulo  
-- Modelo 1: Nivel 1 (pueblo indígena y concentración)  
-- Modelo 2: Nivel 2  
-- Modelo 3: Ambos niveles  
-- Modelo 4: Pendientes aleatorias  
-- Modelo 5: Interacción entre niveles
+-   Modelo 0: Nulo\
+-   Modelo 1: Nivel 1 (pueblo indígena y concentración)\
+-   Modelo 2: Nivel 2\
+-   Modelo 3: Ambos niveles\
+-   Modelo 4: Pendientes aleatorias\
+-   Modelo 5: Interacción entre niveles
 
----
+------------------------------------------------------------------------
 
 # Resultados – Nivel 1
 
-- **Efectos significativos** y negativos:  
-  - Ser indígena: −0.36  
-  - Dificultad para concentrarse: −0.75
+-   **Efectos significativos** y negativos:
+    -   Ser indígena: −0.36\
+    -   Dificultad para concentrarse: −0.75
 
----
+------------------------------------------------------------------------
 
 # Resultados – Nivel 2
 
-- Educación parental comunal centrada: +0.24  
-- Conectividad comunal centrada: **+1.82**
+-   Educación parental comunal centrada: +0.24\
+-   Conectividad comunal centrada: **+1.82**
 
----
+------------------------------------------------------------------------
 
 # Resultados – Modelo con interacción
 
-- Se modeló interacción entre pertenencia indígena y educación parental comunal  
-- No se encontró interacción significativa  
-- Se incluyen gráficos exploratorios
+-   Se modeló interacción entre pertenencia indígena y educación parental comunal\
+-   No se encontró interacción significativa\
+-   Se incluyen gráficos exploratorios
 
----
+------------------------------------------------------------------------
 
 # Conclusiones
 
-- Se confirma incidencia de factores individuales y estructurales  
-- Variables comunales tienen **efectos importantes**  
-- Interacción propuesta no se encontró significativa  
-- Implicancias para políticas territoriales
+-   Se confirma incidencia de factores individuales y estructurales\
+-   Variables comunales tienen **efectos importantes**\
+-   Interacción propuesta no se encontró significativa\
+-   Implicancias para políticas territoriales
 
----
+------------------------------------------------------------------------
 
 # Bibliografía
 
 *Agrega aquí tu bibliografía formateada si la necesitas (o usa Zotero/BibTeX con Quarto)*
 
----
-
+------------------------------------------------------------------------
