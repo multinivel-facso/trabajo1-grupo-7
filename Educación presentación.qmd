@@ -367,7 +367,7 @@ plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
 
 ------------------------------------------------------------------------
 
-# Interracción entre niveles
+# Interacción entre niveles
 
 ```{r interracción entre niveles, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -389,7 +389,7 @@ plot_model(reg_int, type = "int")
 
 ------------------------------------------------------------------------
 
-# Bibliografía
+# Bibliografía {.small}
 
 -   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
 
