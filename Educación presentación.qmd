@@ -15,7 +15,7 @@ format:
 editor: visual
 ---
 
-# Factores influyentes para el desarrollo de la educación en Chile 
+# Factores influyentes para el desarrollo de la educación en Chile
 
 Matilda Raccagni y Rodrigo Huerta
 
@@ -31,7 +31,7 @@ Analisis de datos Multinivel 2025
 
 ------------------------------------------------------------------------
 
-# ¿En qué grado inciden los factores individuales y estructurales en el nivel educativo máximo alcanzado por las personas en Chile? 
+# ¿En qué grado inciden los factores individuales y estructurales en el nivel educativo máximo alcanzado por las personas en Chile?
 
 ------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ Analisis de datos Multinivel 2025
 
 **H4**: Mayor educación promedio de los padres en la comuna se asocia positivamente con el nivel educacional.
 
-**H5**: El efecto de la pertenencia a un pueblo indígena es moderado por la comuna.
+**H5**: El efecto de la pertenencia a un pueblo indígena sobre el nivel educacional varía por la comuna de residencia.
 
 ### **Hipótesis – Interacción entre niveles**
 
@@ -61,7 +61,7 @@ Analisis de datos Multinivel 2025
 -   Diseño probabilístico, representatividad nacional\
 -   **Submuestra**: 51.686 personas de 20+ años en 335 comunas
 
-Para el analisis utilizamos la metodología multinivel, ya que sengún la literatura revisada, los factores de nivel dos inciden en nuestra variable dependiente.
+Para el análisis utilizamos la metodología multinivel, ya que según la literatura revisada, los factores de nivel dos inciden en nuestra variable dependiente.
 
 ------------------------------------------------------------------------
 
@@ -350,7 +350,7 @@ anova_resultados <- anova(resultados_3, reg_al1)
 kable(anova_resultados, caption = "Comparación de modelos con test ANOVA")
 ```
 
----
+------------------------------------------------------------------------
 
 # Gráfico de pendiente aleatoria (pueblo_indigena)
 
@@ -365,9 +365,9 @@ graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [Iquique, Ca
 plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
 ```
 
----
+------------------------------------------------------------------------
 
-# Interracción entre niveles
+# Interacción entre niveles
 
 ```{r interracción entre niveles, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -389,7 +389,7 @@ plot_model(reg_int, type = "int")
 
 ------------------------------------------------------------------------
 
-# Bibliografía
+# Bibliografía {.small}
 
 -   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
 
