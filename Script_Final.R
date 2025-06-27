@@ -171,6 +171,8 @@ graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [Iquique, Ca
 
 plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
 
+attach(casen)
+
 # 6) Interacción entre niveles
 reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + edad + mean_dau_gmc +
                   mean_conectividad_gmc + (1 + pueblo_indigena | comuna_factor), data = casen)
@@ -208,9 +210,9 @@ inf_casen <- influence(resultados_3, group = "comuna_factor")
 
 #Distancia de cook
 
-cooks.distance(dcook, sort = TRUE)
+cooks.distance(inf_casen, sort = TRUE)
 
-cut_dcook <- 4/51686
+cut_dcook <- 4/51775
 cut_dcook
 
 plot(inf_casen, which="cook",
@@ -229,4 +231,4 @@ sig <- sigtest(inf_casen, test=-1.96)
 any(sig$pueblo_indigena$Changed.Sig)
 any(sig$dificultad_conc$Changed.Sig)
 any(sig$mean_educ_padres$Changed.Sig)
-any(sig$mean_conectividad$Changed.Sig)
+any(sig$mean_conectividad$Changed.Sig) # Muchos outliers pero ningún caso influyente

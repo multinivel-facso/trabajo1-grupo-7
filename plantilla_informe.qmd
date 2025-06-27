@@ -30,17 +30,13 @@ En este contexto, es crucial analizar cómo la conjunción de factores como el n
 
 Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y "conectividad", y nuestra variable de anidación serán las “comunas”.
 
-# 2) Objetivos
+En base a esto, buscaremos responder la siguiente pregunta de investigación: ¿Qué efecto tienen las condiciones socioeconómicas, culturales y psicológicas de las personas en la desigualdad educativa en Chile, y cómo varía según las características de la comuna?
+
+# 2) Objetivo general e hipótesis
 
 ### Objetivo general**:**
 
-Calcular y analizar el efecto de factores individuales (variables de nivel 1) y contextuales (variables de nivel 2 y de anidación) sobre el nivel educativo máximo alcanzado por las personas en Chile.
-
-### **Objetivos Especificos:**
-
-1\) Determinar la influencia de variables de nivel 1, como la pertenencia a pueblos indígenas o la dificultad para concentrarse, en el nivel educacional máximo alcanzado.
-
-2\) Determinar la influencia de variables de nivel 2 (agrupadas por comuna), como el promedio de conectividad de la comuna o el promedio del nivel educacional máximo de los padres de la comuna, en el nivel educacional máximo alcanzado
+Evaluar el efecto de las características socioeconómicas, culturales y psicológicas de las personas, y de la comuna de residencia de ellas, sobre la desigualdad educativa en Chile.
 
 ### **Hipótesis** Nivel 1:
 
@@ -54,13 +50,17 @@ Calcular y analizar el efecto de factores individuales (variables de nivel 1) y 
 
 -   **H4:** La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado
 
--   H5: El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional se ve moderado por la comuna
+-   H5: Pertenecer a una comuna con un mayor promedio de ingreso autónomo se asocia positivamente con el nivel educacional máximo
 
--   H6: El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
+-   H6: El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional no es constante entre las comunas.
+
+-   H7: El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
 
 # 3) Datos, variables y métodos
 
-```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
+```{r librerias y bbdd, echo=FALSE, warning=FALSE, message=FALSE}
+# I- Cargamos las librerias y base de datos
+
 pacman::p_load(tidyverse, # Manipulacion de datos
                car, # Recodificar
                sjPlot, # Tablas y graficos
@@ -71,23 +71,42 @@ pacman::p_load(tidyverse, # Manipulacion de datos
                broom, 
                gginference,
                ggplot2,
+               knitr,
+               sjlabelled,
                dplyr,
                stargazer,
                lme4,
                haven,
                reghelper,
                texreg, 
-               gt) # Varios           
+               gt,
+               ggeffects,
+               labelled,
+               influence.ME) # Varios
 
 options(scipen = 999) # para desactivar notacion cientifica
 rm(list = ls()) # para limpiar el entorno de trabajo
+
+load("casen_final.Rdata") #cargamos base de datos, 11 variables
+
+casen <- casen_final
 ```
 
-```{r datos1, echo=FALSE, warning=FALSE, message=FALSE}
-load("casen.Rdata") #cargamos base de datos
-```
+### 3) Metodología
 
-### **Estadísticos descriptivos para variables de nivel 1**
+#### 3.1) Datos 
+
+Se utilizó la base de datos de la encuesta CASEN 2022, la cual tiene un diseño muestral, probabilístico, con representatividad nacional. Se extrajo una submuestra de 51.775 individuos de 18 años o más, dentro de 335 comunas del país.
+
+Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adela
+
+#### 3.2) Variables y operacionalización 
+
+aquí describir cómo operacionalizamos las variables (partir con la dependiente y ser muy específico), luego cn las demas (acordarnos de que tenemos edad como variable de control)
+
+#### 3.3) Estadísticos descriptivos generales
+
+#### **Estadísticos descriptivos para variables de nivel 1**
 
 ```{r descriptivos1, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -126,7 +145,7 @@ La variable dificultad de concentración mide el grado en que la persona declara
 
 En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
 
-### **Estadísticos descriptivos para variables de nivel 2**
+#### **Estadísticos descriptivos para variables de nivel 2**
 
 poner análisis descriptivos de variables de nivel 2
 
@@ -165,7 +184,7 @@ En esta variable se encuestaron a 335 comunas en total, de las cuales las siguie
 
 En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra. La media de respuestas por comuna es de 154.28, con una desviación estándar de 222.57 respuestas, lo que significa que hay comunas con mucha más representación que otras
 
-### Modelos a utilizar
+#### 3.4) Métodos  
 
 !!!!!!!!aquí describir los modelos a usar. Usamos el nulo, predictores nvl1, predictores nvl2, multinivel, pendiente aleatoria y de interacción entre niveles
 
@@ -173,7 +192,9 @@ En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta,
 
 ### a) Gráficos bivariados (ESTO FALTA)
 
-### **b) Modelos y discusión sobre centrado**
+### **b) Resultados de los modelos** 
+
+DISCUTIR CENTRADO Y CASOS INFLUYENTES
 
 Explicar la organización de las tablas y comentar
 
