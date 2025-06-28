@@ -12,7 +12,7 @@ editor: visual
 
 En esta investigación se ahondaran en los factores que inciden en el nivel educacional máximo alcanzado por personas con 20 años o más residentes en 324 comunas de Chile. Se trabajara con un N general de 51.686 casos. Se busca ahondar en la influencia que tienen las siguientes variables: si pertenece a un pueblo indígena; nivel educacional de los padres; conectividad a internet; y dificultad para concentrarse y poner atención. La relevancia de esta investigación radica en que la educación es uno de los pilares fundamentales de las sociedades modernas, tanto en los procesos de socialización como culturales. Existen diversos factores que pueden incidir en alcanzar o no un nivel determinado de educación, como pueden ser los ya nombrados o el nivel de ingresos, el sexo, la orientación sexual o la edad. Se buscará realizar un modelo multinivel donde trabajaremos con variables de nivel 1 y de nivel 2 para ver su incidencia en nuestra variable dependiente.
 
-# 1) Introducción
+# **1) Introducción**
 
 La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu & Passeron, 1990).
 
@@ -22,7 +22,7 @@ Otro eje de desigualdad significativa es la pertenencia a pueblos indígenas. En
 
 La conectividad digital ha adquirido una relevancia especial en los últimos años, particularmente a raíz de la pandemia de COVID-19. Rodríguez et al. (2021) muestran cómo la falta de acceso a dispositivos tecnológicos y a internet de calidad afectó negativamente el proceso formativo de miles de estudiantes. Las brechas digitales se han convertido así en un nuevo eje de desigualdad educativa, afectando especialmente a estudiantes de zonas rurales o de bajos ingresos, quienes vieron restringido su derecho a la educación durante largos periodos.
 
-En esta línea, también es relevante considerar la **comuna de residencia** como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.
+En esta línea, también es relevante considerar la comuna de residencia como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.
 
 En el plano individual, factores como la dificultad de concentración también inciden en el rendimiento académico. Jiménez y Fernández (2022) analizan cómo los problemas de concentración afectan negativamente el aprendizaje, y cómo estas dificultades se ven exacerbadas en contextos de pobreza, estrés familiar o ausencia de acompañamiento educativo. Las condiciones del entorno, por tanto, pueden potenciar o mitigar estas dificultades individuales, lo que evidencia la necesidad de un enfoque integral.
 
@@ -32,31 +32,31 @@ Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se 
 
 En base a esto, buscaremos responder la siguiente pregunta de investigación: ¿Qué efecto tienen las condiciones socioeconómicas, culturales y psicológicas de las personas en la desigualdad educativa en Chile, y cómo varía según las características de la comuna?
 
-# 2) Objetivo general e hipótesis
+# **2) Objetivo general e hipótesis**
 
-### Objetivo general**:**
+### **2.1) Objetivo general:**
 
 Evaluar el efecto de las características socioeconómicas, culturales y psicológicas de las personas, y de la comuna de residencia de ellas, sobre la desigualdad educativa en Chile.
 
-### **Hipótesis** Nivel 1:
+### **2.2) Hipótesis Nivel 1:**
 
 -   **H1:** La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.
 
 -   **H2:** La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo alcanzado.
 
-### **Hipótesis** Nivel 2:
+### **2.3) Hipótesis Nivel 2:**
 
 -   **H3:** Pertenecer a una comuna con un alto nivel de conectividad tiene un efecto positivo sobre el nivel educacional máximo.
 
 -   **H4:** La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado
 
--   H5: Pertenecer a una comuna con un mayor promedio de ingreso autónomo se asocia positivamente con el nivel educacional máximo
+-   **H5:** Pertenecer a una comuna con un mayor promedio de ingreso autónomo se asocia positivamente con el nivel educacional máximo
 
--   H6: El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional no es constante entre las comunas.
+-   **H6:** El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional no es constante entre las comunas.
 
--   H7: El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
+-   **H7:** El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres
 
-# 3) Datos, variables y métodos
+# **3) Datos, variables y métodos**
 
 ```{r librerias y bbdd, echo=FALSE, warning=FALSE, message=FALSE}
 # I- Cargamos las librerias y base de datos
@@ -92,19 +92,17 @@ load("casen_final.Rdata") #cargamos base de datos, 11 variables
 casen <- casen_final
 ```
 
-### 3) Metodología
-
-#### 3.1) Datos 
+#### **3.1) Datos y metodología**
 
 Se utilizó la base de datos de la encuesta CASEN 2022, la cual tiene un diseño muestral, probabilístico, con representatividad nacional. Se extrajo una submuestra de 51.775 individuos de 18 años o más, dentro de 335 comunas del país.
 
 Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adela
 
-#### 3.2) Variables y operacionalización 
+#### **3.2) Variables y operacionalización**
 
 aquí describir cómo operacionalizamos las variables (partir con la dependiente y ser muy específico), luego cn las demas (acordarnos de que tenemos edad como variable de control)
 
-#### 3.3) Estadísticos descriptivos generales
+#### **3.3) Estadísticos descriptivos generales**
 
 #### **Estadísticos descriptivos para variables de nivel 1**
 
@@ -114,7 +112,7 @@ casen$comuna_factor <- as_factor(casen$comuna)
 
 # Descriptivos variables de nivel 1
 casen_desc1 = casen %>% select(nvl_educ, pueblo_indigena,
-                              dificultad_conc, comuna)
+                               dificultad_conc, comuna, edad)
 
 casen_desc1 %>% ungroup() %>%
   select(-comuna) %>%
@@ -127,23 +125,27 @@ casen_desc1 %>% ungroup() %>%
   kable_styling(full_width = TRUE)
 ```
 
-a\) Nivel educacional máximo alcanzado (dependiente):
+**a) Nivel educacional máximo alcanzado (dependiente):**
 
 La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.
 
 Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
 
-b\) Pertenencia a pueblos indígenas (independiente, nivel 1):
+**b) Pertenencia a pueblos indígenas (independiente, nivel 1):**
 
 La variable pertenencia a pueblos indígenas identifica si la persona se reconoce como perteneciente a uno de los 10 pueblos originarios reconocidos en Chile. Es una dummy, donde el valor 1 índica pertenencia y el 0 indica no pertenencia. Esta variable permite observar los porcentajes de pertenencia indígena y no indígena.
 
 En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.
 
-c\) Dificultad para concentrarse (independiente, nivel 2):
+**c) Dificultad para concentrarse (independiente, nivel 1):**
 
 La variable dificultad de concentración mide el grado en que la persona declara tener dificultades para concentrarse o mantener la atención. Es una variable categórica, con una escala que va desde el 0 (no tiene dificultad) hasta el 3 (sí presenta bastante dificultad).
 
 En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
+
+**d) Edad (variable de control)**
+
+.........
 
 #### **Estadísticos descriptivos para variables de nivel 2**
 
@@ -151,17 +153,17 @@ poner análisis descriptivos de variables de nivel 2
 
 ```{r descriptivos2, echo=FALSE, warning=FALSE, message=FALSE}
 
-# Tabla de descriptivos de las variables de nivel 2
 casen_desc2 <- casen %>%
   group_by(comuna) %>%
   summarise(
     mean_educ_padres = mean(mean_educ_padres),
     mean_conectividad = mean(mean_conectividad),
+    mean_dau = mean(mean_dau),
     comunas = n()
   )
 
 casen_desc2 %>%
-  select(mean_educ_padres, mean_conectividad, comunas) %>%
+  select(mean_educ_padres, mean_conectividad, mean_dau, comunas) %>%
   psych::describe() %>%
   select(n, mean, sd, median, min, max, range) %>%
   kable(
@@ -172,101 +174,181 @@ casen_desc2 %>%
 
 ```
 
-d\) Promedio del nivel educacional de los padres por comuna (independiente, nivel 2)
+**e) Promedio del nivel educacional de los padres por comuna (independiente, nivel 2)**
 
-e\) Promedio de conectividad por comuna (independiente, nivel 2)
+**f) Promedio de conectividad por comuna (independiente, nivel 2)**
 
-f\) Comuna (cluster)
+**g) Promedio del decil de ingresos por comuna (independiente, nivel 2)**
+
+**h) Comuna (cluster)**
 
 La variable comuna identifica la unidad territorial en la que reside cada persona encuestada. Corresponde a una variable categórica nominal con 335 categorías posibles, una por cada comuna del país. En este análisis se utilizará esta variable como la variable de anidación o cluster.
 
 En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron, por lo que nuestro N real es 324 comunas encuestadas.
 
-En la Tabla 7 se puede observar las 25 comunas con más frecuencia de respuesta, que del total de 51.686 respuestas totales, representan el 39.87% del total, es decir 20.608 encuestados viven en alguna de esas comunas. La comuna con más respuestas fue Arica con un total de 1805, es decir un 3,49% total de la muestra. La media de respuestas por comuna es de 154.28, con una desviación estándar de 222.57 respuestas, lo que significa que hay comunas con mucha más representación que otras
-
-#### 3.4) Métodos  
+#### **3.4) Métodos**
 
 !!!!!!!!aquí describir los modelos a usar. Usamos el nulo, predictores nvl1, predictores nvl2, multinivel, pendiente aleatoria y de interacción entre niveles
 
 # **4) Resultados**
 
-### a) Gráficos bivariados (ESTO FALTA)
+#### **4.1) Gráficos bivariados**
 
-### **b) Resultados de los modelos** 
+**I- Relación entre nivel educacional máximo alcanzado y promedio de conectividad comunal**
 
-DISCUTIR CENTRADO Y CASOS INFLUYENTES
+```{r bivariados1, echo=FALSE, warning=FALSE, message=FALSE}
+# Gráficos bivariados
+# I-
+casen_biv1=casen %>% group_by(comuna) %>% select(mean_conectividad, nvl_educ, comuna) %>% na.omit() %>% summarise_all(mean)
 
-Explicar la organización de las tablas y comentar
-
-Se construyó un modelo nulo sin predictores, integrando únicamente la variable dependiente y la variable cluster, para conocer los componentes de la varianza.
-
-```{r datos9, echo=FALSE, message=FALSE, warning=FALSE}
-modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
-
-screenreg(modelo_nulo)
+sjPlot::plot_scatter(
+  data = casen_biv1,
+  x = mean_conectividad,
+  y = nvl_educ,
+  dot.labels = to_label(casen_biv1$comuna),
+  fit.line = "lm",
+  show.ci = TRUE,
+  title = "Relación entre conectividad comunal y nivel educacional alcanzado",
+  axis.title = c("Promedio de conectividad comunal", 
+                 "Nivel educacional máximo alcanzado")
+)
 ```
 
-Se calculó la correlación intraclase para conocer qué porcentaje de la varianza del nivel educacional máximo alcanzado se debe a variables de nivel 2. El resultado fue de 0.14, lo que significa que el 14% de la varianza de la variable dependiente se asocia a la pertenencia a la comuna.
+--descripcion del gráfico 1.........
 
-```{r correlacionicc, echo=FALSE, message=FALSE, warning=FALSE}
-reghelper::ICC(modelo_nulo)
+**II- Relación entre decil de ingresos comunal y nivel educacional alcanzado**
+
+```{r bivariados2, echo=FALSE, warning=FALSE, message=FALSE}
+# II-
+casen_biv2=casen %>% group_by(comuna) %>% select(mean_dau, nvl_educ, comuna) %>% na.omit() %>% summarise_all(mean)
+
+sjPlot::plot_scatter(
+  data = casen_biv2,
+  x = mean_dau,
+  y = nvl_educ,
+  dot.labels = to_label(casen_biv1$comuna),
+  fit.line = "lm",
+  show.ci = TRUE,
+  title = "Relación entre decil de ingresos comunal y nivel educacional alcanzado",
+  axis.title = c("Promedio de decil de ingreso autónomo comunal", 
+                 "Nivel educacional máximo alcanzado")
+)
+```
+
+--descripcion del gráfico 2.......
+
+#### **4.2) Centrado de variables y casos influyentes**
+
+```{r centrado, echo=FALSE, warning=FALSE, message=FALSE}
+# Centrado de la variable comprometida en la interacción
+casen <- casen %>% ungroup() %>%
+  mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
+
+mg_educ_padres <- mean(casen$mean_educ_padres) # 2.24 = media general del nivel educacional de los padres
+
+# Centrado de la variable mean_conectividad
+casen <- casen %>% ungroup() %>%
+  mutate(mean_conectividad_gmc = mean_conectividad-mean(mean_conectividad))
+
+mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = media general de acceso a internet
+
+# mg = media general de las variables
+
+# Centrado de la variable mean_dau
+casen <- casen %>% ungroup() %>%
+  mutate(mean_dau_gmc = mean_dau - mean(mean_dau, na.rm = TRUE))
+
+mg_dau <- mean(casen$mean_dau) # 5.08 = media general del decil de ingresos
 
 ```
 
-### **c) Construcción de modelos e interpretación de resultados**
+---discutir centrado y casos influyentes..........
 
-Se puede observar que el valor que más impacta al nivel educacional máximo alcanzado es el promedio del nivel educativo de los padres por comuna, ya que, por cada punto que aumenta este promedio nuestra variable dependiente aumenta en 1.8 puntos aproximadamente, rechazando la hipótesis nula con un nivel de confianza mayor al 95% y encontrando evidencia a favor de la hipótesis alternativa que afirma que unos padres con un nivel educacional más alto se asocian a un nivel educacional más alto alcanzado.
+#### **4.3) Resultados de los modelos**
 
-Sobre la variable de pertenencia a pueblos indígenas, también encontramos evidencia a favor de nuestra hipótesis nula, ya que, al ser dummy, se puede afirmar que el hecho de ser indígena hace que el nivel educacional máximo alcanzado disminuya en 0.32 puntos con un 99.9% de confianza.
+```{r creacion de modelos, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# 1) Modelo nulo
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
 
-Dentro del impacto negativo, es la dificultad para concentrarse la que tiene el mayor impacto, ya que con un p-value menor a 0.001 podemos afirmar que por cada punto que aumenta, el nivel educacional máximo alcanzado disminuye en 0.75 puntos, rechazando así la hipótesis nula de no asociación.
+# 2) Modelo con variables de nivel 1
+resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + edad + (1 | comuna_factor), data = casen)
 
-Finalmente, la conectividad tiene un impacto positivo en nuestra variable dependiente. Es posible rechazar la hipótesis nula con una probabilidad de error menor a 0.001 y encontrar evidencia a favor de nuestra hipótesis alternativa. Por cada punto que sube el promedio de conectividad por comuna, el nivel educacional máximo alcanzado por la persona encuestada aumenta en 0.22 puntos.
+# 3) Modelo con variables de nivel 2
+resultados_2 = lmer(nvl_educ ~ mean_conectividad_gmc + mean_educ_padres_gmc + mean_dau_gmc + (1 | comuna_factor), data = casen)
 
-```{r modelomultinivel, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
-resultados_1 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
-                    mean_educ_padres + mean_conectividad + 
-                    (1 | comuna), data = casen)
+# 4) Modelo con variables de nivel 1 y 2
+resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + edad +
+                       mean_conectividad_gmc + mean_educ_padres_gmc + mean_dau_gmc +
+                       (1 | comuna_factor), data = casen)
 
-tab_model(resultados_1,
-          show.ci = FALSE,
-          show.icc = FALSE,
-          title = "Modelo multinivel",
-          dv.labels = c("Nivel educacional máximo"),
-          pred.labels = c("(Intercepto)", 
-                          "Pertenencia a pueblo indígena", 
-                          "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)"))
-```
-
-### **Modelos con pendiente aleatoria**
-
-```{r modeloal1, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# 5) Pendiente aleatoria (+ test de devianza)
 # Pendiente aleatoria para pueblo_indigena
-reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad + 
-               mean_educ_padres + ( 1 + pueblo_indigena | comuna), data = casen)
+reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + edad + mean_conectividad_gmc + 
+               mean_educ_padres_gmc + mean_dau_gmc + ( 1 + pueblo_indigena | comuna_factor), data = casen)
 
+# 6) Interacción entre niveles
+reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + edad + mean_dau_gmc +
+                  mean_conectividad_gmc + (1 + pueblo_indigena | comuna_factor), data = casen)
 
-tab_model(resultados_1, reg_al1,
+# Tabla para comparar los modelos
+# CÓDIGO PARA COMPARAR MODELOS
+tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
           show.ci = FALSE,
-          show.icc = FALSE,
+          show.icc = TRUE,
           title = "Comparación de modelos",
-          dv.labels = c("Modelo multinivel",
-                        "Modelo con pendiente aleatoria"),
+          dv.labels = c("Modelo Nulo", 
+                        "Modelo con predictores de nivel 1", 
+                        "Modelo con predictores de nivel 2", 
+                        "Modelo con predictores de nivel 1 y 2",
+                        "Modelo con pendiente aleatoria",
+                        "Modelo con interacción entre niveles"),
           pred.labels = c("(Intercepto)", 
                           "Pertenencia a pueblo indígena", 
                           "Dificultad para concentrarse", 
-                          "Promedio educativo de los padres (comuna)", 
-                          "Promedio conectividad (comuna)"))
+                          "Promedio nivel educativo de los padres (centrado)", 
+                          "Promedio conectividad (centrado)",
+                          "Interacción (pueblo_indigena:mean_educ_padres)"))
+```
 
+-----Explicar la organización de las tablas y comentar......
 
+#### **4.4) Test de devianza**
+
+```{r test de devianza, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# Test de devianza
+anova_resultados <- anova(resultados_3, reg_al1)
+
+kable(anova_resultados, caption = "Comparación de modelos con test ANOVA")
 
 ```
 
-### **Modelos con interacción entre niveles**
+----describir test ANOVA......
 
-# Biliografía
+#### **4.5) Gráficos con pendiente aleatoria**
+
+```{r grafico pendiente_al, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# Graficar pendiente aleatoria
+
+graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [Iquique, Calama, La Serena, Vallenar, Santiago, Concepción, Temuco, Valdivia, Punta Arenas]"), type = "random")
+                                   
+plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
+```
+
+----describir gráfico con pendiente aleatoria (decir q seleccionamos ciertas comunas etc etc)......
+
+#### **4.6) Gráfico de interacción entre niveles**
+
+```{r grafico int_niveles, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+plot_model(reg_int, type = "int")
+```
+
+----describir gráfico de interacción y discutir porque no es significativo
+
+# **5) Conclusiones y discusiones**
+
+----discutir resultdosssssssss............
+
+# **Referencias**
 
 -   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
 
