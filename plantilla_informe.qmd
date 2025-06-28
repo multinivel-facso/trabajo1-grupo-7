@@ -96,31 +96,89 @@ casen <- casen_final
 
 Se utilizó la base de datos de la encuesta CASEN 2022, la cual tiene un diseño muestral, probabilístico, con representatividad nacional. Se extrajo una submuestra de 51.775 individuos de 18 años o más, dentro de 335 comunas del país.
 
-Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adela
+Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adelante.
 
 #### **3.2) Variables y operacionalización**
 
--   Nivel educacional máximo alcanzado (dependiente): Esta variable fue construida en base a la variable "educ" que posee la base de datos de la encuesta CASEN 2022, que identifica de forma nominal el nivel de escolaridad de la persona encuestada. Fue recodificada para que pasara de tener un rango de 0 a 12, a un rango de 0 a 8 con los siguientes valores:
+**Nivel educacional máximo alcanzado:**
 
-    -   0 = Sin educación formal: mismo valor que la variable original
+-   El objeto de estudio de nuestra investigación es el nivel educacional máximo alcanzado. Esta variable fue construida en base a la variable "educ" que posee la base de datos de la encuesta CASEN 2022, que identifica de forma nominal el nivel de escolaridad de la persona encuestada. Fue recodificada para que pasara de tener un rango de 0 a 12, a un rango de 0 a 8, donde los valores más altos indican un nivel educativo mayor. Los valores recodificados son los siguientes:
 
-    -   1 = Básica incompleta: mismo valor que la variable original
+    -   **0 = Sin educación formal:** mismo valor que la variable original
 
-    -   2 = Básica completa: mismo valor que la variable original
+    -   **1 = Básica incompleta:** mismo valor que la variable original
 
-    -   3 = Media incompleta: integramos los valores de "Media humanista incompleta (3)" y "Media técnica profesional incompleta (4)"
+    -   **2 = Básica completa:** mismo valor que la variable original
 
-    -   4 = Media completa: integramos los valores de "Media humanista completa (5)" y "Media técnica profesional completa (6)".
+    -   **3 = Media incompleta:** integramos los valores de "Media humanista incompleta (3)" y "Media técnica profesional incompleta (4)"
 
-    -   5 = Educación superior incompleta: integramos los valores de "Técnico nivel superior incompleta (7)" y "Profesional incompleto (9)".
+    -   **4 = Media completa:** integramos los valores de "Media humanista completa (5)" y "Media técnica profesional completa (6)".
 
-    -   6 = Educación superior completa: integramos los valores de "Técnico nivel superior completo (8)" y "Profesional completo (11)".
+    -   **5 = Educación superior incompleta:** integramos los valores de "Técnico nivel superior incompleta (7)" y "Profesional incompleto (9)".
 
-    -   7 = Posgrado incompleto: recodificamos el valor de "Posgrado incompleto (10)" para que tuviera el valor 7.
+    -   **6 = Educación superior completa:** integramos los valores de "Técnico nivel superior completo (8)" y "Profesional completo (11)".
 
-    -   8 = Posgrado completo: recodificamos el valor de "Posgrado completo (12)" para que tuviera el valor 8.
+    -   **7 = Posgrado incompleto:** recodificamos el valor de "Posgrado incompleto (10)" para que tuviera el valor 7.
 
--   
+    -   **8 = Posgrado completo:** recodificamos el valor de "Posgrado completo (12)" para que tuviera el valor 8.
+
+-   La finalidad de la recodificación de esta variable fue obtener una escala ordinal que facilite la interpretación de los resultados. Existen diversas formas de medir el nivel educativo de una persona, como los años de escolaridad, los puntajes de cierta evaluación, o el nivel educativo máximo alcanzado. En esta investigación nos decantamos por esta última forma, ya que creemos que al ser una escala ordinal, facilita la interpretación de los resultados. Esta forma de tratar el nivel de estudios de una persona han sido utilizadas por la Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2018) ———- AGREGAR MÁS DSP y reeredactar para que quede claro...........
+
+**Pertenencia a pueblo indígena**
+
+-   La pertenencia a pueblo indígena es una variable predictora de nivel 1 creada en base a la variable "r3", que pregunta sobre si la persona encuestada pertenece a uno de los 10 pueblos indígenas reconocidos por la ley (Aimara, Rapa-Nui o Pascuenses, Quechua, Mapuche, Atacameño (Likan-Antai), Collas, Kawashkar o Alacalufes, Yámana o Yagán, Diaguita, Chango). Esta variable fue recodificada para obtener una variable dummy, donde el valor 1 indica que sí pertenece a uno de los 10 pueblos originarios que identifica la pregunta, mientras que el valor 0 indica que no pertenece a ninguno.
+
+**Dificultad para concentrarse**
+
+-   La dificultad para concentrarse es la segunda y última variable predictora de nivel 1, la cual mide en una escala de 0 a 3 la dificultad para recordar o concentrarse de una persona. Fue creada en base a la pregunta "h7d", una pregunta tipo Likert, la cual tiene los siguientes valores:
+
+    -   **1 = No, Ninguna dificultad:** se recodificó para que tenga el valor 0.
+
+    -   **2 = Sí, algo de dificultad:** se recodificó para que tenga el valor 1.
+
+    -   **3 = Sí, mucha dificultad:** se recodificó para que tenga el valor 2.
+
+    -   **4 = No puede hacerlo:** se recodificó para que tenga el valor 3.
+
+**Promedio del nivel educacional máximo alcanzado de los padres (por comuna)**
+
+-   Es la primera variable predictora de nivel 2, y mide el promedio comunal de educación parental. Este promedio fue calculado en base a las variables "r12a" y "r12b", las cuales preguntan a la persona encuestada sobre el nivel educacional más alto alcanzado por la madre y por el padre, respectivamente. La recodificación de ambas variables fue realizada de la siguiente manera (ambas variables poseen la misma escala original y recodificada):
+
+    -   **1 = Nunca asistió:** mismo valor que la variable original.
+
+    -   **2 = Educación básica:** mismo valor que la variable original.
+
+    -   **3 = Educación media:** integramos los valores de "Educación Media Científico-Humanista o Humanidades (sistema antiguo) (3)" y "Educación Media Técnica Profesional o Técnica, Comercial, Industrial o Normalista (sistema antiguo) (4)".
+
+    -   **4 = Educación superior**: integramos los valores de "Técnico Nivel Superior (carrera de 1 a 3 años) (5)" y "Profesional (carrera de 4 o más años) (6)".
+
+    -   **5 = Postgrado:** recodificamos el valor de "Postgrado (7)" para que tuviera el valor 5.
+
+-   Con las variables recodificadas, se calculó un promedio entre madre y padre para obtener el promedio de educación parental de la persona encuestada. Luego, se calculó el promedio comunal de educación parental, agrupando por las 335 comunas.
+
+**Promedio del nivel de acceso a internet de los hogares (por comuna)**
+
+-   Esta variable predictora de nivel 2 corresponde a un índice sumativo, con un rango posible entre 0 y 5, que identifica el nivel de acceso a internet del hogar de la persona encuestada. El índice fue construído en base a las siguientes preguntas sobre si la persona encuestada o algún integrante del hogar poseen acceso a algún tipo de conexión pagada a internet, con respuestas de sí o no:
+
+    -   **r17a = Banda ancha fija**
+
+    -   **r17b = Banda ancha móvil (mode, Wifi o USB)**
+
+    -   **r17c = Teléfono móvil que permite conexión a internet (smartphone)**
+
+    -   **r17d = Tablet u otro dispositivo que permite conexión a Internet**
+
+    -   **r17e = Internet satelital**
+
+-   Las respuestas de estas 5 preguntas fueron recodificadas para que el valor 1 indique "Sí", y el valor 0 indique "No", para luego crear un índice sumativo con todas las respuestas. Con el índice listo, se calculó el promedio comunal de acceso a internet de los hogares, agrupando por las 335 comunas presentes en nuestra submuestra.
+
+**Promedio del decil de ingreso autónomo (por comuna)**
+
+-   El promedio del decil de ingresos por comuna es la tercera y última variable predictora de nivel 2. Para obtener el promedio, se utilizó la variable "dau" de la base de datos CASEN 2022, que identifica los deciles autónomos nacionales de los hogares de las personas encuestadas, y luego se obtuvo el promedio comunal agrupando por las 335 comunas presentes.
+
+**Edad**
+
+-   Esta variable se utiliza como variable de control para los modelos realizados. Representa la edad en años de la persona encuestada al momento de la entrevista.
 
 #### **3.3) Estadísticos descriptivos generales**
 
@@ -147,29 +205,15 @@ casen_desc1 %>% ungroup() %>%
 
 **a) Nivel educacional máximo alcanzado (dependiente):**
 
-La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.
-
-Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.
-
 **b) Pertenencia a pueblos indígenas (independiente, nivel 1):**
 
-La variable pertenencia a pueblos indígenas identifica si la persona se reconoce como perteneciente a uno de los 10 pueblos originarios reconocidos en Chile. Es una dummy, donde el valor 1 índica pertenencia y el 0 indica no pertenencia. Esta variable permite observar los porcentajes de pertenencia indígena y no indígena.
-
-En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.
-
 **c) Dificultad para concentrarse (independiente, nivel 1):**
-
-La variable dificultad de concentración mide el grado en que la persona declara tener dificultades para concentrarse o mantener la atención. Es una variable categórica, con una escala que va desde el 0 (no tiene dificultad) hasta el 3 (sí presenta bastante dificultad).
-
-En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.
 
 **d) Edad (variable de control)**
 
 .........
 
 #### **Estadísticos descriptivos para variables de nivel 2**
-
-poner análisis descriptivos de variables de nivel 2
 
 ```{r descriptivos2, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -203,8 +247,6 @@ casen_desc2 %>%
 **h) Comuna (cluster)**
 
 La variable comuna identifica la unidad territorial en la que reside cada persona encuestada. Corresponde a una variable categórica nominal con 335 categorías posibles, una por cada comuna del país. En este análisis se utilizará esta variable como la variable de anidación o cluster.
-
-En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron, por lo que nuestro N real es 324 comunas encuestadas.
 
 #### **3.4) Métodos**
 
