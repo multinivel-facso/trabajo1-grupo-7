@@ -37,6 +37,35 @@ ul.task-list li input[type="checkbox"] {
 <script src="plantilla_informe_files/libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="plantilla_informe_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,12 +113,13 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="introducción" class="level1">
 <h1><strong>1) Introducción</strong></h1>
-<p>La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. En particular, variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, la conectividad digital, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos. Esta problemática no solo tiene implicancias en términos de oportunidades individuales, sino que también reproduce desigualdades sociales estructurales que afectan la cohesión y movilidad social (Bourdieu &amp; Passeron, 1990).</p>
+<p>La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y, en este caso, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. Desde esta perspectiva, Pierre Bourdieu plantea que la educación no solo transmite conocimientos, sino que también reproduce las estructuras sociales existentes, al legitimar como mérito lo que, en realidad, son ventajas heredadas. A través del concepto de capital cultural, Bourdieu explica cómo los estudiantes provenientes de clases sociales altas acceden más fácilmente a los códigos y exigencias escolares, lo que refuerza su éxito académico y perpetúa su posición privilegiada. Así, “la institución escolar favorece a quienes ya poseen las disposiciones y recursos valorados por el sistema educativo” (Bourdieu y Passeron, 1970), transformando la escuela en un espacio de reproducción antes que de movilidad social. En esta investigación en particular, se va a indagar como las variables como el nivel educacional de los padres, la pertenencia a pueblos indígenas, las dificultades de concentración, el acceso a internet, el nivel socioeconómico, junto con la comuna de residencia se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos.&nbsp;</p>
 <p>Diversos estudios han demostrado que el nivel educativo de los padres constituye un predictor sólido del rendimiento académico y de las trayectorias escolares de sus hijos. Mejía y Mejía (2023) sostienen que los hijos de padres con mayor nivel de instrucción (capital cultural) tienden a alcanzar logros educativos más altos, en parte por el capital cultural que se transmite en el hogar y por el acompañamiento en el proceso educativo. Este fenómeno ha sido ampliamente documentado en donde el capital familiar actúa como una ventaja comparativa.</p>
-<p>Otro eje de desigualdad significativa es la pertenencia a pueblos indígenas. En su análisis sobre el acceso y permanencia de estudiantes indígenas en la educación superior, López y Escobar (2008) destacan las múltiples barreras—lingüísticas, económicas y culturales—que enfrentan estos estudiantes. Además, señalan que la discriminación estructural reduce las expectativas de éxito escolar y limita la movilidad educativa de esta población. Esta situación historica que requieren una atención particular.</p>
-<p>La conectividad digital ha adquirido una relevancia especial en los últimos años, particularmente a raíz de la pandemia de COVID-19. Rodríguez et al.&nbsp;(2021) muestran cómo la falta de acceso a dispositivos tecnológicos y a internet de calidad afectó negativamente el proceso formativo de miles de estudiantes. Las brechas digitales se han convertido así en un nuevo eje de desigualdad educativa, afectando especialmente a estudiantes de zonas rurales o de bajos ingresos, quienes vieron restringido su derecho a la educación durante largos periodos.</p>
-<p>En esta línea, también es relevante considerar la comuna de residencia como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.</p>
-<p>En el plano individual, factores como la dificultad de concentración también inciden en el rendimiento académico. Jiménez y Fernández (2022) analizan cómo los problemas de concentración afectan negativamente el aprendizaje, y cómo estas dificultades se ven exacerbadas en contextos de pobreza, estrés familiar o ausencia de acompañamiento educativo. Las condiciones del entorno, por tanto, pueden potenciar o mitigar estas dificultades individuales, lo que evidencia la necesidad de un enfoque integral.</p>
+<p>Otro eje de desigualdad significativa es la pertenencia a pueblos indígenas. En su análisis sobre el acceso y permanencia de estudiantes indígenas en la educación superior, López y Escobar (2008) destacan las múltiples barreras —lingüísticas, económicas y culturales— que enfrentan estos estudiantes. Además, señalan que la discriminación estructural reduce las expectativas de éxito escolar y limita la movilidad educativa de esta población. Esta situación histórica requiere una atención particular. En esta línea, Gloria Ladson-Billings (1994) argumenta que los sistemas educativos tienden a desvalorizar los conocimientos y prácticas culturales de los estudiantes racializados, produciendo una forma de “pérdida cultural” en lugar de inclusión. Asimismo, Patricia Hill Collins (1990) plantea que las instituciones, incluida la escuela, operan desde una lógica de dominación interseccional que margina a quienes no se ajustan a los saberes legitimados por la cultura hegemónica, reforzando la exclusión y limitando la agencia educativa de las personas racializadas o indígenas.</p>
+<p>Así mismo, el acceso a internet en los hogares ha adquirido una relevancia especial en los últimos años, particularmente a raíz de la pandemia de COVID-19. Rodríguez et al.&nbsp;(2021) muestran cómo la falta de acceso a dispositivos tecnológicos y a internet de calidad afectó negativamente el proceso formativo de miles de estudiantes. Las brechas digitales se han convertido así en un nuevo eje de desigualdad educativa, afectando especialmente a estudiantes de zonas rurales o de bajos ingresos, quienes vieron restringido su derecho a la educación durante largos periodos.</p>
+<p>En el plano individual, factores como la dificultad de concentración también inciden en el rendimiento académico. Jiménez y Fernández (2022) analizan cómo los problemas de concentración afectan negativamente el aprendizaje, y cómo estas dificultades se ven exacerbadas en contextos de pobreza, estrés familiar o ausencia de acompañamiento educativo. Las condiciones del entorno, por tanto, pueden potenciar o mitigar estas dificultades individuales, lo que evidencia la necesidad de un enfoque integral. En esta línea, Howard Gardner (1999), a través de su teoría de las inteligencias múltiples, cuestiona los modelos escolares tradicionales que privilegian una única forma de atención y aprendizaje, ignorando que los estudiantes pueden concentrarse y desarrollarse mejor en ámbitos diversos como lo musical, corporal o interpersonal. Por su parte, Michael Apple (1982) sostiene que el currículum y la estructura escolar muchas veces no consideran las realidades ni los ritmos de estudiantes de sectores populares, lo que genera desconexión y falta de sentido, afectando directamente su capacidad de atención y permanencia en el sistema educativo.</p>
+<p>El nivel socioeconómico (NSE) es una variable ampliamente reconocida en la literatura como un factor determinante en el acceso, permanencia y éxito educativo. Diversos estudios han demostrado que el NSE no solo condiciona los recursos materiales disponibles para el aprendizaje, sino también las oportunidades culturales, las expectativas familiares y la trayectoria escolar de los individuos. En esta línea, Sue Thomson (2021) señala que el rendimiento académico y la probabilidad de alcanzar niveles educativos superiores están fuertemente vinculados al contexto socioeconómico del hogar. Asimismo, Sirin (2005), a través de un meta-análisis, confirma que variables como el ingreso, el nivel educativo de los padres y su ocupación se correlacionan significativamente con los logros educativos. Esta relación estructural también ha sido abordada por Pierre Bourdieu (1990), quien plantea que el capital económico y cultural heredado define las posibilidades de éxito escolar, al ser la escuela un espacio que legitima y reproduce las desigualdades sociales preexistentes. Por tanto, incluir el nivel socioeconómico como variable en este análisis resulta fundamental para comprender cómo las desigualdades estructurales influyen en las trayectorias educativas en contextos como el chileno.</p>
+<p>En esta línea, también es relevante considerar la comuna de residencia como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. El lugar de residencia, más que una característica neutra, se convierte en un eje estructural de desigualdad, ya que influye directamente en el tipo de educación al que se puede acceder (PNUD, 2017). En esta misma línea, Truffello y Contreras (2019) muestran que la segregación territorial en Chile se traduce en circuitos escolares cerrados, donde las oportunidades educativas dependen en gran medida del capital social y económico de cada comuna. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.</p>
 <p>En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.</p>
 <p>Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y “conectividad”, y nuestra variable de anidación serán las “comunas”.</p>
 <p>En base a esto, buscaremos responder la siguiente pregunta de investigación: ¿Qué efecto tienen las condiciones socioeconómicas, culturales y psicológicas de las personas en la desigualdad educativa en Chile, y cómo varía según las características de la comuna?</p>
@@ -108,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 <section id="hipótesis-nivel-2" class="level3">
-<h3 class="anchored" data-anchor-id="hipótesis-nivel-2"><strong>2.3) Hipótesis</strong> Nivel 2:</h3>
+<h3 class="anchored" data-anchor-id="hipótesis-nivel-2"><strong>2.3) Hipótesis Nivel 2:</strong></h3>
 <ul>
 <li><p><strong>H3:</strong> Pertenecer a una comuna con un alto nivel de conectividad tiene un efecto positivo sobre el nivel educacional máximo.</p></li>
 <li><p><strong>H4:</strong> La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado</p></li>
@@ -123,11 +153,72 @@ ul.task-list li input[type="checkbox"] {
 <section id="datos-y-metodología" class="level4">
 <h4 class="anchored" data-anchor-id="datos-y-metodología"><strong>3.1) Datos y metodología</strong></h4>
 <p>Se utilizó la base de datos de la encuesta CASEN 2022, la cual tiene un diseño muestral, probabilístico, con representatividad nacional. Se extrajo una submuestra de 51.775 individuos de 18 años o más, dentro de 335 comunas del país.</p>
-<p>Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adela</p>
+<p>Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adelante.</p>
 </section>
 <section id="variables-y-operacionalización" class="level4">
 <h4 class="anchored" data-anchor-id="variables-y-operacionalización"><strong>3.2) Variables y operacionalización</strong></h4>
-<p>aquí describir cómo operacionalizamos las variables (partir con la dependiente y ser muy específico), luego cn las demas (acordarnos de que tenemos edad como variable de control)</p>
+<p><strong>Nivel educacional máximo alcanzado:</strong></p>
+<ul>
+<li><p>El objeto de estudio de nuestra investigación es el nivel educacional máximo alcanzado. Esta variable fue construida en base a la variable “educ” que posee la base de datos de la encuesta CASEN 2022, que identifica de forma nominal el nivel de escolaridad de la persona encuestada. Fue recodificada para que pasara de tener un rango de 0 a 12, a un rango de 0 a 8, donde los valores más altos indican un nivel educativo mayor. Los valores recodificados son los siguientes:</p>
+<ul>
+<li><p><strong>0 = Sin educación formal:</strong> mismo valor que la variable original</p></li>
+<li><p><strong>1 = Básica incompleta:</strong> mismo valor que la variable original</p></li>
+<li><p><strong>2 = Básica completa:</strong> mismo valor que la variable original</p></li>
+<li><p><strong>3 = Media incompleta:</strong> integramos los valores de “Media humanista incompleta (3)” y “Media técnica profesional incompleta (4)”</p></li>
+<li><p><strong>4 = Media completa:</strong> integramos los valores de “Media humanista completa (5)” y “Media técnica profesional completa (6)”.</p></li>
+<li><p><strong>5 = Educación superior incompleta:</strong> integramos los valores de “Técnico nivel superior incompleta (7)” y “Profesional incompleto (9)”.</p></li>
+<li><p><strong>6 = Educación superior completa:</strong> integramos los valores de “Técnico nivel superior completo (8)” y “Profesional completo (11)”.</p></li>
+<li><p><strong>7 = Posgrado incompleto:</strong> recodificamos el valor de “Posgrado incompleto (10)” para que tuviera el valor 7.</p></li>
+<li><p><strong>8 = Posgrado completo:</strong> recodificamos el valor de “Posgrado completo (12)” para que tuviera el valor 8.</p></li>
+</ul></li>
+<li><p>La finalidad de la recodificación de esta variable fue obtener una escala ordinal que facilite la interpretación de los resultados y permita análisis comparativos robustos. Existen diversas formas de medir el nivel educativo de una persona, como los años de escolaridad, los puntajes estandarizados o el nivel educativo máximo alcanzado. En esta investigación optamos por esta última, ya que condensa de forma jerárquica los tramos educativos y permite una lectura más clara de las desigualdades acumuladas a lo largo del ciclo formativo. Esta forma de medición ha sido ampliamente utilizada por organismos internacionales como la Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2018), y responde a una lógica reconocida en la literatura metodológica. Como señala Schneider (2016), al momento de construir variables educativas es clave definir si estas pueden ser tratadas como ordinales, lo cual es posible “si las calificaciones educativas están jerárquicamente relacionadas” (p.&nbsp;8). En el caso de esta investigación, medir el nivel educativo de una persona de esta manera permite modelarla como una escala ordinal que contribuye al análisis de la desigualdad educacional.</p></li>
+</ul>
+<p><strong>Pertenencia a pueblo indígena</strong></p>
+<ul>
+<li>La pertenencia a pueblo indígena es una variable predictora de nivel 1 creada en base a la variable “r3”, que pregunta sobre si la persona encuestada pertenece a uno de los 10 pueblos indígenas reconocidos por la ley (Aimara, Rapa-Nui o Pascuenses, Quechua, Mapuche, Atacameño (Likan-Antai), Collas, Kawashkar o Alacalufes, Yámana o Yagán, Diaguita, Chango). Esta variable fue recodificada para obtener una variable dummy, donde el valor 1 indica que sí pertenece a uno de los 10 pueblos originarios que identifica la pregunta, mientras que el valor 0 indica que no pertenece a ninguno.</li>
+</ul>
+<p><strong>Dificultad para concentrarse</strong></p>
+<ul>
+<li><p>La dificultad para concentrarse es la segunda y última variable predictora de nivel 1, la cual mide en una escala de 0 a 3 la dificultad para recordar o concentrarse de una persona. Fue creada en base a la pregunta “h7d”, una pregunta tipo Likert, la cual tiene los siguientes valores:</p>
+<ul>
+<li><p><strong>1 = No, Ninguna dificultad:</strong> se recodificó para que tenga el valor 0.</p></li>
+<li><p><strong>2 = Sí, algo de dificultad:</strong> se recodificó para que tenga el valor 1.</p></li>
+<li><p><strong>3 = Sí, mucha dificultad:</strong> se recodificó para que tenga el valor 2.</p></li>
+<li><p><strong>4 = No puede hacerlo:</strong> se recodificó para que tenga el valor 3.</p></li>
+</ul></li>
+</ul>
+<p><strong>Promedio del nivel educacional máximo alcanzado de los padres (por comuna)</strong></p>
+<ul>
+<li><p>Es la primera variable predictora de nivel 2, y mide el promedio comunal de educación parental. Este promedio fue calculado en base a las variables “r12a” y “r12b”, las cuales preguntan a la persona encuestada sobre el nivel educacional más alto alcanzado por la madre y por el padre, respectivamente. La recodificación de ambas variables fue realizada de la siguiente manera (ambas variables poseen la misma escala original y recodificada):</p>
+<ul>
+<li><p><strong>1 = Nunca asistió:</strong> mismo valor que la variable original.</p></li>
+<li><p><strong>2 = Educación básica:</strong> mismo valor que la variable original.</p></li>
+<li><p><strong>3 = Educación media:</strong> integramos los valores de “Educación Media Científico-Humanista o Humanidades (sistema antiguo) (3)” y “Educación Media Técnica Profesional o Técnica, Comercial, Industrial o Normalista (sistema antiguo) (4)”.</p></li>
+<li><p><strong>4 = Educación superior</strong>: integramos los valores de “Técnico Nivel Superior (carrera de 1 a 3 años) (5)” y “Profesional (carrera de 4 o más años) (6)”.</p></li>
+<li><p><strong>5 = Postgrado:</strong> recodificamos el valor de “Postgrado (7)” para que tuviera el valor 5.</p></li>
+</ul></li>
+<li><p>Con las variables recodificadas, se calculó un promedio entre madre y padre para obtener el promedio de educación parental de la persona encuestada. Luego, se calculó el promedio comunal de educación parental, agrupando por las 335 comunas.</p></li>
+</ul>
+<p><strong>Promedio del nivel de acceso a internet de los hogares (por comuna)</strong></p>
+<ul>
+<li><p>Esta variable predictora de nivel 2 corresponde a un índice sumativo, con un rango posible entre 0 y 5, que identifica el nivel de acceso a internet del hogar de la persona encuestada. El índice fue construído en base a las siguientes preguntas sobre si la persona encuestada o algún integrante del hogar poseen acceso a algún tipo de conexión pagada a internet, con respuestas de sí o no:</p>
+<ul>
+<li><p><strong>r17a = Banda ancha fija</strong></p></li>
+<li><p><strong>r17b = Banda ancha móvil (mode, Wifi o USB)</strong></p></li>
+<li><p><strong>r17c = Teléfono móvil que permite conexión a internet (smartphone)</strong></p></li>
+<li><p><strong>r17d = Tablet u otro dispositivo que permite conexión a Internet</strong></p></li>
+<li><p><strong>r17e = Internet satelital</strong></p></li>
+</ul></li>
+<li><p>Las respuestas de estas 5 preguntas fueron recodificadas para que el valor 1 indique “Sí”, y el valor 0 indique “No”, para luego crear un índice sumativo con todas las respuestas. Con el índice listo, se calculó el promedio comunal de acceso a internet de los hogares, agrupando por las 335 comunas presentes en nuestra submuestra.</p></li>
+</ul>
+<p><strong>Promedio del decil de ingreso autónomo (por comuna)</strong></p>
+<ul>
+<li>El promedio del decil de ingresos por comuna es la tercera y última variable predictora de nivel 2. Para obtener el promedio, se utilizó la variable “dau” de la base de datos CASEN 2022, que identifica los deciles autónomos nacionales de los hogares de las personas encuestadas, y luego se obtuvo el promedio comunal agrupando por las 335 comunas presentes.</li>
+</ul>
+<p><strong>Edad</strong></p>
+<ul>
+<li>Esta variable se utiliza como variable de control para los modelos realizados. Representa la edad en años de la persona encuestada al momento de la entrevista.</li>
+</ul>
 </section>
 <section id="estadísticos-descriptivos-generales" class="level4">
 <h4 class="anchored" data-anchor-id="estadísticos-descriptivos-generales"><strong>3.3) Estadísticos descriptivos generales</strong></h4>
@@ -198,20 +289,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p><strong>a) Nivel educacional máximo alcanzado (dependiente):</strong></p>
-<p>La variable nivel educacional máximo alcanzado por la persona encuestada es una variable cuantitativa, ya que sus categorías tienen un orden jerárquico y son más de 5 posibles valores. Los valores van de 0 a 8, el valor más bajo significa que no ha recibido ninguna educación formal, mientras que el valor más alto significa que ha completado un postgrado o más, pasando por etapas como educación básica, media y superior, completa o incompleta. Esta variable permite analizar cómo se distribuye la población encuestada con respecto al nivel de educación máximo alcanzado.</p>
-<p>Se puede observar que la media de esta variable es 4, al igual que su moda, lo que equivale a la educación media completa, tambien se observa una desviación estandar de 1.85 puntos con respecto de la media . Por otro lado, un 25% de los encuestados llegaron a un nivel de educación básica incompleta, y únicamente un 24,57% de la muestra tuvo algún tipo de educación superior (universitaria o tecnica) y/o postgrado.</p>
 <p><strong>b) Pertenencia a pueblos indígenas (independiente, nivel 1):</strong></p>
-<p>La variable pertenencia a pueblos indígenas identifica si la persona se reconoce como perteneciente a uno de los 10 pueblos originarios reconocidos en Chile. Es una dummy, donde el valor 1 índica pertenencia y el 0 indica no pertenencia. Esta variable permite observar los porcentajes de pertenencia indígena y no indígena.</p>
-<p>En la variable de pueblos indigenas podemos observar que del total de la muestra de 51.686 encuestados, más de 4/5 de la muestra (87% aprox.) no se considera o no pertenece a un pueblo originario, mientras que el 13.16% de los encuestados sí pertenece o se considera a sí mismo parte de algún pueblo originario.</p>
 <p><strong>c) Dificultad para concentrarse (independiente, nivel 1):</strong></p>
-<p>La variable dificultad de concentración mide el grado en que la persona declara tener dificultades para concentrarse o mantener la atención. Es una variable categórica, con una escala que va desde el 0 (no tiene dificultad) hasta el 3 (sí presenta bastante dificultad).</p>
-<p>En cuanto a las medidas de tendencia central, se observa que la media de la dificultad de concentración es moderadamente baja, lo que sugiere que la mayoría de las personas encuestadas no reporta niveles elevados de dificultad. La mediana y la moda son valores cercanos a 0 o 1, lo que refuerza lo dicho. Respecto a la dispersión, la desviación estándar y la varianza indican que existe cierta variabilidad entre los encuestados, aunque no extrema. Es cerca de un 2% de los encuestados los que tienen problemas de concentración.</p>
 <p><strong>d) Edad (variable de control)</strong></p>
 <p>………</p>
 </section>
 <section id="estadísticos-descriptivos-para-variables-de-nivel-2" class="level4">
 <h4 class="anchored" data-anchor-id="estadísticos-descriptivos-para-variables-de-nivel-2"><strong>Estadísticos descriptivos para variables de nivel 2</strong></h4>
-<p>poner análisis descriptivos de variables de nivel 2</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
@@ -280,11 +364,59 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>g) Promedio del decil de ingresos por comuna (independiente, nivel 2)</strong></p>
 <p><strong>h) Comuna (cluster)</strong></p>
 <p>La variable comuna identifica la unidad territorial en la que reside cada persona encuestada. Corresponde a una variable categórica nominal con 335 categorías posibles, una por cada comuna del país. En este análisis se utilizará esta variable como la variable de anidación o cluster.</p>
-<p>En esta variable se encuestaron a 335 comunas en total, de las cuales las siguientes comunas; Ollague, Juan Fernández, Isla de Pascua, Cochamo, Chaitén, Futaleufú, Hualaihue, Palena, Guaitecas, O´Higgins y La Antártica no respondieron, por lo que nuestro N real es 324 comunas encuestadas.</p>
 </section>
 <section id="métodos" class="level4">
 <h4 class="anchored" data-anchor-id="métodos"><strong>3.4) Métodos</strong></h4>
-<p>!!!!!!!!aquí describir los modelos a usar. Usamos el nulo, predictores nvl1, predictores nvl2, multinivel, pendiente aleatoria y de interacción entre niveles</p>
+<p>Con el objetivo de responder nuestra pregunta de investigación, y de encontrar evidencia a favor de nuestras hipótesis, se calcularon los siguientes modelos:</p>
+<ul>
+<li><strong>Modelo nulo:</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{nvl\_educ}_{ij} = \gamma_{00} + u_{0j} + r_{ij}
+\]</span></p>
+<ul>
+<li><strong>Modelo con predictores de nivel 1</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{nvl\_educ}_{ij} = \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} + u_{0j} + r_{ij}
+\]</span></p>
+<ul>
+<li><strong>Modelo con predictores de nivel 2</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{nvl\_educ}_{ij} = \gamma_{00} + \gamma_{01} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{02} \text{mean\_conectividad\_gmc}_{j} + \gamma_{03} \text{mean\_dau\_gmc}_{j} + u_{0j} + r_{ij}
+\]</span></p>
+<ul>
+<li><strong>Modelo con predictores de nivel 1 y nivel 2</strong></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ &amp; \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} \\
+&amp; + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+&amp; + u_{0j} + r_{ij}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Modelo con pendiente aleatoria</strong></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ &amp; \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} \\
+&amp; + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+&amp; + u_{0j} + u_{1j} \text{pueblo\_indígena}_{ij} + r_{ij}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Modelo con interacción entre niveles</strong></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ &amp; \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} \\
+&amp; + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+&amp; + \gamma_{07} \left(\text{pueblo\_indígena}_{ij} \times \text{mean\_educ\_padres\_gmc}_{j}\right) \\
+&amp; + u_{0j} + u_{1j} \text{pueblo\_indígena}_{ij} + r_{ij}
+\end{aligned}
+\]</span></p>
 </section>
 </section>
 <section id="resultados" class="level1">

@@ -30,7 +30,7 @@ En esta línea, también es relevante considerar la comuna de residencia como un
 
 En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.
 
-Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.686 observaciones y 9 variables. Nuestra variable dependiente es “el máximo nivel educacional alcanzado”, y nuestras variables independientes de nivel 1 son “la pertenencia a pueblos originarios” y “dificultad para concentrarse”, en nuestras variables de nivel 2 tenemos el “nivel máximo de educacional alcanzado por los padres” y "conectividad", y nuestra variable de anidación serán las “comunas”.
+Para el presente estudio vamos a utilizar la encuesta CASEN 2022, de la cual se extrajo 51.775 observaciones y 8 variables. Nuestra variable dependiente es el nivel educacional máximo alcanzado, y nuestras variables independientes de nivel 1 son la pertenencia a pueblos originarios, dificultad para concentrarse, y la edad como variable de control. Mientras que las variables predictoras de nivel 2 son el promedio del nivel máximo de educacional alcanzado por los padres por comuna, el promedio comunal de acceso a internet en los hogares y el promedio comunal del decil de ingresos. Por útiimo, nuestra variable de anidación serán las comunas (N=335).
 
 En base a esto, buscaremos responder la siguiente pregunta de investigación: ¿Qué efecto tienen las condiciones socioeconómicas, culturales y psicológicas de las personas en la desigualdad educativa en Chile, y cómo varía según las características de la comuna?
 
@@ -124,7 +124,7 @@ Para los análisis, se utilizó una metodología multinivel debido a que, en bas
 
     -   **8 = Posgrado completo:** recodificamos el valor de "Posgrado completo (12)" para que tuviera el valor 8.
 
--   La finalidad de la recodificación de esta variable fue obtener una escala ordinal que facilite la interpretación de los resultados y permita análisis comparativos robustos. Existen diversas formas de medir el nivel educativo de una persona, como los años de escolaridad, los puntajes estandarizados o el nivel educativo máximo alcanzado. En esta investigación optamos por esta última, ya que condensa de forma jerárquica los tramos educativos y permite una lectura más clara de las desigualdades acumuladas a lo largo del ciclo formativo. Esta forma de medición ha sido ampliamente utilizada por organismos internacionales como la Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2018), y responde a una lógica reconocida en la literatura metodológica. Como señala Schneider (2016), al momento de construir variables educativas es clave definir si estas pueden ser tratadas como ordinales, lo cual es posible “si las calificaciones educativas están jerárquicamente relacionadas” (p. 8). En este caso, al representar tramos crecientes de logro educacional, la recodificación permite modelar la variable como una escala ordinal válida para estudios de estratificación social y movilidad educativa.
+-   La finalidad de la recodificación de esta variable fue obtener una escala ordinal que facilite la interpretación de los resultados y permita análisis comparativos robustos. Existen diversas formas de medir el nivel educativo de una persona, como los años de escolaridad, los puntajes estandarizados o el nivel educativo máximo alcanzado. En esta investigación optamos por esta última, ya que condensa de forma jerárquica los tramos educativos y permite una lectura más clara de las desigualdades acumuladas a lo largo del ciclo formativo. Esta forma de medición ha sido ampliamente utilizada por organismos internacionales como la Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2018), y responde a una lógica reconocida en la literatura metodológica. Como señala Schneider (2016), al momento de construir variables educativas es clave definir si estas pueden ser tratadas como ordinales, lo cual es posible “si las calificaciones educativas están jerárquicamente relacionadas” (p. 8). En el caso de esta investigación, medir el nivel educativo de una persona de esta manera permite modelarla como una escala ordinal que contribuye al análisis de la desigualdad educacional.
 
 **Pertenencia a pueblo indígena**
 
@@ -252,7 +252,56 @@ La variable comuna identifica la unidad territorial en la que reside cada person
 
 #### **3.4) Métodos**
 
-!!!!!!!!aquí describir los modelos a usar. Usamos el nulo, predictores nvl1, predictores nvl2, multinivel, pendiente aleatoria y de interacción entre niveles
+Con el objetivo de responder nuestra pregunta de investigación, y de encontrar evidencia a favor de nuestras hipótesis, se calcularon los siguientes modelos:
+
+-   **Modelo nulo:**
+
+$$
+\text{nvl\_educ}_{ij} = \gamma_{00} + u_{0j} + r_{ij}
+$$
+
+-   **Modelo con predictores de nivel 1**
+
+$$
+\text{nvl\_educ}_{ij} = \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} + u_{0j} + r_{ij}
+$$
+
+-   **Modelo con predictores de nivel 2**
+
+$$
+\text{nvl\_educ}_{ij} = \gamma_{00} + \gamma_{01} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{02} \text{mean\_conectividad\_gmc}_{j} + \gamma_{03} \text{mean\_dau\_gmc}_{j} + u_{0j} + r_{ij}
+$$
+
+-   **Modelo con predictores de nivel 1 y nivel 2**
+
+$$
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ & \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} \\
+& + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+& + u_{0j} + r_{ij}
+\end{aligned}
+$$
+
+-   **Modelo con pendiente aleatoria**
+
+$$
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ & \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} \\
+& + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+& + u_{0j} + u_{1j} \text{pueblo\_indígena}_{ij} + r_{ij}
+\end{aligned}
+$$
+
+-   **Modelo con interacción entre niveles**
+
+$$
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ & \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad}_{ij} \\
+& + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+& + \gamma_{07} \left(\text{pueblo\_indígena}_{ij} \times \text{mean\_educ\_padres\_gmc}_{j}\right) \\
+& + u_{0j} + u_{1j} \text{pueblo\_indígena}_{ij} + r_{ij}
+\end{aligned}
+$$
 
 # **4) Resultados**
 

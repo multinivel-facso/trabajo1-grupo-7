@@ -196,7 +196,7 @@ modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
 # Modelo con predictores de nivel 1 {.small}
 
 $$
-\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij}   
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij}  
 + u_{0j} + r_{ij}
 $$
 
@@ -205,7 +205,7 @@ $$
 # Modelos con predictores de nivel 2 {.small}
 
 $$
-\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{mean_educ_padres_gmc}_{ij} + \gamma_{02}  \text{mean_conectividad_gmc}_{ij}   
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{mean_educ_padres_gmc}_{ij} + \gamma_{02}  \text{mean_conectividad_gmc}_{ij} + \gamma_{03}  \text{mean_dau_gmc}_{ij}    
 + u_{0j} + r_{ij}
 $$
 
@@ -213,40 +213,40 @@ $$
 
 # Modelos con predictores de nivel 1 y 2 {.small}
 
-::: {style="font-size:85%"}
+:::: {style="font-size:85%"}
 ::: {style="overflow-x: auto; white-space: nowrap;"}
 $$
-\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij}  
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij} + \gamma_{04} \text{mean_educ_padres_gmc}_{ij} + \gamma_{05} \text{mean_conectividad_gmc}_{ij} + \gamma_{06}  \text{mean_dau_gmc}_{ij}   
 + u_{0j} + r_{ij}
 $$
 :::
-:::
+::::
 
 ------------------------------------------------------------------------
 
 # Modelo con pendiente aleatoria {.small}
 
-::: {style="font-size:85%"}
+:::: {style="font-size:85%"}
 ::: {style="overflow-x: auto; white-space: nowrap;"}
 $$
-\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij}  
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij} + \gamma_{04} \text{mean_educ_padres_gmc}_{ij} + \gamma_{05} \text{mean_conectividad_gmc}_{ij} + \gamma_{06}  \text{mean_dau_gmc}_{ij} 
 + u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
 $$
 :::
-:::
+::::
 
 ------------------------------------------------------------------------
 
 # Modelo con interacción entre niveles {.small}
 
-::: {style="font-size:85%"}
+:::: {style="font-size:85%"}
 ::: {style="overflow-x: auto; white-space: nowrap;"}
 $$
-\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03} \text{mean_educ_padres_gmc}_{ij} + \gamma_{04} \text{mean_conectividad_gmc}_{ij} +  \gamma_{05} \text{pueblo_indigena*mean_educ_padres_gmc}
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij} + \gamma_{04} \text{mean_educ_padres_gmc}_{ij} + \gamma_{05} \text{mean_conectividad_gmc}_{ij} + \gamma_{06}  \text{mean_dau_gmc}_{ij}
 + u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
 $$
 :::
-:::
+::::
 
 ------------------------------------------------------------------------
 
