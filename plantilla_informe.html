@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Equipo docente">
+<meta name="author" content="Matilda Raccagni, Rodrigo Huerta">
 
-<title>Título del trabajo grupal</title>
+<title>Incidencia en el nivel educacional máximo alcanzado de adultos chilenos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,10 +34,38 @@ ul.task-list li input[type="checkbox"] {
 <script src="plantilla_informe_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="plantilla_informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="plantilla_informe_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-
 <script src="plantilla_informe_files/libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="plantilla_informe_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -49,8 +77,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Título del trabajo grupal</h1>
-<p class="subtitle lead">Estadística Correlacional 2023</p>
+<h1 class="title">Incidencia en el nivel educacional máximo alcanzado de adultos chilenos</h1>
+<p class="subtitle lead">Análisis de datos Multinivel</p>
 </div>
 
 
@@ -60,14 +88,14 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Autor/a</div>
     <div class="quarto-title-meta-contents">
-             <p>Equipo docente </p>
+             <p>Matilda Raccagni, Rodrigo Huerta </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">7 de noviembre de 2023</p>
+      <p class="date">28 de mayo de 2025</p>
     </div>
   </div>
   
@@ -75,109 +103,701 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
 
-<section id="introducción" class="level1">
-<h1>Introducción</h1>
-<p>Aqui ponemos la introducción, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-<p>En este ejemplo daremos una mirada a la salud mental, y exploraremos posibles asociaciones con la edad, sexo y nivel educacional.</p>
+
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>En esta investigación se ahondaran en los factores que inciden en el nivel educacional máximo alcanzado por 51.775 personas con 18 años o más residentes en 335 comunas de Chile. Se busca ahondar en la influencia que tienen las siguientes variables: si pertenece a un pueblo indígena; nivel educacional de los padres; conectividad a internet; y dificultad para concentrarse y poner atención. La relevancia de esta investigación radica en que la educación es uno de los pilares fundamentales de las sociedades modernas, tanto en los procesos de socialización como culturales. Existen diversos factores que pueden incidir en alcanzar o no un nivel determinado de educación, como pueden ser los ya nombrados o el nivel de ingresos, el sexo, la orientación sexual o la edad. En esta investigación se encontraron efectos significativos entre factores culturales, psicológicos, simbólicos y socioeconómicos sobre el nivel educativo máximo alcanzado de las personas, además de variaciones significativas asociadas a la pertenencia a la comuna de las personas.</p>
 </section>
-<section id="variables" class="level1">
-<h1>Variables</h1>
-<p>Aqui ponemos las variables, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-<p>Podemos cargar las librerías sin que aparezca en nuestro informe, señalando la especificación al chunk <code>echo=FALSE</code>.</p>
-<p>Esto lo podemos repetir para la carga de la base de datos y el procesamiento de los datos.</p>
-<p>A continuación, en nuestro ejemplo describiremos las variables necesarias para responder a nuestro objetivo.</p>
-<section id="descripción-de-variables" class="level2">
-<h2 class="anchored" data-anchor-id="descripción-de-variables">Descripción de variables</h2>
-<p>En este ejemplo, se seleccionaron las variables:</p>
+<section id="introducción" class="level1">
+<h1><strong>1) Introducción</strong></h1>
+<p>La educación es un pilar fundamental del desarrollo individual y colectivo. En sociedades profundamente desiguales como las latinoamericanas y, en el caso de esta investigación, la chilena, el acceso y logro educativo son procesos fuertemente influenciados por factores estructurales e individuales. Bourdieu y Passeron (1990), quienes complementan esta perspectiva, plantean que la educación reproduce no sólo conocimiento, sino que también reproduce estructuras sociales que legitiman ventajas heredadas como mérito. Este concepto es lo que el autor denomina capital cultural. Bourdieu explica como, por ejemplo, los estudiantes que vienen de clases más altas acceden con más facilidad a los códigos y exigencias escolares, lo que los pone en ventaja sobre los demás y refuerza su éxito académico, volviendo a perpetuar su posición privilegiada. Así, la institución escolar favorece a quienes ya poseen las disposiciones y recursos valorados por el sistema educativo (Bourdieu y Passeron, 1990), transformando la escuela en un espacio de reproducción de desigualdades antes que de movilidad social, incumpliendo la promesa de que gracias a la educación se podía lograr una movilidad social. En esta investigación en particular, se va a indagar cómo distintas variables individuales y contextuales se configuran como determinantes críticos del nivel educativo máximo alcanzado por los individuos.&nbsp;</p>
+<p>Diversos estudios han demostrado que el nivel educativo de los padres constituye un predictor sólido del rendimiento académico y de las trayectorias escolares de sus hijos. Mejía y Mejía (2023) sostienen que los hijos de padres con mayor nivel de instrucción (capital cultural), concepto utilizado también por Pierre Bourdieu, tienden a alcanzar logros educativos más altos, en parte por el capital cultural que se transmite en el hogar y por el acompañamiento en el proceso educativo. Este fenómeno ha sido ampliamente documentado en el ámbito educativo, donde el capital familiar actúa como una ventaja comparativa que favorece a quienes poseen un mayor capital cultural heredado.&nbsp;</p>
+<p>Otro eje de desigualdad significativa que se busca investigar es la pertenencia a pueblos indígenas. En el análisis sobre el acceso y permanencia de estudiantes indígenas en la educación superior, López y Escobar (2008) destacan las múltiples barreras —lingüísticas, económicas y culturales— que enfrentan estos estudiantes. Además, señalan que la discriminación estructural reduce las expectativas de éxito escolar y limita la movilidad educativa de esta población. Siguiendo con este análisis, Ladson-Billings (1994) argumenta que los sistemas educativos tienden a desvalorizar los conocimientos y prácticas culturales de los estudiantes racializados, produciendo una forma de “pérdida cultural” en lugar de inclusión. Asimismo, Hill Collins (1990) plantea que las instituciones, incluida la escuela, operan desde una lógica de dominación interseccional que margina a quienes no se ajustan a los saberes legitimados por la cultura hegemónica, reforzando la exclusión y limitando la agencia educativa de las personas racializadas o indígenas.</p>
+<p>El acceso a internet en los hogares ha adquirido una relevancia especial en los últimos años, particularmente a raíz de la pandemia de COVID-19. Rodríguez et al.&nbsp;(2021) muestran cómo la falta de acceso a dispositivos tecnológicos y a internet de calidad afectó negativamente el proceso formativo de miles de estudiantes. Las brechas digitales se han convertido así en un nuevo eje de desigualdad educativa, afectando especialmente a estudiantes de zonas rurales o de bajos ingresos, quienes vieron restringido su derecho a la educación durante largos periodos.</p>
+<p>En el plano individual, factores como la dificultad de concentración también inciden en el rendimiento académico. Jiménez y Fernández (2022) analizan cómo los problemas de concentración afectan negativamente el aprendizaje, y cómo estas dificultades se ven exacerbadas en contextos de pobreza, estrés familiar o ausencia de acompañamiento educativo. Las condiciones del entorno, por tanto, pueden potenciar o mitigar estas dificultades individuales, lo que evidencia la necesidad de un enfoque integral. En esta línea, Gardner (1999), a través de su teoría de las inteligencias múltiples, cuestiona los modelos escolares tradicionales que privilegian una única forma de atención y aprendizaje, ignorando que los estudiantes pueden concentrarse y desarrollarse mejor en ámbitos diversos como lo musical, corporal o interpersonal. Por su parte, Apple (1982) sostiene que el currículum y la estructura escolar muchas veces no consideran las realidades ni los ritmos de estudiantes de sectores populares, lo que genera desconexión y falta de sentido, afectando directamente su capacidad de atención y permanencia en el sistema educativo.</p>
+<p>El nivel socioeconómico (NSE) es una variable ampliamente reconocida en la literatura como un factor determinante en el acceso, permanencia y éxito educativo. Diversos estudios han demostrado que el NSE no solo condiciona los recursos materiales disponibles para el aprendizaje, sino también las oportunidades culturales, las expectativas familiares y la trayectoria escolar de los individuos. Thomson (2021) señala que el rendimiento académico y la probabilidad de alcanzar niveles educativos superiores están fuertemente vinculados al contexto socioeconómico del hogar. El ingreso, sumado al nivel educativo y la ocupación de los padres, son factores que se están significativamente correlacionados con el nivel educacional máximo alcanzado (Sirin, 2005). El capital económico y el capital cultural heredado definen las posibilidades de éxito escolar (Bourdieu y Passeron, 1990), al ser la escuela un espacio que legitima y reproduce las desigualdades sociales preexistentes. Por tanto, incluir el nivel socioeconómico como variable en este análisis resulta fundamental para comprender cómo las desigualdades socioeconómicas influyen en las trayectorias educativas en contextos como el chileno.</p>
+<p>Además de los factores ya presentados, también es relevante considerar la comuna de residencia como un factor que puede incidir en las oportunidades educativas de los individuos. Las comunas en Chile presentan profundas diferencias en términos de calidad de la infraestructura escolar, dotación docente, oferta de programas educativos y condiciones socioeconómicas locales. Así, estudiantes que viven en comunas con mayores recursos y mejor acceso a servicios públicos tienden a contar con un entorno más propicio para el desarrollo académico, mientras que aquellos que residen en comunas más vulnerables enfrentan múltiples obstáculos que limitan su trayectoria escolar. El lugar de residencia, más que una característica neutra, se convierte en un eje estructural de desigualdad, ya que influye directamente en el tipo de educación al que se puede acceder (PNUD, 2017). Truffello y Contreras (2019) muestran que la segregación territorial en Chile se traduce en circuitos escolares cerrados, donde las oportunidades educativas dependen en gran medida del capital social y económico de cada comuna. Estas diferencias comunales se traducen en desigualdades en el nivel educativo máximo alcanzado, reforzando patrones territoriales de exclusión y movilidad social reducida.</p>
+<p>En este contexto, es crucial analizar cómo la conjunción de factores como el nivel educativo de los padres, la etnicidad, la conectividad digital, la comuna y las capacidades individuales (como la concentración) contribuyen o limitan el logro educativo máximo. No se trata de fenómenos aislados, sino de un entramado complejo donde se articulan múltiples dimensiones de la desigualdad. Entender esta dinámica resulta clave para proponer intervenciones eficaces que garanticen una mayor equidad en el acceso, permanencia y éxito en el sistema educativo.</p>
+<p>En esta investigación, se utilizará la base de datos de la encuesta CASEN 2022, de la cual se extrajo una submuestra de 51.775 observaciones y 8 variables. Nuestra variable dependiente es el nivel educacional máximo alcanzado, y nuestras variables independientes de nivel 1 son: la pertenencia a pueblos originarios, dificultad para concentrarse, y la edad como variable de control. Mientras que las variables predictoras de nivel 2 son: el promedio del nivel máximo de educacional alcanzado por los padres por comuna, el promedio comunal de acceso a internet en los hogares y el promedio comunal del decil de ingresos. Por útiimo, nuestra variable de anidación serán las comunas (N=335).</p>
+<p>En base a esto, buscaremos responder la siguiente pregunta de investigación: ¿Qué efecto tienen las condiciones socioeconómicas, culturales y psicológicas de las personas en la desigualdad educativa en Chile, y cómo varía según las características de la comuna?</p>
+</section>
+<section id="objetivo-general-e-hipótesis" class="level1">
+<h1><strong>2) Objetivo general e hipótesis</strong></h1>
+<section id="objetivo-general" class="level3">
+<h3 class="anchored" data-anchor-id="objetivo-general"><strong>2.1) Objetivo general:</strong></h3>
+<p>Evaluar el efecto de las características socioeconómicas, culturales y psicológicas de las personas, y de la comuna de residencia de ellas, sobre la desigualdad educativa en Chile.</p>
+</section>
+<section id="hipótesis-nivel-1" class="level3">
+<h3 class="anchored" data-anchor-id="hipótesis-nivel-1"><strong>2.2) Hipótesis Nivel 1:</strong></h3>
 <ul>
-<li>sexo: sexo del encuestado, con nivel de medición nominal</li>
-<li>edad: edad del encuestado, con nivel de medición intervalar</li>
-<li>nedu: nivel educativo del encuestado, con nivel de medición ordinal</li>
+<li><p><strong>H1:</strong> La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional máximo alcanzado.</p></li>
+<li><p><strong>H2:</strong> La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional máximo alcanzado.</p></li>
 </ul>
-<p>Y las variables del módulo de Salud y Bienestar, referentes a <em>Estado de ánimo: sintomatología depresiva</em>, con nivel de medición ordinal, los ítems son los siguientes:</p>
+</section>
+<section id="hipótesis-nivel-2" class="level3">
+<h3 class="anchored" data-anchor-id="hipótesis-nivel-2"><strong>2.3) Hipótesis Nivel 2:</strong></h3>
 <ul>
-<li>Frecuencia: Poco interés o alegría</li>
-<li>Frecuencia: Decaimiento, pesadez o desesperanza</li>
-<li>Frecuencia: Dificultad para dormir o exceso de sueño</li>
-<li>Frecuencia: Cansancio o sensación de falta de energía</li>
-<li>Frecuencia: Apetito disminuido o aumentado</li>
-<li>Frecuencia: Dificultad para concentrarse</li>
-<li>Frecuencia: Mala opinión de sí mismo</li>
-<li>Frecuencia: Enlentecimiento físico</li>
-<li>Frecuencia: Pensamiento de muerte o dañarse</li>
+<li><p><strong>H3:</strong> Pertenecer a una comuna con un alto nivel de conectividad tiene un efecto positivo sobre el nivel educacional máximo.</p></li>
+<li><p><strong>H4:</strong> La pertenencia a una comuna con un alto promedio de nivel educativo de los padres se asocia positivamente con el nivel educacional máximo alcanzado</p></li>
+<li><p><strong>H5:</strong> Pertenecer a una comuna con un mayor promedio de ingreso autónomo se asocia positivamente con el nivel educacional máximo</p></li>
+<li><p><strong>H6:</strong> El efecto que tiene pertenecer a un pueblo indígena sobre el nivel educacional no es constante entre las comunas.</p></li>
+<li><p><strong>H7:</strong> El efecto negativo que tiene pertenecer a un pueblo indígena sobre el nivel educacional es menor en comunas con promedios más altos de educación de los padres</p></li>
 </ul>
+</section>
+</section>
+<section id="datos-variables-y-métodos" class="level1">
+<h1><strong>3) Datos, variables y métodos</strong></h1>
+<section id="datos-y-metodología" class="level4">
+<h4 class="anchored" data-anchor-id="datos-y-metodología"><strong>3.1) Datos y metodología</strong></h4>
+<p>Se utilizó la base de datos de la encuesta CASEN 2022, la cual tiene un diseño muestral, probabilístico, con representatividad nacional. Se extrajo una submuestra de 51.775 individuos de 18 años o más, dentro de 335 comunas del país.</p>
+<p>Para los análisis, se utilizó una metodología multinivel debido a que, en base a la bibliografía revisada, existen factores contextuales que inciden en la trayectoria educativa de las personas. Además, como presentaremos más adelante.</p>
+</section>
+<section id="variables-y-operacionalización" class="level4">
+<h4 class="anchored" data-anchor-id="variables-y-operacionalización"><strong>3.2) Variables y operacionalización</strong></h4>
+<p><strong>Nivel educacional máximo alcanzado:</strong></p>
+<ul>
+<li><p>El objeto de estudio de nuestra investigación es el nivel educacional máximo alcanzado. Esta variable fue construida en base a la variable “educ” que posee la base de datos de la encuesta CASEN 2022, que identifica de forma nominal el nivel de escolaridad de la persona encuestada. Fue recodificada para que pasara de tener un rango de 0 a 12, a un rango de 0 a 8, donde los valores más altos indican un nivel educativo mayor. Los valores recodificados son los siguientes:</p>
+<ul>
+<li><p><strong>0 = Sin educación formal:</strong> mismo valor que la variable original</p></li>
+<li><p><strong>1 = Básica incompleta:</strong> mismo valor que la variable original</p></li>
+<li><p><strong>2 = Básica completa:</strong> mismo valor que la variable original</p></li>
+<li><p><strong>3 = Media incompleta:</strong> integramos los valores de “Media humanista incompleta (3)” y “Media técnica profesional incompleta (4)”</p></li>
+<li><p><strong>4 = Media completa:</strong> integramos los valores de “Media humanista completa (5)” y “Media técnica profesional completa (6)”.</p></li>
+<li><p><strong>5 = Educación superior incompleta:</strong> integramos los valores de “Técnico nivel superior incompleta (7)” y “Profesional incompleto (9)”.</p></li>
+<li><p><strong>6 = Educación superior completa:</strong> integramos los valores de “Técnico nivel superior completo (8)” y “Profesional completo (11)”.</p></li>
+<li><p><strong>7 = Posgrado incompleto:</strong> recodificamos el valor de “Posgrado incompleto (10)” para que tuviera el valor 7.</p></li>
+<li><p><strong>8 = Posgrado completo:</strong> recodificamos el valor de “Posgrado completo (12)” para que tuviera el valor 8.</p></li>
+</ul></li>
+<li><p>La finalidad de la recodificación de esta variable fue obtener una escala ordinal que facilite la interpretación de los resultados y permita análisis comparativos robustos. Existen diversas formas de medir el nivel educativo de una persona, como los años de escolaridad, los puntajes estandarizados o el nivel educativo máximo alcanzado. En esta investigación optamos por esta última, ya que condensa de forma jerárquica los tramos educativos y permite una lectura más clara de las desigualdades acumuladas a lo largo del ciclo formativo. Esta forma de medición ha sido ampliamente utilizada por organismos internacionales como la Organización para la Cooperación y el Desarrollo Económicos (OCDE, 2018), y responde a una lógica reconocida en la literatura metodológica. Como señala Schneider (2016), al momento de construir variables educativas es clave definir si estas pueden ser tratadas como ordinales, lo cual es posible “si las calificaciones educativas están jerárquicamente relacionadas” (p.&nbsp;8). En el caso de esta investigación, medir el nivel educativo de una persona de esta manera permite modelarla como una escala ordinal que contribuye al análisis de la desigualdad educacional.</p></li>
+</ul>
+<p><strong>Pertenencia a pueblo indígena</strong></p>
+<ul>
+<li>La pertenencia a pueblo indígena es una variable predictora de nivel 1 creada en base a la variable “r3”, que pregunta sobre si la persona encuestada pertenece a uno de los 10 pueblos indígenas reconocidos por la ley (Aimara, Rapa-Nui o Pascuenses, Quechua, Mapuche, Atacameño (Likan-Antai), Collas, Kawashkar o Alacalufes, Yámana o Yagán, Diaguita, Chango). Esta variable fue recodificada para obtener una variable dummy, donde el valor 1 indica que sí pertenece a uno de los 10 pueblos originarios que identifica la pregunta, mientras que el valor 0 indica que no pertenece a ninguno.</li>
+</ul>
+<p><strong>Dificultad para concentrarse</strong></p>
+<ul>
+<li><p>La dificultad para concentrarse es la segunda y última variable predictora de nivel 1, la cual mide en una escala de 0 a 3 la dificultad para recordar o concentrarse de una persona. Fue creada en base a la pregunta “h7d”, una pregunta tipo Likert, la cual tiene los siguientes valores:</p>
+<ul>
+<li><p><strong>1 = No, Ninguna dificultad:</strong> se recodificó para que tenga el valor 0.</p></li>
+<li><p><strong>2 = Sí, algo de dificultad:</strong> se recodificó para que tenga el valor 1.</p></li>
+<li><p><strong>3 = Sí, mucha dificultad:</strong> se recodificó para que tenga el valor 2.</p></li>
+<li><p><strong>4 = No puede hacerlo:</strong> se recodificó para que tenga el valor 3.</p></li>
+</ul></li>
+</ul>
+<p><strong>Promedio del nivel educacional máximo alcanzado de los padres (por comuna)</strong></p>
+<ul>
+<li><p>Es la primera variable predictora de nivel 2, y mide el promedio comunal de educación parental. Este promedio fue calculado en base a las variables “r12a” y “r12b”, las cuales preguntan a la persona encuestada sobre el nivel educacional más alto alcanzado por la madre y por el padre, respectivamente. La recodificación de ambas variables fue realizada de la siguiente manera (ambas variables poseen la misma escala original y recodificada):</p>
+<ul>
+<li><p><strong>1 = Nunca asistió:</strong> mismo valor que la variable original.</p></li>
+<li><p><strong>2 = Educación básica:</strong> mismo valor que la variable original.</p></li>
+<li><p><strong>3 = Educación media:</strong> integramos los valores de “Educación Media Científico-Humanista o Humanidades (sistema antiguo) (3)” y “Educación Media Técnica Profesional o Técnica, Comercial, Industrial o Normalista (sistema antiguo) (4)”.</p></li>
+<li><p><strong>4 = Educación superior</strong>: integramos los valores de “Técnico Nivel Superior (carrera de 1 a 3 años) (5)” y “Profesional (carrera de 4 o más años) (6)”.</p></li>
+<li><p><strong>5 = Postgrado:</strong> recodificamos el valor de “Postgrado (7)” para que tuviera el valor 5.</p></li>
+</ul></li>
+<li><p>Con las variables recodificadas, se calculó un promedio entre madre y padre para obtener el promedio de educación parental de la persona encuestada. Luego, se calculó el promedio comunal de educación parental, agrupando por las 335 comunas.</p></li>
+</ul>
+<p><strong>Promedio del nivel de acceso a internet de los hogares (por comuna)</strong></p>
+<ul>
+<li><p>Esta variable predictora de nivel 2 corresponde a un índice sumativo, con un rango posible entre 0 y 5, que identifica el nivel de acceso a internet del hogar de la persona encuestada. El índice fue construído en base a las siguientes preguntas sobre si la persona encuestada o algún integrante del hogar poseen acceso a algún tipo de conexión pagada a internet, con respuestas de sí o no:</p>
+<ul>
+<li><p><strong>r17a = Banda ancha fija</strong></p></li>
+<li><p><strong>r17b = Banda ancha móvil (mode, Wifi o USB)</strong></p></li>
+<li><p><strong>r17c = Teléfono móvil que permite conexión a internet (smartphone)</strong></p></li>
+<li><p><strong>r17d = Tablet u otro dispositivo que permite conexión a Internet</strong></p></li>
+<li><p><strong>r17e = Internet satelital</strong></p></li>
+</ul></li>
+<li><p>Las respuestas de estas 5 preguntas fueron recodificadas para que el valor 1 indique “Sí”, y el valor 0 indique “No”, para luego crear un índice sumativo con todas las respuestas. Con el índice listo, se calculó el promedio comunal de acceso a internet de los hogares, agrupando por las 335 comunas presentes en nuestra submuestra.</p></li>
+</ul>
+<p><strong>Promedio del decil de ingreso autónomo (por comuna)</strong></p>
+<ul>
+<li>El promedio del decil de ingresos por comuna es la tercera y última variable predictora de nivel 2. Para obtener el promedio, se utilizó la variable “dau” de la base de datos CASEN 2022, que identifica los deciles autónomos nacionales de los hogares de las personas encuestadas, y luego se obtuvo el promedio comunal agrupando por las 335 comunas presentes.</li>
+</ul>
+<p><strong>Edad</strong></p>
+<ul>
+<li>Esta variable se utiliza como variable de control para los modelos realizados. Representa la edad en años de la persona encuestada al momento de la entrevista.</li>
+</ul>
+</section>
+<section id="estadísticos-descriptivos-generales" class="level4">
+<h4 class="anchored" data-anchor-id="estadísticos-descriptivos-generales"><strong>3.3) Estadísticos descriptivos generales</strong></h4>
+</section>
+<section id="estadísticos-descriptivos-para-variables-de-nivel-1" class="level4">
+<h4 class="anchored" data-anchor-id="estadísticos-descriptivos-para-variables-de-nivel-1"><strong>Estadísticos descriptivos para variables de nivel 1</strong></h4>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="https://www.desarrollosocialyfamilia.gob.cl/storage/image/banner-saludmental.png" class="img-fluid"></p>
-</div>
-</div>
-<p>En la <a href="#tbl-sexo">Tabla&nbsp;1</a> podemos ver que la proporción de mujeres que responde la encuesta corresponde a 60.12%, mientras que la propoción de hombres corresponde a 39.88%.</p>
-<div class="cell tbl-cap-location-top">
-<div class="cell-output-display">
-<div id="tbl-sexo" class="anchored">
-<table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Tabla&nbsp;1: Distribución de sexo</caption>
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Descriptivos generales de variables nivel 1</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;" data-quarto-table-cell-role="th">Sexo</th>
-<th style="text-align: center;" data-quarto-table-cell-role="th">n</th>
-<th style="text-align: center;" data-quarto-table-cell-role="th">Proporción</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">range</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1151</td>
-<td style="text-align: center;">39.88</td>
+<td style="text-align: left;">nvl_educ</td>
+<td style="text-align: right;">51775</td>
+<td style="text-align: right;">3.76</td>
+<td style="text-align: right;">1.86</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">1735</td>
-<td style="text-align: center;">60.12</td>
+<td style="text-align: left;">pueblo_indigena</td>
+<td style="text-align: right;">51775</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
 </tr>
-</tbody><tfoot>
 <tr class="odd">
-<td style="text-align: center; padding: 0; border: 0;"><sup>a</sup> Fuente: Elaboración propia en base a ELSOC 2016.</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
+<td style="text-align: left;">dificultad_conc</td>
+<td style="text-align: right;">51775</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
 </tr>
-</tfoot>
-
+<tr class="even">
+<td style="text-align: left;">edad</td>
+<td style="text-align: right;">51775</td>
+<td style="text-align: right;">53.47</td>
+<td style="text-align: right;">16.26</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">89</td>
+</tr>
+</tbody>
 </table>
-</div>
 
 
 </div>
 </div>
+<p><strong>a) Nivel educacional máximo alcanzado (dependiente):</strong></p>
+<p>Tiene un rango posible de 0 a 8, con una media de 3.76 y una mediana de 4, lo que indica que los encuestados han alcanzado como máximo nivel educativo la educación media completa, aproximadamente, con una dispersión media-alta (s.d. = 1.86).</p>
+<p><strong>b) Pertenencia a pueblos indígenas (independiente, nivel 1):</strong></p>
+<p>Es una variable dicotómica (dummy) donde 1 significa pertenencia al pueblo indígena y 0 no pertenencia. Tiene una media de 0.13, lo que indica que 13% de los encuestados se identifica como parte de uno de los diez pueblos indígenas reconocidos en la pregunta (aproximadamente 6730 personas).</p>
+<p><strong>c) Dificultad para concentrarse (independiente, nivel 1):</strong></p>
+<p>Esta variable tiene un rango posible de 0 a 3, donde el valor 3 significa una gran dificultad para concentrarse. Presenta una media de 0.17, que a nuestro parecer es baja, y una desviación estándar moderada de 0.43.</p>
+<p><strong>d) Edad (variable de control)</strong></p>
+<p>Es una variable de control que tiene un rango posible de 18 a 107 años, con una media de 54 años aproximadamente. Tiene una desviación estándar de 16.26, lo que indica una dispersión moderada-alta.</p>
 </section>
-</section>
-<section id="análisis" class="level1">
-<h1>Análisis</h1>
-<p>Aqui ponemos el análisis, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-<p>En nuestro ejemplo, analizaremos la correlación entre algunas variables.</p>
-<p>En la <a href="#fig-cor_edad_dep">Figura&nbsp;1</a> es posible apreciar… La correlación entre la edad y el promedio de la sintomatología depresiva corresponde a 0.0176236.</p>
-<div class="cell" data-layout-align="center">
+<section id="estadísticos-descriptivos-para-variables-de-nivel-2" class="level4">
+<h4 class="anchored" data-anchor-id="estadísticos-descriptivos-para-variables-de-nivel-2"><strong>Estadísticos descriptivos para variables de nivel 2</strong></h4>
+<div class="cell">
 <div class="cell-output-display">
-<div id="fig-cor_edad_dep" class="quarto-figure quarto-figure-center anchored">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Descriptivos generales de variables de nivel 2</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">n</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">mean</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sd</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">median</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">mean_educ_padres</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">2.04</td>
+<td style="text-align: right;">0.32</td>
+<td style="text-align: right;">1.99</td>
+<td style="text-align: right;">1.37</td>
+<td style="text-align: right;">3.48</td>
+<td style="text-align: right;">2.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mean_conectividad</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">1.81</td>
+<td style="text-align: right;">0.55</td>
+<td style="text-align: right;">1.73</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">3.39</td>
+<td style="text-align: right;">2.69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">mean_dau</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">4.62</td>
+<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">4.46</td>
+<td style="text-align: right;">2.49</td>
+<td style="text-align: right;">8.90</td>
+<td style="text-align: right;">6.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">comunas</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">154.55</td>
+<td style="text-align: right;">223.13</td>
+<td style="text-align: right;">78.00</td>
+<td style="text-align: right;">6.00</td>
+<td style="text-align: right;">1808.00</td>
+<td style="text-align: right;">1802.00</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><strong>e) Promedio del nivel educacional de los padres por comuna (independiente, nivel 2)</strong></p>
+<p>El promedio del nivel educacional parental por comuna tiene un rango posible de 1 a 5, Presenta una media y una mediana de aproximadamente 2, lo que indica que el nivel educacional de los padres es bajo en las comunas, con una desviación estándar baja de 0.32.</p>
+<p><strong>f) Promedio de conectividad por comuna (independiente, nivel 2)</strong></p>
+<p>Tiene un rango posible de 0 a 5, con una media de 1.81 y una mediana de 1.73, valores que indican un bajo nivel de conexión a internet en los hogares. Posee una desviación estándar de 0.55, que encontramos moderada.</p>
+<p><strong>g) Promedio del decil de ingresos por comuna (independiente, nivel 2)</strong></p>
+<p>Es una variable cuantitativa con un rango posible de 1 a 10, con una media de 4.62 y una mediana de 4.46, ambas (media y mediana) parecidas. Estos valores indican que en promedio las comunas se encuentran entre el 40% al 50% con menores ingresos. Esta variable tiene una desviación estándar de 1.11, que en el rango de la escala creemos que es una dispersión moderada-baja.</p>
+<p><strong>h) Comuna (cluster)</strong></p>
+<p>La variable comuna identifica la unidad territorial en la que reside cada persona encuestada. Corresponde a una variable categórica nominal con 335 categorías posibles. Tiene una media de 154.55 personas encuestadas en promedio por comuna y una desviación estándar alta de 223.13. El rango total es de 1799, indicando una gran heterogeneidad en el tamaño o peso poblacional de las comunas dentro del estudio.</p>
+</section>
+<section id="métodos" class="level4">
+<h4 class="anchored" data-anchor-id="métodos"><strong>3.4) Métodos</strong></h4>
+<p>Con el objetivo de responder nuestra pregunta de investigación, y de encontrar evidencia a favor de nuestras hipótesis, se calcularon los siguientes modelos:</p>
+<ul>
+<li><strong>Modelo nulo:</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{nvl\_educ}_{ij} = \gamma_{00} + u_{0j} + r_{ij}
+\]</span></p>
+<ul>
+<li><strong>Modelo con predictores de nivel 1</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{nvl\_educ}_{ij} = \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad\_gmc}_{ij} + u_{0j} + r_{ij}
+\]</span></p>
+<ul>
+<li><strong>Modelo con predictores de nivel 2</strong></li>
+</ul>
+<p><span class="math display">\[
+\text{nvl\_educ}_{ij} = \gamma_{00} + \gamma_{01} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{02} \text{mean\_conectividad\_gmc}_{j} + \gamma_{03} \text{mean\_dau\_gmc}_{j} + u_{0j} + r_{ij}
+\]</span></p>
+<ul>
+<li><strong>Modelo con predictores de nivel 1 y nivel 2</strong></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ &amp; \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad\_gmc}_{ij} \\
+&amp; + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+&amp; + u_{0j} + r_{ij}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Modelo con pendiente aleatoria</strong></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ &amp; \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad\_gmc}_{ij} \\
+&amp; + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+&amp; + u_{0j} + u_{1j} \text{pueblo\_indígena}_{ij} + r_{ij}
+\end{aligned}
+\]</span></p>
+<ul>
+<li><strong>Modelo con interacción entre niveles</strong></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{nvl\_educ}_{ij} =\ &amp; \gamma_{00} + \gamma_{01} \text{pueblo\_indígena}_{ij} + \gamma_{02} \text{dificultad\_conc}_{ij} + \gamma_{03} \text{edad\_gmc}_{ij} \\
+&amp; + \gamma_{04} \text{mean\_educ\_padres\_gmc}_{j} + \gamma_{05} \text{mean\_conectividad\_gmc}_{j} + \gamma_{06} \text{mean\_dau\_gmc}_{j} \\
+&amp; + \gamma_{07} \left(\text{pueblo\_indígena}_{ij} \times \text{mean\_educ\_padres\_gmc}_{j}\right) \\
+&amp; + u_{0j} + u_{1j} \text{pueblo\_indígena}_{ij} + r_{ij}
+\end{aligned}
+\]</span></p>
+</section>
+</section>
+<section id="resultados" class="level1">
+<h1><strong>4) Resultados</strong></h1>
+<section id="gráficos-bivariados" class="level4">
+<h4 class="anchored" data-anchor-id="gráficos-bivariados"><strong>4.1) Gráficos bivariados</strong></h4>
+<p><strong>I- Relación entre nivel educacional máximo alcanzado y promedio de conectividad comunal</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
 <figure class="figure">
-<p><img src="plantilla_informe_files/figure-html/fig-cor_edad_dep-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figura&nbsp;1: Correlación entre edad y sintomatología depresiva</figcaption>
+<p><img src="plantilla_informe_files/figure-html/bivariados1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>En este primer gráfico se observa la relación entre el promedio de acceso a internet y nuestra variable dependiente. En la esquina superior derecha se ubican las comunas con altos valores en ambas variables, esquina en la cual se ubican 4 de las 5 comunas más ricas de Chile: Las Condes, Vitacura, La Reina y Providencia, mientras que Lo Barnechea no alcanza ese nivel. También, destacan comunas como Quinta Normal y San Pedro de la Paz, que tienen niveles altos de conectividad (entendida como acceso a conexión a internet) en el rango nacional, pero no poseen niveles tan altos de nivel educacional. Por último, también se destaca la posición de Río Verde, ya que a pesar de tener un promedio de acceso a internet bajo, posee un nivel educacional máximo más alto que el promedio.</p>
+<p><strong>II- Relación entre decil de ingresos comunal y nivel educacional alcanzado</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="plantilla_informe_files/figure-html/bivariados2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este segundo gráfico se observa la relación entre el promedio del decil de ingresos de las comunas y nuestra variable dependiente. Nuevamente, encontramos a Vitacura, Providencia, Las Condes y La Reina entre las comunas con mayores valores en ambas variables. Podemos observar una gran concentración de comunas entre el decil 3 y 5, las cuales, a simple vista, no pasan del valor 4 (educación media completa) en el nivel educacional máximo alcanzado. También, destacar la posición de Río Verde que posee el tercer decil más alto de ingresos, y que se ubica entre las comunas con valores más altos en ambas variables.</p>
 </section>
-<section id="conclusiones" class="level1">
-<h1>Conclusiones</h1>
-<p>Aqui redactamos algunas conclusiones, de acuerdo con la <a href="https://correlacional.netlify.app/trabajos">pauta</a>.</p>
-</section>
-<section id="biliografía" class="level1">
-<h1>Biliografía</h1>
+<section id="centrado-de-variables-y-casos-influyentes" class="level4">
+<h4 class="anchored" data-anchor-id="centrado-de-variables-y-casos-influyentes"><strong>4.2) Centrado de variables y casos influyentes</strong></h4>
+<p>Respecto al centrado de las variables, se centraron las 3 variables de nivel 2 (promedio de educación parental, promedio de acceso a internet y promedio de decil de ingresos) a la gran media, con el objetivo de lograr una mejor consistencia de los resultados. Además de las variables de nivel 2, se tomó la decisión de centrar la variable edad a la media general para lograr una mejor interpretación del intercepto. Optamos por centrarla a la gran media y no a la media grupal debido a que en esta investigación no nos interesa conocer el efecto de la edad por cada comuna, sino que simplemente queremos controlar por edad sin un sentido contextual añadido. A continuación, se explicita la media general de cada variable centrada:</p>
 <ul>
-<li><p>COES (2023). <em>Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2022. Presentación de Resultados COES</em>. Marzo, Santiago de Chile.</p></li>
-<li><p>R Core Team (2023). <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing, Vienna, Austria. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p></li>
+<li><p><strong>Media general acceso a internet = 2.223</strong></p></li>
+<li><p><strong>Media general decil de ingresos = 5.086</strong></p></li>
+<li><p><strong>Media general educación de los padres = 2.240</strong></p></li>
+<li><p><strong>Media general edad = 53.474</strong></p></li>
+</ul>
+<p>Sobre los casos influyentes de nuestra muestra, se calculó Distancia de Cook para identificar posibles casos influyentes y, si bien se encontraron outliers, estos no eran influyentes para nuestra muestra.</p>
+</section>
+<section id="resultados-de-los-modelos" class="level4">
+<h4 class="anchored" data-anchor-id="resultados-de-los-modelos"><strong>4.3) Resultados de los modelos</strong></h4>
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">Comparación de modelos</caption>
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">Modelo Nulo</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">Modelo con predictores de nivel 1</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">Modelo con predictores de nivel 2</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">Modelo con predictores de nivel 1 y 2</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">Modelo con pendiente aleatoria</th>
+<th colspan="2" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">Modelo con interacción entre niveles</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col9">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  0">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  1">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  2">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  3">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercepto)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.27</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.50</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">3.74</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">3.86</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">3.86</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">3.86</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Pertenencia a pueblo indígena</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.48</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">-0.45</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">-0.37</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">-0.39</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Dificultad para concentrarse</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.38</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">-0.37</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">-0.37</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">-0.37</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Edad (control, centrado)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">-0.05</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">-0.05</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">-0.05</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">-0.05</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Promedio acceso a internet (centrado)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.23</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">0.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">0.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Promedio nivel educativo de los padres (centrado)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.44</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">1.38</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">1.38</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">1.40</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Promedio decil de ingresos (centrado)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.14</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.10</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">0.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Interacción (pueblo_indigena:mean_educ_padres)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  1"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  2">-0.11</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  3">0.212</td>
+</tr>
+<tr>
+<td colspan="13" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">2.92</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">2.30</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">2.92</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">2.30</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">2.29</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">2.29</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.48 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.34 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.01 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.02 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.02 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.02 <sub>comuna_factor</sub></td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>11</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.06 <sub>comuna_factor.pueblo_indigena</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.06 <sub>comuna_factor.pueblo_indigena</sub></td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ρ<sub>01</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">&nbsp;</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">-0.58 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">-0.58 <sub>comuna_factor</sub></td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.14</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.13</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.01</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.01</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">335 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">335 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">335 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">335 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">335 <sub>comuna_factor</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">335 <sub>comuna_factor</sub></td>
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">51775</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">51775</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">51775</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">51775</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">51775</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="2">51775</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.000 / 0.142</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.199 / 0.302</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.152 / 0.155</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.330 / 0.336</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.328 / 0.336</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="2">0.329 / 0.336</td>
+</tr>
+
+</tbody></table>
+
+<p>En esta tabla se pueden observar los resultados de los 6 modelos presentados en el punto 3.4. La discusión será en el orden en el que aparecen los modelos de izquierda a derecha.</p>
+<p>En primer lugar, reportar la correlación intraclase calculada con nuestro modelo nulo, la cual es de 0.14, indicando que el 14% de la varianza del nivel educacional máximo alcanzado se asocia a la pertenencia a la comuna.</p>
+<p>Sobre el modelo con predictores de nivel 1, podemos observar que ambos valores son negativos y estadísticamente significativos (p-value&lt;0.001). Recordando que la variable de “pueblo_indigena” es una variable dummy, al aumentar en 1 punto significaría que la persona pertenece a uno de los 10 pueblos originarios que identificaba la pregunta, causando una disminución de 0.48 puntos en el nivel educativo máximo alcanzado. Sobre la dificultad para concentrarse, podemos ver que por cada punto que aumenta, el nivel educativo máximo disminuye en 0.38 puntos.</p>
+<p>Pasando al modelo con predictores de nivel 2, se puede ver que las 3 variables contextuales son estadísticamente significativas (p-value&lt;0.001), además de ser positivas. En primer lugar, el acceso a internet se asocia positivamente con el nivel educativo máximo, ya que por cada punto que aumenta por sobre la gran media, nuestra variable dependiente aumenta en 0.23 puntos. En segundo lugar, el promedio de educación parental por comuna tiene una gran relevancia debido a su β de 1.44, que indica que por cada punto que aumenta por sobre la gran media, el nivel educacional máximo alcanzado aumenta en 1.44 puntos. Por último, el promedio del decil de ingresos comunal también implica un aumento en el nivel educacional máximo, esta vez de 0.14 puntos (β=0.14).</p>
+<p>En el modelo con predictores de nivel 1 y 2, podemos ver que los β mantienen su significancia estadística. Algunos valores disminuyen debido al control que existe entre las variables, siendo el promedio de acceso a internet comunal el más afectado con una disminución de 0.11 puntos, además de una baja en su significancia estadística (p-value=0.001).</p>
+<p>En el modelo con pendiente aleatoria, intentamos poner a prueba nuestra sexta hipótesis donde se busca ver si el efecto de ser indígena sobre el nivel educacional alcanzado es constante o varía entre comunas. Los resultados muestran que el efecto sí varía significativamente entre comunas, reflejado en una varianza de la pendiente de 0.06 (τ<sub>11</sub> = 0.06). El intercepto de este modelo es de 3.86, lo que indica el nivel educacional máximo esperado para una persona cuando todas las variables son 0, es decir, para una persona que: no es indígena, no tiene dificultades para concentrarse, que tiene una edad igual a la media general (aproximadamente 53 años), y que vive en una comuna “promedio” en términos de nivel educativo parental, acceso a internet y decil de ingresos. En la escala de nuestra variable dependiente, este valor de 3.86 indica un nivel educativo máximo alcanzado de educación media completa, aproximadamente.</p>
+<p>Por último, en el modelo con pendiente aleatoria se puso a prueba la hipótesis 6. Si bien, el coeficiente es negativo, no es estadísticamente significativo (p-value=0.212).</p>
+</section>
+<section id="test-de-devianza" class="level4">
+<h4 class="anchored" data-anchor-id="test-de-devianza"><strong>4.4) Test de devianza</strong></h4>
+<table class="caption-top table">
+<caption>Comparación de modelos con test ANOVA</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 3%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">npar</th>
+<th style="text-align: right;">AIC</th>
+<th style="text-align: right;">BIC</th>
+<th style="text-align: right;">logLik</th>
+<th style="text-align: right;">-2*log(L)</th>
+<th style="text-align: right;">Chisq</th>
+<th style="text-align: right;">Df</th>
+<th style="text-align: right;">Pr(&gt;Chisq)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">resultados_3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">190268.9</td>
+<td style="text-align: right;">190348.6</td>
+<td style="text-align: right;">-95125.46</td>
+<td style="text-align: right;">190250.9</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">reg_al1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">190214.9</td>
+<td style="text-align: right;">190312.3</td>
+<td style="text-align: right;">-95096.44</td>
+<td style="text-align: right;">190192.9</td>
+<td style="text-align: right;">58.03702</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Se realizó un test ANOVA entre el modelo con predictores de nivel 1 y 2 (resultados_3) y el modelo con pendiente aleatoria (reg_al1) para evaluar el ajuste de los modelos. Los resultados muestran que el modelo con pendiente aleatoria se ajusta significativamente mejor que el modelo sin ella.</p>
+</section>
+<section id="gráficos-con-pendiente-aleatoria" class="level4">
+<h4 class="anchored" data-anchor-id="gráficos-con-pendiente-aleatoria"><strong>4.5) Gráficos con pendiente aleatoria</strong></h4>
+<p><img src="plantilla_informe_files/figure-html/grafico%20pendiente_al-1.png" class="img-fluid" width="672"></p>
+<p>En este gráfico se puede visualizar la varianza de la pendiente de pueblo_indigena entre las comunas. Se eligieron 1 o 2 comunas por cada zona del país (9 comunas en total) para intentar lograr una representatividad equitativa. Se puede ver que Temuco y Punta Arenas tienen una pendiente negativa muy marcada, mientras que la de Valdivia no es tan severa, aunque sigue siendo llamativa. Las pendientes de Vallenar, Calama, La Serena e Iquique son negativas, aunque no llegan al nivel de las comunas anteriores. Por último, la pendiente de Santiago es ligeramente negativa.</p>
+</section>
+<section id="gráfico-de-interacción-entre-niveles" class="level4">
+<h4 class="anchored" data-anchor-id="gráfico-de-interacción-entre-niveles"><strong>4.6) Gráfico de interacción entre niveles</strong></h4>
+<p><img src="plantilla_informe_files/figure-html/grafico%20int_niveles-1.png" class="img-fluid" width="672"></p>
+<p>En este gráfico se observa que la interacción esperada entre la pertenencia a pueblo indígena y el promedio de educación parental no resultó estadísticamente significativa. Esta falta de significancia nos hizo reflexionar sobre los motivos del resultado, llegando a la conclusión de que la educación parental, si bien según nuestro modelo influye en el nivel educacional máximo alcanzado, no es un factor adecuado ni determinante de la desigualdad educativa basada en la etnicidad de las personas. UNESCO (2017) afirma que existen barreras estructurales y simbólicas a las que las personas indígenas se enfrentan en su trayectoria educativa. Hay factores como la infraestructura, el bloqueo del acceso a la educación, los currículums monoculturales, o el lenguaje utilizado en la enseñanza que podrían ser más adecuados para analizar este tipo de desigualdad educativa.</p>
+</section>
+</section>
+<section id="conclusiones-y-discusiones" class="level1">
+<h1><strong>5) Conclusiones y discusiones</strong></h1>
+<p>En base a los resultados presentados anteriormente, fue posible encontrar evidencia a favor de 6 de las 7 hipótesis planteadas:</p>
+<ul>
+<li><p><strong>H1:</strong> β = -0.37</p></li>
+<li><p><strong>H2:</strong> β = -0.37</p></li>
+<li><p><strong>H3:</strong> β = 0.12</p></li>
+<li><p><strong>H4:</strong> β = 1.38</p></li>
+<li><p><strong>H5:</strong> β = 0.09</p></li>
+<li><p><strong>H6:</strong> τ<sub>11</sub> = 0.06</p></li>
+<li><p><strong>H7:</strong> La interacción no es estadísticamente significativa.</p></li>
+</ul>
+<p>En base a los resultados, podemos concluir que la trayectoria y el logro educativo no dependen exclusivamente de variables económicas e institucionales, variables que han sido el centro de las demandas por educación en los últimos años. Existen elementos como la etnicidad de las personas, las neurodivergencias, las diversidades de las personas, el capital cultural heredado que genera una desigualdad de entrada, la brecha digital o las características del entorno familiar que también son útiles y muy relevantes para el análisis de la desigualdad educacional en Chile.</p>
+<p>Con esta investigación buscamos ampliar el enfoque que se tiene para analizar la desigualdad educativa. Intentamos salir de la reflexión centrada únicamente en el lado administrativo o económico, para visibilizar variables psicológicas, simbólicas y estructurales que inciden en la trayectoria educativa de las personas.</p>
+</section>
+<section id="referencias" class="level1">
+<h1><strong>Referencias</strong></h1>
+<ul>
+<li><p>Apple, M. W. (1982). Education and power. Boston: Routledge &amp; Kegan Paul.</p></li>
+<li><p>Bourdieu, P., &amp; Passeron, J.-C. (1990). La reproducción. Elementos para una teoría del sistema de enseñanza. Laia.</p></li>
+<li><p>Gardner, H. (1999). La inteligencia reformulada: Las inteligencias múltiples en el siglo XXI (Traducción de M. Gimeno). Barcelona: Paidós. (Trabajo original publicado en 1983 como Frames of Mind)</p></li>
+<li><p>Hill Collins, P. (2000). Black feminist thought: Knowledge, consciousness, and the politics of empowerment (2nd ed.). New York: Routledge. (Trabajo original publicado en 1990)</p></li>
+<li><p>Jiménez, J. M., &amp; Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. Latinoamérica. Revista de Estudios Educativos, 52(1).<a href="https://latam.redilat.org/index.php/lt/article/view/3246">https://latam.redilat.org/index.php/lt/article/view/3246</a></p></li>
+<li><p>Ladson-Billings, G. (1994). The dreamkeepers: Successful teachers of African American children. San Francisco: Jossey-Bass.</p></li>
+<li><p>López, J., &amp; Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? Estudios Sociológicos, 26(78), 713–736.<a href="https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&amp;script=sci_arttext">https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&amp;script=sci_arttext</a></p></li>
+<li><p>Mejía, D. A., &amp; Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. ResearchGate.<a href="https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement">https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children’s_academic_achievement</a></p></li>
+<li><p>Mide UC. (2020). Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena. Pontificia Universidad Católica de Chile.<a href="https://mideuc.cl/">https://mideuc.cl</a></p></li>
+<li><p>PNUD. (2017). Desiguales: Orígenes, cambios y desafíos de la brecha social en Chile. Programa de las Naciones Unidas para el Desarrollo (PNUD).<a href="https://www.undp.org/es/chile/publications/informe-desarrollo-humano-desiguales-2017">https://www.undp.org/es/chile/publications/informe-desarrollo-humano-desiguales-2017</a></p></li>
+<li><p>Rodríguez, F., Pérez, M., &amp; Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. Revista Conrado, 17(83).<a href="https://www.redalyc.org/journal/280/28073811035/html/">https://www.redalyc.org/journal/280/28073811035/html/</a></p></li>
+<li><p>Schneider, S. L. (2016). The conceptualisation, measurement, and coding of education in German and cross‑national surveys (GESIS Survey Guidelines, versión 2.0). Mannheim, Germany: GESIS – Leibniz Institute for the Social Sciences.<a href="https://doi.org/10.15465/gesis-sg_en_020">https://doi.org/10.15465/gesis-sg_en_020</a></p></li>
+<li><p>Sirin, S. R. (2005). Socioeconomic status and academic achievement: A meta-analytic review of research. Review of Educational Research, 75(3), 417–453.<a href="https://doi.org/10.3102/00346543075003417">https://doi.org/10.3102/00346543075003417</a></p></li>
+<li><p>Thomson, S. (2021). Achievement at school and socioeconomic background — an educational perspective. NPJ Science of Learning, 6(44).<a href="https://doi.org/10.1038/s41539-021-00112-6">https://doi.org/10.1038/s41539-021-00112-6</a></p></li>
+<li><p>Truffello, R., &amp; Contreras, D. (2019). ¿Qué tan segregada está la educación chilena? En PNUD (Ed.), Desarrollo humano en Chile: Aportes para pensar el futuro (pp.&nbsp;49–67). Santiago, Chile: PNUD.</p></li>
+<li><p>UNESCO (2017). Education for Indigenous Peoples: Advancing Inclusive and Equitable Quality Education.</p></li>
 </ul>
 </section>
 
@@ -218,18 +838,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -261,11 +870,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -275,8 +923,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -288,7 +945,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -332,6 +1112,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -357,6 +1138,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -417,6 +1224,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

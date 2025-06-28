@@ -1,0 +1,406 @@
+---
+title: "Factores influyentes para el desarrollo de la educación" 
+format: 
+  revealjs:
+    theme: multinivel.scss
+    incremental: true
+    slide-number: true
+    auto-stretch: false
+    transition: fade
+    transition-speed: slow
+    scrollable: true
+    scrollOverflow: true           
+    css: estilos.css 
+    self-contained: true
+editor: visual
+---
+
+# Factores influyentes para el desarrollo de la educación en Chile
+
+Matilda Raccagni y Rodrigo Huerta
+
+Analisis de datos Multinivel 2025
+
+------------------------------------------------------------------------
+
+# Introducción
+
+-   **Problematización:** La educación es uno de los pilares fundamentales del desarrollo individual y colectivo, en la sociedad chilena actual, el acceso y logro educativo son procesos muy influenciados por factores estructurales e individuales
+
+-   **Variables a utilizar:** nivel educacional (dependiente), nivel educativo de los padres, etnicidad, conectividad digital y capacidad para concentrarse.
+
+------------------------------------------------------------------------
+
+# ¿En qué grado inciden los factores individuales y estructurales en el nivel educativo máximo alcanzado por las personas en Chile?
+
+------------------------------------------------------------------------
+
+### **Hipótesis – Nivel 1**
+
+**H1**: La pertenencia a pueblos originarios se asocia negativamente con el nivel educacional.
+
+**H2**: La dificultad para concentrarse tiene un efecto negativo sobre el nivel educacional.
+
+### **Hipótesis – Nivel 2**
+
+**H3**: Mayor conectividad comunal se asocia positivamente con el nivel educacional.
+
+**H4**: Mayor educación promedio de los padres en la comuna se asocia positivamente con el nivel educacional.
+
+**H5**: El efecto de la pertenencia a un pueblo indígena sobre el nivel educacional varía por la comuna de residencia.
+
+### **Hipótesis – Interacción entre niveles**
+
+**H6**: En comunas con mayor educación parental, el efecto negativo de ser indígena es menor.
+
+------------------------------------------------------------------------
+
+# Metodología
+
+-   **Base de datos**: Encuesta CASEN 2022\
+-   Diseño probabilístico, representatividad nacional\
+-   **Submuestra**: 51.686 personas de 20+ años en 335 comunas
+
+Para el análisis utilizamos la metodología multinivel, ya que según la literatura revisada, los factores de nivel dos inciden en nuestra variable dependiente.
+
+------------------------------------------------------------------------
+
+## Tablas de descriptivos variables nivel 1 y 2
+
+Las variables que vamos a utilizar son las siguientes
+
+```{r datos, echo=FALSE, warning=FALSE, message=FALSE}
+pacman::p_load(tidyverse, # Manipulacion de datos
+               car, # Recodificar
+               sjPlot, # Tablas y graficos
+               sjmisc, # Descriptivos
+               kableExtra, # Tablas
+               psych, # Bivariados
+               corrplot, # Graficos correlación
+               broom, 
+               gginference,
+               ggplot2,
+               knitr,
+               sjlabelled,
+               dplyr,
+               stargazer,
+               lme4,
+               haven,
+               reghelper,
+               texreg, 
+               gt,
+               ggeffects,
+               labelled,
+               influence.ME) # Varios          
+
+options(scipen = 999) # para desactivar notacion cientifica
+rm(list = ls()) # para limpiar el entorno de trabajo
+```
+
+```{r datos1, echo=FALSE, warning=FALSE, message=FALSE}
+load("casen.Rdata") #cargamos base de datos
+
+```
+
+```{r descriptivos1, echo=FALSE, warning=FALSE, message=FALSE}
+
+casen$comuna_factor <- as_factor(casen$comuna)
+
+casen_desc1 = casen %>% select(nvl_educ, pueblo_indigena,
+                              dificultad_conc, comuna)
+
+# Descriptivos variables de nivel 1
+casen_desc1 %>% ungroup() %>%
+  select(-comuna) %>%
+  psych::describe() %>%
+  select(n, mean, sd, median, min, max, range, median) %>%
+  kable(
+    caption = "Descriptivos generales de variables nivel 1",
+    digits = 2
+  ) %>%
+  kable_styling(full_width = TRUE)
+```
+
+```{r descriptivos2, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Tabla de descriptivos de las variables de nivel 2
+casen_desc2 <- casen %>%
+  group_by(comuna) %>%
+  summarise(
+    mean_educ_padres = mean(mean_educ_padres),
+    mean_conectividad = mean(mean_conectividad),
+    N_comunas = n()
+  )
+
+casen_desc2 %>%
+  select(mean_educ_padres, mean_conectividad, N_comunas) %>%
+  psych::describe() %>%
+  select(n, mean, sd, median, min, max, range) %>%
+  kable(
+    caption = "Descriptivos generales de variables de nivel 2",
+    digits = 2
+  ) %>%
+  kable_styling(full_width = TRUE)
+
+```
+
+------------------------------------------------------------------------
+
+# Centrado y casos influyentes
+
+-   Centramos ambas variables de nivel 2 a la gran media para lograr una mejor consistencia de los resultados. 
+
+-   No detectamos casos influyentes
+
+```{r centrado de variables, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+# 2) Centrado
+# Centrado de la variable comprometida en la interacción
+casen <- casen %>% ungroup() %>%
+  mutate(mean_educ_padres_gmc = mean_educ_padres-mean(mean_educ_padres))
+
+mg_educ_padres <- mean(casen$mean_educ_padres) # 2.24 = media general del nivel educacional de los padres
+
+# Centrado de la variable mean_conectividad
+casen <- casen %>% ungroup() %>%
+  mutate(mean_conectividad_gmc = mean_conectividad-mean(mean_conectividad))
+
+mg_conectividad <- mean(casen$mean_conectividad) # 2.22 = med
+
+# mg = media general de las variables
+
+```
+
+------------------------------------------------------------------------
+
+# Modelos
+
+------------------------------------------------------------------------
+
+# Modelo Nulo
+
+El modelo nulo se representa como
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + u_{0j} + r_{ij}
+$$
+
+```{r datos9, echo=FALSE, message=FALSE, warning=FALSE}
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna), data = casen)
+
+```
+
+------------------------------------------------------------------------
+
+# Modelo con predictores de nivel 1 {.small}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij}  
++ u_{0j} + r_{ij}
+$$
+
+------------------------------------------------------------------------
+
+# Modelos con predictores de nivel 2 {.small}
+
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{mean_educ_padres_gmc}_{ij} + \gamma_{02}  \text{mean_conectividad_gmc}_{ij} + \gamma_{03}  \text{mean_dau_gmc}_{ij}    
++ u_{0j} + r_{ij}
+$$
+
+------------------------------------------------------------------------
+
+# Modelos con predictores de nivel 1 y 2 {.small}
+
+:::: {style="font-size:85%"}
+::: {style="overflow-x: auto; white-space: nowrap;"}
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij} + \gamma_{04} \text{mean_educ_padres_gmc}_{ij} + \gamma_{05} \text{mean_conectividad_gmc}_{ij} + \gamma_{06}  \text{mean_dau_gmc}_{ij}   
++ u_{0j} + r_{ij}
+$$
+:::
+::::
+
+------------------------------------------------------------------------
+
+# Modelo con pendiente aleatoria {.small}
+
+:::: {style="font-size:85%"}
+::: {style="overflow-x: auto; white-space: nowrap;"}
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij} + \gamma_{04} \text{mean_educ_padres_gmc}_{ij} + \gamma_{05} \text{mean_conectividad_gmc}_{ij} + \gamma_{06}  \text{mean_dau_gmc}_{ij} 
++ u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
+$$
+:::
+::::
+
+------------------------------------------------------------------------
+
+# Modelo con interacción entre niveles {.small}
+
+:::: {style="font-size:85%"}
+::: {style="overflow-x: auto; white-space: nowrap;"}
+$$
+\text{nvl_educ}_{ij} = \gamma_{00} + \gamma_{01}  \text{pueblo_indígena}_{ij} + \gamma_{02}  \text{dificultad_conc}_{ij} + \gamma_{03}  \text{edad}_{ij} + \gamma_{04} \text{mean_educ_padres_gmc}_{ij} + \gamma_{05} \text{mean_conectividad_gmc}_{ij} + \gamma_{06}  \text{mean_dau_gmc}_{ij}
++ u_{0j} + u_{1j} \text {pueblo_indigena}+ r_{ij}
+$$
+:::
+::::
+
+------------------------------------------------------------------------
+
+# Resultados
+
+------------------------------------------------------------------------
+
+# Gráfico Bivariado
+
+```{r graficos bivariados, echo=FALSE, warning=FALSE, message=FALSE}
+
+casen_biv1=casen %>% group_by(comuna) %>% select(mean_conectividad, nvl_educ, comuna) %>% na.omit() %>% summarise_all(mean)
+
+sjPlot::plot_scatter(
+  data = casen_biv1,
+  x = mean_conectividad,
+  y = nvl_educ,
+  dot.labels = to_label(casen_biv1$comuna),
+  fit.line = "lm",
+  show.ci = TRUE,
+  title = "Relación entre conectividad comunal y nivel educacional alcanzado",
+  axis.title = c("Promedio de conectividad comunal", 
+                 "Nivel educacional máximo alcanzado")
+)
+
+```
+
+------------------------------------------------------------------------
+
+# Resultados {.tiny}
+
+::: {.scrollable style="overflow: auto; max-height: 500px;"}
+```{r grafico modelo multinivel, echo=FALSE, warning=FALSE, message=FALSE, results='asis'}
+
+
+casen$comuna_factor <- as_factor(casen$comuna)
+
+# 1) Modelo nulo
+modelo_nulo = lmer(nvl_educ ~ 1 + (1 | comuna_factor), data = casen)
+
+# 2) Modelo con variables de nivel 1
+resultados_1 = lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + (1 | comuna_factor), data = casen)
+
+# 3) Modelo con variables de nivel 2
+resultados_2 = lmer(nvl_educ ~ mean_conectividad_gmc + mean_educ_padres_gmc + (1 | comuna_factor), data = casen)
+
+# 4) Modelo con variables de nivel 1 y 2
+resultados_3 <- lmer(nvl_educ ~ pueblo_indigena + dificultad_conc + 
+                       mean_conectividad_gmc + mean_educ_padres_gmc + 
+                    (1 | comuna_factor), data = casen)
+
+# 5) Pendiente aleatoria (+ test de devianza)
+# Pendiente aleatoria para pueblo_indigena
+reg_al1=lmer(nvl_educ ~ 1 + pueblo_indigena + dificultad_conc + mean_conectividad_gmc + 
+               mean_educ_padres_gmc + ( 1 + pueblo_indigena | comuna_factor), data = casen)
+
+# 6) Interacción entre niveles
+reg_int <- lmer(nvl_educ ~ pueblo_indigena*mean_educ_padres_gmc + dificultad_conc + 
+                  mean_conectividad_gmc + (1 + pueblo_indigena | comuna_factor), data = casen)
+
+# CÓDIGO PARA COMPARAR MODELOS
+tab_model(modelo_nulo, resultados_1, resultados_2, resultados_3, reg_al1, reg_int,
+          show.ci = FALSE,
+          show.icc = TRUE,
+          title = "Comparación de modelos",
+          dv.labels = c("Modelo Nulo", 
+                        "Modelo con predictores de nivel 1", 
+                        "Modelo con predictores de nivel 2", 
+                        "Modelo con predictores de nivel 1 y 2",
+                        "Modelo con pendiente aleatoria",
+                        "Modelo con interacción entre niveles"),
+          pred.labels = c("(Intercepto)", 
+                          "Pertenencia a pueblo indígena", 
+                          "Dificultad para concentrarse", 
+                          "Promedio nivel educativo de los padres (centrado)", 
+                          "Promedio conectividad (centrado)",
+                          "Interacción (pueblo_indigena:mean_educ_padres)"))
+
+
+invisible(NULL)      # evita ecos adicionales
+
+```
+:::
+
+<div>
+
+<div>
+
+</div>
+
+</div>
+
+------------------------------------------------------------------------
+
+# Test de Devianza
+
+```{r test anova, echo=FALSE, warning=FALSE, message=FALSE}
+# Ver test ANOVA en una tabla
+anova_resultados <- anova(resultados_3, reg_al1)
+
+kable(anova_resultados, caption = "Comparación de modelos con test ANOVA")
+```
+
+------------------------------------------------------------------------
+
+# Gráfico de pendiente aleatoria (pueblo_indigena)
+
+```{r grafico de pendiente aleatoria, echo=FALSE, warning=FALSE, message=FALSE}
+
+install.packages("ggeffects")
+
+# Graficar pendiente aleatoria
+
+graf1=ggpredict(reg_al1, terms = c("pueblo_indigena","comuna_factor [Iquique, Calama, La Serena, Vallenar, Santiago, Concepción, Temuco, Valdivia, Punta Arenas]"), type = "random")
+                                   
+plot(graf1) # esto ponerlo dsp en el análisis separado de cada modelo
+```
+
+------------------------------------------------------------------------
+
+# Interacción entre niveles
+
+```{r interracción entre niveles, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+plot_model(reg_int, type = "int")
+```
+
+------------------------------------------------------------------------
+
+# Conclusiones
+
+-   Se confirma incidencia de factores individuales y estructurales
+
+-   Variables comunales tienen **efectos importantes**
+
+-   Interacción propuesta no se encontró significativa
+
+-   Efecto de la conectividad
+
+------------------------------------------------------------------------
+
+# Bibliografía {.small}
+
+-   Bourdieu, P., & Passeron, J.-C. (1990). *La reproducción. Elementos para una teoría del sistema de enseñanza*. Laia.
+
+-   Jiménez, J. M., & Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. *Latinoamérica. Revista de Estudios Educativos*, 52(1). <https://latam.redilat.org/index.php/lt/article/view/3246>
+
+-   López, J., & Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? *Estudios Sociológicos*, 26(78), 713–736. <https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext>
+
+-   Mejía, D. A., & Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. *ResearchGate*. [https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement](https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement)
+
+-   Rodríguez, F., Pérez, M., & Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. *Revista Conrado*, 17(83). <https://www.redalyc.org/journal/280/28073811035/html/>
+
+-   Mide UC. (2020). *Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena.* Pontificia Universidad Católica de Chile. Recuperado de <https://mideuc.cl>
+
+------------------------------------------------------------------------
