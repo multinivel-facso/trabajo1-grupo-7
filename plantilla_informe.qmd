@@ -100,7 +100,27 @@ Para los análisis, se utilizó una metodología multinivel debido a que, en bas
 
 #### **3.2) Variables y operacionalización**
 
-aquí describir cómo operacionalizamos las variables (partir con la dependiente y ser muy específico), luego cn las demas (acordarnos de que tenemos edad como variable de control)
+-   Nivel educacional máximo alcanzado (dependiente): Esta variable fue construida en base a la variable "educ" que posee la base de datos de la encuesta CASEN 2022, que identifica de forma nominal el nivel de escolaridad de la persona encuestada. Fue recodificada para que pasara de tener un rango de 0 a 12, a un rango de 0 a 8 con los siguientes valores:
+
+    -   0 = Sin educación formal: mismo valor que la variable original
+
+    -   1 = Básica incompleta: mismo valor que la variable original
+
+    -   2 = Básica completa: mismo valor que la variable original
+
+    -   3 = Media incompleta: integramos los valores de "Media humanista incompleta (3)" y "Media técnica profesional incompleta (4)"
+
+    -   4 = Media completa: integramos los valores de "Media humanista completa (5)" y "Media técnica profesional completa (6)".
+
+    -   5 = Educación superior incompleta: integramos los valores de "Técnico nivel superior incompleta (7)" y "Profesional incompleto (9)".
+
+    -   6 = Educación superior completa: integramos los valores de "Técnico nivel superior completo (8)" y "Profesional completo (11)".
+
+    -   7 = Posgrado incompleto: recodificamos el valor de "Posgrado incompleto (10)" para que tuviera el valor 7.
+
+    -   8 = Posgrado completo: recodificamos el valor de "Posgrado completo (12)" para que tuviera el valor 8.
+
+-   
 
 #### **3.3) Estadísticos descriptivos generales**
 
