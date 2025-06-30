@@ -528,25 +528,25 @@ Con esta investigación buscamos ampliar el enfoque que se tiene para analizar l
 
 -   Hill Collins, P. (2000). Black feminist thought: Knowledge, consciousness, and the politics of empowerment (2nd ed.). New York: Routledge. (Trabajo original publicado en 1990)
 
--   Jiménez, J. M., & Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. Latinoamérica. Revista de Estudios Educativos, 52(1).[ https://latam.redilat.org/index.php/lt/article/view/3246](https://latam.redilat.org/index.php/lt/article/view/3246)
+-   Jiménez, J. M., & Fernández, M. A. (2022). Problemas de concentración que afectan el rendimiento académico: Estudio de caso. Latinoamérica. Revista de Estudios Educativos, 52(1).<https://latam.redilat.org/index.php/lt/article/view/3246>
 
 -   Ladson-Billings, G. (1994). The dreamkeepers: Successful teachers of African American children. San Francisco: Jossey-Bass.
 
--   López, J., & Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? Estudios Sociológicos, 26(78), 713–736.[ https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext](https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext)
+-   López, J., & Escobar, A. (2008). Ser indígena en la educación superior: ¿Desventajas reales o percibidas? Estudios Sociológicos, 26(78), 713–736.<https://www.scielo.org.mx/scielo.php?pid=S0185-27602008000400003&script=sci_arttext>
 
--   Mejía, D. A., & Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. ResearchGate.[ https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement](https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement)
+-   Mejía, D. A., & Mejía, M. T. (2023). La influencia de los padres en el rendimiento académico de los niños. ResearchGate.[https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement](https://www.researchgate.net/publication/391068651_La_influencia_de_los_padres_en_el_rendimiento_academico_de_los_ninosThe_influence_of_parents_on_children's_academic_achievement)
 
--   Mide UC. (2020). Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena. Pontificia Universidad Católica de Chile.[ https://mideuc.cl](https://mideuc.cl/)
+-   Mide UC. (2020). Indicadores de desarrollo comunal y escolar (IDCE): Desigualdades territoriales en la educación chilena. Pontificia Universidad Católica de Chile.[https://mideuc.cl](https://mideuc.cl/)
 
--   PNUD. (2017). Desiguales: Orígenes, cambios y desafíos de la brecha social en Chile. Programa de las Naciones Unidas para el Desarrollo (PNUD).[ https://www.undp.org/es/chile/publications/informe-desarrollo-humano-desiguales-2017](https://www.undp.org/es/chile/publications/informe-desarrollo-humano-desiguales-2017)
+-   PNUD. (2017). Desiguales: Orígenes, cambios y desafíos de la brecha social en Chile. Programa de las Naciones Unidas para el Desarrollo (PNUD).<https://www.undp.org/es/chile/publications/informe-desarrollo-humano-desiguales-2017>
 
--   Rodríguez, F., Pérez, M., & Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. Revista Conrado, 17(83).[ https://www.redalyc.org/journal/280/28073811035/html/](https://www.redalyc.org/journal/280/28073811035/html/)
+-   Rodríguez, F., Pérez, M., & Arévalo, J. (2021). Análisis sobre la educación virtual: impactos en el proceso formativo. Revista Conrado, 17(83).<https://www.redalyc.org/journal/280/28073811035/html/>
 
--   Schneider, S. L. (2016). The conceptualisation, measurement, and coding of education in German and cross‑national surveys (GESIS Survey Guidelines, versión 2.0). Mannheim, Germany: GESIS – Leibniz Institute for the Social Sciences.[ https://doi.org/10.15465/gesis-sg_en_020](https://doi.org/10.15465/gesis-sg_en_020)
+-   Schneider, S. L. (2016). The conceptualisation, measurement, and coding of education in German and cross‑national surveys (GESIS Survey Guidelines, versión 2.0). Mannheim, Germany: GESIS – Leibniz Institute for the Social Sciences.<https://doi.org/10.15465/gesis-sg_en_020>
 
--   Sirin, S. R. (2005). Socioeconomic status and academic achievement: A meta-analytic review of research. Review of Educational Research, 75(3), 417–453.[ https://doi.org/10.3102/00346543075003417](https://doi.org/10.3102/00346543075003417)
+-   Sirin, S. R. (2005). Socioeconomic status and academic achievement: A meta-analytic review of research. Review of Educational Research, 75(3), 417–453.<https://doi.org/10.3102/00346543075003417>
 
--   Thomson, S. (2021). Achievement at school and socioeconomic background — an educational perspective. NPJ Science of Learning, 6(44).[ https://doi.org/10.1038/s41539-021-00112-6](https://doi.org/10.1038/s41539-021-00112-6)
+-   Thomson, S. (2021). Achievement at school and socioeconomic background — an educational perspective. NPJ Science of Learning, 6(44).<https://doi.org/10.1038/s41539-021-00112-6>
 
 -   Truffello, R., & Contreras, D. (2019). ¿Qué tan segregada está la educación chilena? En PNUD (Ed.), Desarrollo humano en Chile: Aportes para pensar el futuro (pp. 49–67). Santiago, Chile: PNUD.
 
